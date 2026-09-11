@@ -1,0 +1,10 @@
+{
+  "description": "Easily convert Markdown files into interactive prompts for enhanced content creation, ideal for writers and developers seeking streamlined workflows.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
