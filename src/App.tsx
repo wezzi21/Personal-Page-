@@ -140,10 +140,6 @@ function HeroAnimation() {
       className="hero-parallax relative w-full h-full overflow-hidden"
       style={{ background: "#0A0A0A" }}
     >
-      {/* Telemetry labels */}
-      <div className="absolute left-6" style={{ top: "76px", color: "rgba(255,255,255,0.35)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" }}>
-        SESSION: FOUNDER / FR1BET
-      </div>
       <div className="absolute right-6" style={{ top: "76px", color: "rgba(255,255,255,0.25)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase" }}>
         P1 &nbsp;|&nbsp; QUALIFYING
       </div>
@@ -316,7 +312,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
   );
 }
 
-// ─── Hero Section ──────────────────────────────────���──────────────────────────
+// ─── Hero Section ──────────────────────────────────����──────────────────────────
 
 function Hero() {
   return (
