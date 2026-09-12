@@ -28,6 +28,49 @@ function Reveal({ children, delay = 0, fade = false, className = "" }: { childre
   );
 }
 
+function ReactiveMesh() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mesh = ref.current;
+    if (!mesh || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let frame = 0;
+    let targetX = 50;
+    let targetY = 42;
+    let currentX = targetX;
+    let currentY = targetY;
+    let currentGlowX = targetX;
+    let currentGlowY = targetY;
+
+    const handlePointerMove = (event: PointerEvent) => {
+      targetX = (event.clientX / window.innerWidth) * 100;
+      targetY = (event.clientY / window.innerHeight) * 100;
+    };
+
+    const animate = () => {
+      currentX += (targetX - currentX) * 0.055;
+      currentY += (targetY - currentY) * 0.055;
+      currentGlowX += (currentX - currentGlowX) * 0.035;
+      currentGlowY += (currentY - currentGlowY) * 0.035;
+      mesh.style.setProperty("--mesh-x", `${currentX}%`);
+      mesh.style.setProperty("--mesh-y", `${currentY}%`);
+      mesh.style.setProperty("--mesh-trail-x", `${currentGlowX}%`);
+      mesh.style.setProperty("--mesh-trail-y", `${currentGlowY}%`);
+      frame = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    frame = requestAnimationFrame(animate);
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return <div ref={ref} className="reactive-mesh" aria-hidden="true" />;
+}
+
 // ─── SVG Icons ───────────────────────────────────────────────────────────────
 
 function IconLinkedIn() {
@@ -1256,7 +1299,8 @@ const socialPosts = generatedSocialPosts as SocialPost[];
 
 function SocialsPage() {
   return (
-    <div className="socials-page" style={{ background: "var(--black)", minHeight: "100vh" }}>
+    <div className="socials-page page-with-mesh" style={{ background: "var(--black)", minHeight: "100vh" }}>
+      <ReactiveMesh />
       <header className="socials-header">
         <a href="/" className="wordmark">WRJ<span>.</span></a>
         <a href="/" className="socials-back">Back to profile</a>
@@ -1326,7 +1370,8 @@ export default function App() {
   if (isSocialsPage) return <SocialsPage />;
 
   return (
-    <div style={{ background: "var(--black)", minHeight: "100%" }}>
+    <div className="page-with-mesh" style={{ background: "var(--black)", minHeight: "100%" }}>
+      <ReactiveMesh />
       <Nav scrolled={scrolled} />
       <Hero />
       <Story />

@@ -258,6 +258,27 @@ html {
   transform: scale(1.05);
 }
 
+/* Cursor-reactive red mesh for interior pages */
+.page-with-mesh {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.reactive-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(38rem 28rem at var(--mesh-trail-x, 50%) var(--mesh-trail-y, 42%), rgba(255, 24, 1, 0.08), transparent 68%),
+    radial-gradient(28rem 22rem at var(--mesh-x, 50%) var(--mesh-y, 42%), rgba(255, 24, 1, 0.13), transparent 70%),
+    radial-gradient(22rem 18rem at 18% 78%, rgba(255, 24, 1, 0.045), transparent 72%),
+    #0A0A0A;
+  filter: saturate(1.12);
+  transition: opacity 0.4s ease;
+}
+
 /* Personal photo parallax background */
 .hero-parallax {
   isolation: isolate;
@@ -328,6 +349,12 @@ html {
 
   .hero-parallax-video {
     display: none;
+  }
+
+  .reactive-mesh {
+    background:
+      radial-gradient(30rem 24rem at 50% 42%, rgba(255, 24, 1, 0.08), transparent 70%),
+      #0A0A0A;
   }
 }
 
