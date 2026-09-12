@@ -258,6 +258,36 @@ html {
   transform: scale(1.05);
 }
 
+/* Personal photo parallax background */
+.hero-parallax {
+  isolation: isolate;
+}
+
+.hero-parallax-photo,
+.hero-parallax-shade {
+  position: absolute;
+  inset: -8%;
+  pointer-events: none;
+}
+
+.hero-parallax-photo {
+  z-index: -2;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  filter: saturate(0.7) contrast(1.08);
+  opacity: 0.7;
+  transform: scale(1.08);
+}
+
+.hero-parallax-shade {
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(10, 10, 10, 0.82) 0%, rgba(10, 10, 10, 0.42) 48%, rgba(10, 10, 10, 0.76) 100%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0.2) 0%, rgba(10, 10, 10, 0.08) 45%, rgba(10, 10, 10, 0.94) 100%);
+}
+
 /* Scroll reveal animations */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(28px); }

@@ -92,9 +92,16 @@ function IconPinterest() {
 function HeroAnimation() {
   return (
     <div
-      className="relative w-full h-full overflow-hidden"
+      className="hero-parallax relative w-full h-full overflow-hidden"
       style={{ background: "linear-gradient(160deg, #0A0A0A 0%, #171717 50%, #0A0A0A 100%)" }}
     >
+      <div
+        className="hero-parallax-photo"
+        aria-hidden="true"
+        style={{ backgroundImage: "url('/assets/social/background.jpg')" }}
+      />
+      <div className="hero-parallax-shade" aria-hidden="true" />
+
       {/* Grid lines — race track metaphor */}
       <div className="absolute inset-0 grid-overlay" />
 
