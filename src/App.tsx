@@ -216,7 +216,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
 
         {/* Desktop: presentation shortcut */}
         <div className="hidden md:block">
-          <a href="/presentation" className="presentation-nav-link">Presentation</a>
+          <a href="/presentation" className="social-link">FR1BET PRESENTATION /</a>
         </div>
 
         {/* Desktop links */}
@@ -316,7 +316,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
   );
 }
 
-// ─── Hero Section ─────────────────────────────────────────────────────────────
+// ─── Hero Section ──────────────────────────────────���──────────────────────────
 
 function Hero() {
   return (
