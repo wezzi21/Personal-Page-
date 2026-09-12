@@ -255,6 +255,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           </a>
           <a
             href="#hero"
+            className="wordmark-zoom"
             style={{
               fontFamily: "Inter",
               fontWeight: 900,
@@ -397,7 +398,7 @@ function Hero() {
         </div>
 
         {/* Social links */}
-        <div className="flex flex-wrap gap-4 md:gap-6">
+        <div className="home-social-links flex flex-col items-start gap-4 md:items-end md:gap-5">
           <a href="https://www.linkedin.com/in/wrjaesch" target="_blank" rel="noopener noreferrer" className="social-link">
             <IconLinkedIn /> LinkedIn
           </a>
@@ -414,7 +415,7 @@ function Hero() {
             <IconDiscord /> Discord
           </a>
           <a href="https://pinterest.com/fr1bet" target="_blank" rel="noopener noreferrer" className="social-link">
-            Pinterest
+            <IconPinterest /> Pinterest
           </a>
         </div>
       </div>
@@ -1274,7 +1275,9 @@ function Footer() {
             color: "var(--neutral-500)",
           }}
         >
-          WRJ<span style={{ color: "var(--red)" }}>.</span>
+          <a href="#hero" className="wordmark-zoom" style={{ color: "inherit", textDecoration: "none" }}>
+            WRJ<span style={{ color: "var(--red)" }}>.</span>
+          </a>
         </span>
         <span style={{ width: "1px", height: "16px", background: "var(--surface-700)", display: "inline-block" }} />
         <a href="https://fr1bet.com" target="_blank" rel="noopener noreferrer">
