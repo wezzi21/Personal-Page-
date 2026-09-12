@@ -211,8 +211,9 @@ function Nav({ scrolled }: { scrolled: boolean }) {
         </a>
 
         {/* Desktop: presentation shortcut */}
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-8">
           <a href="/presentation" className="social-link">FR1BET PRESENTATION /</a>
+          <a href="#" className="social-link" aria-label="Guide coming soon">Guide</a>
         </div>
 
         {/* Desktop links */}
