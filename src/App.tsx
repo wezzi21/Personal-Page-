@@ -1313,7 +1313,7 @@ function SocialsPage() {
           <h1 className="hero-display">Socials</h1>
           <span className="rule-red" />
           <p className="socials-lede">
-            A working library for the photos, videos, and captions behind the next post. Add a picture or video to <code>public/assets/social/</code>; GitHub Actions will create a simple caption and publish it here automatically.
+            A working library for the photos, videos, and captions behind the next post.
           </p>
         </div>
 
