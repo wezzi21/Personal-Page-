@@ -45,6 +45,34 @@ body,
   text-transform: uppercase;
 }
 
+.presentation-content-image {
+  width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 32px 72px rgba(0,0,0,0.85);
+  display: block;
+}
+
+.presentation-hero-action {
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.presentation-hero-action:hover,
+.presentation-hero-action:focus-visible {
+  transform: translateY(-3px);
+}
+
+.presentation-hero-action-primary:hover,
+.presentation-hero-action-primary:focus-visible {
+  background: #ff1932 !important;
+  box-shadow: 0 12px 38px rgba(229,0,26,0.62) !important;
+}
+
+.presentation-hero-action-secondary:hover,
+.presentation-hero-action-secondary:focus-visible {
+  border-color: rgba(255,255,255,0.6) !important;
+  background: rgba(255,255,255,0.08) !important;
+}
+
 .presentation-back-link {
   color: #aaa;
   font-family: Barlow, sans-serif;
