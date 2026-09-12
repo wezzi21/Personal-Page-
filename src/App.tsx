@@ -745,7 +745,7 @@ function WhatImBuilding() {
   );
 }
 
-// ─── Vision Section ────────────────────────────────��──────────────────────────
+// ─── Vision Section ────────────────────────────────��───────────────────────���──
 
 function Vision() {
   const milestones = [
@@ -1332,15 +1332,21 @@ function SocialsPage() {
           </section>
         ) : (
           <section className="socials-grid" aria-label="Social posts">
-            {socialPosts.map((post) => (
-              <article className="social-card" key={post.asset}>
-                <div className="social-card-media">
-                  {post.type === "video" ? (
-                    <video src={post.asset} controls preload="metadata" aria-label={post.title} />
-                  ) : (
-                    <img src={post.asset} alt={post.title} />
-                  )}
-                </div>
+          {socialPosts.map((post, index) => (
+            <article className="social-card" key={post.asset}>
+              <div className="social-card-media">
+                {post.type === "video" ? (
+                  <video src={post.asset} controls preload="metadata" aria-label={post.title} />
+                ) : (
+                  <img
+                    src={post.asset}
+                    alt={post.title}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                    fetchPriority={index === 0 ? "high" : "low"}
+                  />
+                )}
+              </div>
                 <div className="social-card-copy">
                   <p className="section-label">{post.type} / {post.platforms.join(" · ")}</p>
                   <h2>{post.title}</h2>

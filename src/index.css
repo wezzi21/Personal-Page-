@@ -528,9 +528,15 @@ html {
 }
 .socials-file-note strong { color: var(--red); font-weight: 700; }
 .socials-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; margin-top: 5rem; }
-.social-card { border: 1px solid var(--surface-800); background: var(--surface-900); }
-.social-card-media { aspect-ratio: 4 / 3; overflow: hidden; background: var(--surface-800); }
-.social-card-media img, .social-card-media video { width: 100%; height: 100%; object-fit: cover; }
+ .social-card {
+  border: 1px solid var(--surface-800);
+  background: var(--surface-900);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 520px;
+}
+ .social-card-media { aspect-ratio: 4 / 3; overflow: hidden; background: var(--surface-800); }
+ .social-card-media img, .social-card-media video { width: 100%; height: 100%; object-fit: cover; }
+ .social-card-media img { display: block; }
 .social-card-copy { padding: 1.5rem; }
 .social-card-copy h2 { margin: 0.6rem 0; font-size: 1.2rem; font-style: italic; text-transform: uppercase; }
 .social-card-copy > p:last-child { color: var(--neutral-400); line-height: 1.7; }
