@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import fr1betLogo from "@/imports/red_white_logo.png";
+import generatedSocialPosts from "./social-posts.json";
 
 // ─── Scroll Reveal ────────────────────────────────────────────────────────────
 
@@ -1325,7 +1326,7 @@ type SocialPost = {
   platforms: string[];
 };
 
-const socialPosts: SocialPost[] = [];
+const socialPosts = generatedSocialPosts as SocialPost[];
 
 function SocialsPage() {
   return (
@@ -1341,7 +1342,7 @@ function SocialsPage() {
           <h1 className="hero-display">Socials</h1>
           <span className="rule-red" />
           <p className="socials-lede">
-            A working library for the photos, videos, and captions behind the next post. Add an asset to <code>public/assets/social/</code>, then add its caption to the post list in this page.
+            A working library for the photos, videos, and captions behind the next post. Add a picture or video to <code>public/assets/social/</code>; GitHub Actions will create a simple caption and publish it here automatically.
           </p>
         </div>
 
@@ -1351,7 +1352,7 @@ function SocialsPage() {
             <p className="section-label">Ready for the first drop</p>
             <h2 id="socials-empty-title">No posts yet.</h2>
             <p>
-              Upload your media to <code>public/assets/social/</code>. Each file becomes available at <code>/assets/social/filename</code>, ready to share with your AI posting workflow.
+              Upload a picture or video to <code>public/assets/social/</code>. The GitHub Action creates its caption automatically, then the new post appears here after the site rebuilds.
             </p>
             <div className="socials-file-note">
               <span>Recommended format</span>
@@ -1384,7 +1385,7 @@ function SocialsPage() {
   );
 }
 
-// ─── App ──────────────────────────���───────────────────────────────────────────
+// ─── App ──────────────────────────�����───────────────────────────────────────────
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
