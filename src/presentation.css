@@ -24,6 +24,55 @@ body,
 .g-ti3 { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; }
 .g-ti4 { display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: center; }
 
+.presentation-hero-background {
+  position: absolute;
+  inset: -10% 0 0;
+  background-image: linear-gradient(to bottom, rgba(8,8,8,0.08) 0%, rgba(8,8,8,0.5) 52%, #080808 100%), url('/assets/social/Front%20page.png');
+  background-size: cover;
+  background-position: center calc(30% + var(--presentation-parallax-y, 0px));
+  opacity: 0.5;
+  transform: translate3d(0, calc(var(--presentation-parallax-y, 0px) * -0.18), 0) scale(1.06);
+  will-change: background-position, transform;
+}
+
+.presentation-brand {
+  color: #fff;
+  font-family: "'Barlow', sans-serif";
+  font-size: clamp(20px, 3vw, 34px);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.presentation-back-link {
+  color: #aaa;
+  font-family: "'Barlow', sans-serif";
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.presentation-back-link:hover,
+.presentation-back-link:focus-visible {
+  color: #fff;
+  transform: translateX(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .presentation-hero-background {
+    background-position: center 30%;
+    transform: scale(1.04);
+  }
+
+  .presentation-back-link {
+    transition: none;
+  }
+}
+
 @media (max-width: 768px) {
   .sp { padding: 48px 20px 40px; }
   .g2, .g3, .g-ti, .g-ti2, .g-ti3, .g-ti4 { grid-template-columns: 1fr !important; gap: 24px !important; }
