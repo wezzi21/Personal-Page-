@@ -199,6 +199,35 @@ html {
   gap: 1.5rem;
 }
 
+.story-nav-item {
+  cursor: default;
+  transition: transform 220ms ease, color 220ms ease, opacity 220ms ease;
+  transform-origin: left center;
+}
+
+.story-nav-item:hover {
+  transform: translateX(5px);
+}
+
+.story-nav-item:hover span {
+  color: var(--white) !important;
+}
+
+.story-nav-item:hover > div {
+  background: var(--red) !important;
+  box-shadow: 0 0 12px rgba(255, 24, 1, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-nav-item {
+    transition: color 180ms ease;
+  }
+
+  .story-nav-item:hover {
+    transform: none;
+  }
+}
+
 .presentation-nav-divider {
   color: var(--neutral-500);
   font-family: 'Inter', sans-serif;

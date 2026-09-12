@@ -624,7 +624,7 @@ function Story() {
               </p>
               <div className="mt-8">
                 {storyBeats.map((b, i) => (
-                  <div key={i} className="flex items-center gap-3 mb-3">
+                  <div key={i} className="story-nav-item flex items-center gap-3 mb-3">
                     <div
                       style={{
                         width: "6px",
