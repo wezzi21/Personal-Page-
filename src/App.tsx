@@ -135,34 +135,46 @@ function IconPinterest() {
 // ─── Animation Placeholder ────────────────────────────────────────────────────
 
 function HeroAnimation() {
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const updateParallax = () => {
+      hero.style.setProperty("--hero-parallax-y", `${Math.min(window.scrollY * 0.18, 180)}px`);
+    };
+
+    updateParallax();
+    window.addEventListener("scroll", updateParallax, { passive: true });
+    return () => window.removeEventListener("scroll", updateParallax);
+  }, []);
+
   return (
     <div
+      ref={heroRef}
       className="hero-parallax relative w-full h-full overflow-hidden"
       style={{ background: "#0A0A0A" }}
     >
+      <video
+        className="hero-parallax-video"
+        src="/assets/social/looping%20video%20mp4.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+      />
+      <div className="hero-parallax-shade" aria-hidden="true" />
       <div className="absolute right-6" style={{ top: "76px", color: "rgba(255,255,255,0.25)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase" }}>
         P1 &nbsp;|&nbsp; QUALIFYING
       </div>
 
-      {/* Bottom label */}
       <div className="absolute bottom-6 left-0 right-0 flex justify-center">
         <span style={{ color: "rgba(255,255,255,0.15)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase" }}>
           LOOP / FR1BET — LIVE HEADER MEDIA
         </span>
       </div>
-
-      {/* Silhouette / placeholder figure */}
-      <div
-        className="absolute"
-        style={{
-          left: "50%",
-          bottom: "22%",
-          transform: "translateX(-50%)",
-          width: "2px",
-          height: "48px",
-          background: "linear-gradient(to top, rgba(255,255,255,0.6), transparent)",
-        }}
-      />
     </div>
   );
 }
