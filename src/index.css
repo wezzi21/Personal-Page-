@@ -263,11 +263,23 @@ html {
   isolation: isolate;
 }
 
+.hero-parallax-video,
 .hero-parallax-photo,
 .hero-parallax-shade {
   position: absolute;
   inset: -8%;
+  width: 116%;
+  height: 116%;
   pointer-events: none;
+}
+
+.hero-parallax-video {
+  z-index: -3;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.7) contrast(1.08);
+  opacity: 0.72;
+  transform: scale(1.08);
 }
 
 .hero-parallax-photo {
@@ -312,6 +324,10 @@ html {
   .reveal, .reveal-fade {
     opacity: 1 !important;
     animation: none !important;
+  }
+
+  .hero-parallax-video {
+    display: none;
   }
 }
 
