@@ -7,8 +7,9 @@ const logoBg = fr1betLogo;
 const fr1Coin = "/assets/social/ChatGPT%20Image%20Sep%203,%202026,%2005_04_04%20PM.png";
 const gridScreenshot = "/assets/social/ten%20cards.png";
 const poolScreenshot = "/assets/social/six%20tiers.png";
-const insightScreenshot = "/assets/social/sprint%20cards.png";
+const insightScreenshot = "/assets/social/race%20divisions.png";
 const racingDivisionsScreenshot = "/assets/social/countdown.png";
+const sprintCardsScreenshot = "/assets/social/sprint%20cards.png";
 
 const RED = "#E5001A";
 
@@ -235,10 +236,10 @@ function Hero() {
         </Reveal>
         <Reveal delay={320}>
           <div style={{ display: "flex", gap: 14, marginTop: 32, flexWrap: "wrap" }}>
-            <a href="https://fr1bet.com" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: RED, color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 16, letterSpacing: 1.5, padding: "14px 28px", borderRadius: 6, textDecoration: "none", boxShadow: `0 8px 32px rgba(229,0,26,0.45)` }}>
+            <a href="https://fr1bet.com" target="_blank" rel="noreferrer" className="presentation-hero-action presentation-hero-action-primary" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: RED, color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 16, letterSpacing: 1.5, padding: "14px 28px", borderRadius: 6, textDecoration: "none", boxShadow: `0 8px 32px rgba(229,0,26,0.45)` }}>
               ENTER THE GRID ›
             </a>
-            <a href="#how" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", border: "1px solid rgba(255,255,255,0.18)", color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontStyle: "italic", fontSize: 15, letterSpacing: 1, padding: "14px 24px", borderRadius: 6, textDecoration: "none" }}>
+            <a href="#how" className="presentation-hero-action presentation-hero-action-secondary" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", border: "1px solid rgba(255,255,255,0.18)", color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontStyle: "italic", fontSize: 15, letterSpacing: 1, padding: "14px 24px", borderRadius: 6, textDecoration: "none" }}>
               HOW IT WORKS
             </a>
           </div>
@@ -427,21 +428,9 @@ function SprintWeekends() {
               </div>
             </Reveal>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {sprintCards.map((card, i) => (
-              <Reveal key={card.pos} delay={100 + i * 60}>
-                <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "14px 16px", display: "flex", alignItems: "center", gap: 14 }}>
-                  <div style={{ width: 44, height: 44, background: RED, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <span style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 900, fontStyle: "italic", fontSize: 13, color: "#fff", letterSpacing: 0.5 }}>{card.pos}</span>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: "'Barlow',sans-serif", fontSize: 10, color: RED, letterSpacing: 2, marginBottom: 3 }}>{card.session}</div>
-                    <div style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontSize: 13, color: "#fff" }}>{card.desc}</div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={100}>
+            <img className="presentation-content-image" src={sprintCardsScreenshot} alt="FR1BET sprint prediction cards" loading="lazy" decoding="async" />
+          </Reveal>
         </div>
       </div>
     </Slide>
