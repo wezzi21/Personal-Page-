@@ -136,6 +136,23 @@ function IconPinterest() {
 
 function HeroAnimation() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const loopFadeRef = useRef(false);
+
+  const handleVideoTimeUpdate = () => {
+    const video = videoRef.current;
+    if (!video || !Number.isFinite(video.duration)) return;
+
+    const shouldFade = video.duration - video.currentTime <= 0.35;
+    if (shouldFade !== loopFadeRef.current) {
+      loopFadeRef.current = shouldFade;
+      video.classList.toggle("hero-parallax-video-fading", shouldFade);
+    }
+
+    if (video.currentTime < 0.1 && shouldFade === false) {
+      video.classList.remove("hero-parallax-video-fading");
+    }
+  };
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -157,12 +174,14 @@ function HeroAnimation() {
       style={{ background: "#0A0A0A" }}
     >
       <video
+        ref={videoRef}
         className="hero-parallax-video"
         src="/assets/social/looping%20video%20mp4.mp4"
         autoPlay
         muted
         loop
         playsInline
+        onTimeUpdate={handleVideoTimeUpdate}
         aria-hidden="true"
       />
       <div className="hero-parallax-shade" aria-hidden="true" />
@@ -326,7 +345,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
   );
 }
 
-// ─── Hero Section ──────────────────────────────────����──────────────────────────
+// ─── Hero Section ──────────────────────────────────����───────────��──────────────
 
 function Hero() {
   return (
@@ -1376,7 +1395,7 @@ function SocialsPage() {
   );
 }
 
-// ─── App ──────────────────────────�����───────────────────────────────────────────
+// ─── App ──────────────────────────�����─���─────────────────────────────────────────
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
