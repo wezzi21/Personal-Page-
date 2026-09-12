@@ -95,6 +95,18 @@ function HeroAnimation() {
       className="hero-parallax relative w-full h-full overflow-hidden"
       style={{ background: "linear-gradient(160deg, #0A0A0A 0%, #171717 50%, #0A0A0A 100%)" }}
     >
+      <video
+        className="hero-parallax-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/assets/social/background.jpg"
+        aria-hidden="true"
+      >
+        <source src="/assets/social/Video%20Project%202.mp4" type="video/mp4" />
+      </video>
       <div
         className="hero-parallax-photo"
         aria-hidden="true"
@@ -187,7 +199,7 @@ function HeroAnimation() {
       {/* Bottom label */}
       <div className="absolute bottom-6 left-0 right-0 flex justify-center">
         <span style={{ color: "rgba(255,255,255,0.15)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase" }}>
-          ANIMATION PLACEHOLDER — REPLACE WITH GRID WALK VIDEO
+          LOOP / FR1BET — LIVE HEADER MEDIA
         </span>
       </div>
 
