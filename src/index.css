@@ -199,6 +199,47 @@ html {
   gap: 1.5rem;
 }
 
+.quality-tag {
+  transition: transform 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.quality-tag:hover,
+.quality-tag:focus-visible {
+  color: var(--white) !important;
+  border-color: var(--red) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 0 14px rgba(255, 50, 40, 0.24);
+}
+
+.story-nav-item {
+  cursor: default;
+  transition: transform 220ms ease, color 220ms ease, opacity 220ms ease;
+  transform-origin: left center;
+}
+
+.story-nav-item:hover {
+  transform: translateX(5px);
+}
+
+.story-nav-item:hover span {
+  color: var(--white) !important;
+}
+
+.story-nav-item:hover > div {
+  background: var(--red) !important;
+  box-shadow: 0 0 12px rgba(255, 24, 1, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-nav-item {
+    transition: color 180ms ease;
+  }
+
+  .story-nav-item:hover {
+    transform: none;
+  }
+}
+
 .presentation-nav-divider {
   color: var(--neutral-500);
   font-family: 'Inter', sans-serif;
@@ -392,8 +433,12 @@ html {
   filter: saturate(0.7) contrast(1.08);
   opacity: 0.72;
   transform: translate3d(0, var(--hero-parallax-y, 0px), 0) scale(1.12);
-  transition: transform 0.18s linear;
-  will-change: transform;
+  transition: transform 0.18s linear, opacity 0.35s ease;
+  will-change: transform, opacity;
+}
+
+.hero-parallax-video-fading {
+  opacity: 0;
 }
 
 .hero-parallax-photo {

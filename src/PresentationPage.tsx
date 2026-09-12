@@ -171,21 +171,42 @@ function Pill({ children, active }: { children: ReactNode; active?: boolean }) {
 /* ─── Slides ─── */
 
 function Hero() {
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let frame = 0;
+    const updateParallax = () => {
+      const offset = Math.min(window.scrollY * 0.16, 140);
+      hero.style.setProperty("--presentation-parallax-y", `${offset}px`);
+      frame = 0;
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(updateParallax);
+    };
+
+    updateParallax();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <Slide id="hero" noLogo>
-      <div style={{ backgroundImage: `url(${heroBg})`, backgroundSize: "cover", backgroundPosition: "center 30%", position: "absolute", inset: 0, opacity: 0.32 }} />
+      <div ref={heroRef} className="presentation-hero-background" aria-hidden="true" />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(8,8,8,0.05) 0%, rgba(8,8,8,0.5) 50%, #080808 100%)" }} />
 
       {/* Nav */}
       <nav style={{ position: "relative", zIndex: 10, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 32px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ width: 32, height: 32, background: RED, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Barlow',sans-serif", fontWeight: 900, fontSize: 16, color: "#fff" }}>F</div>
-          <span style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontSize: 15, color: "#fff", letterSpacing: 2 }}>FR1BET</span>
+          <span className="presentation-brand">FR1BET PRESENTATION</span>
         </div>
-        <div className="mob-hide" style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          {[["How it works", "#how"], ["Tiers", "#tiers"], ["Pit Pass", "#pitpass"], ["Play now", "#cta"]].map(([l, href]) => (
-            <a key={l} href={href} style={{ fontFamily: "'Barlow',sans-serif", fontSize: 13, color: l === "Play now" ? "#fff" : "#aaa", textDecoration: "none", ...(l === "Play now" ? { background: RED, padding: "8px 18px", borderRadius: 6, fontWeight: 700, letterSpacing: 1 } : {}) }}>{l}</a>
-          ))}
+        <div className="mob-hide" style={{ display: "flex", alignItems: "center" }}>
+          <a href="/" className="presentation-back-link">BACK TO MAIN PAGE</a>
         </div>
       </nav>
 
@@ -246,7 +267,7 @@ function HowItWorks() {
 
         {/* Screenshot full-width */}
         <Reveal delay={160}>
-          <img src={gridScreenshot} alt="FR1BET prediction grid — 10 cards per race weekend" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
+          <img src={gridScreenshot} alt="FR1BET prediction grid — 10 cards per race weekend" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
         </Reveal>
 
         <div className="g3">
@@ -308,7 +329,7 @@ function PoolsExplained() {
             </Reveal>
           </div>
           <Reveal delay={100}>
-            <img src={insightScreenshot} alt="FR1BET pool view" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block" }} />
+            <img src={insightScreenshot} alt="FR1BET pool view" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block" }} />
           </Reveal>
         </div>
       </div>
@@ -346,7 +367,7 @@ function StakeTiers() {
         </div>
 
         <Reveal delay={160}>
-          <img src={poolScreenshot} alt="Select stake — active racing divisions" style={{ width: "100%", borderRadius: 14, boxShadow: "0 24px 64px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
+          <img src={poolScreenshot} alt="Select stake — active racing divisions" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 24px 64px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
         </Reveal>
 
         <div className="g3" style={{ gap: 10 }}>
@@ -445,7 +466,7 @@ function Dashboard() {
         </Reveal>
 
         <Reveal delay={155}>
-          <img src={racingDivisionsScreenshot} alt="FR1BET dashboard — active racing divisions and countdown" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
+          <img src={racingDivisionsScreenshot} alt="FR1BET dashboard — active racing divisions and countdown" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
         </Reveal>
 
         <div className="g3">
