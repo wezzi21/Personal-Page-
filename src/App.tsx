@@ -93,27 +93,8 @@ function HeroAnimation() {
   return (
     <div
       className="hero-parallax relative w-full h-full overflow-hidden"
-      style={{ background: "linear-gradient(160deg, #0A0A0A 0%, #171717 50%, #0A0A0A 100%)" }}
+      style={{ background: "#0A0A0A" }}
     >
-      <video
-        className="hero-parallax-video"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster="/assets/social/background.jpg"
-        aria-hidden="true"
-      >
-        <source src="/assets/social/Video%20Project%202.mp4" type="video/mp4" />
-      </video>
-      <div
-        className="hero-parallax-photo"
-        aria-hidden="true"
-        style={{ backgroundImage: "url('/assets/social/background.jpg')" }}
-      />
-      <div className="hero-parallax-shade" aria-hidden="true" />
-
       {/* Grid lines — race track metaphor */}
       <div className="absolute inset-0 grid-overlay" />
 
@@ -132,7 +113,7 @@ function HeroAnimation() {
             y1={600}
             x2={400 + i * 20}
             y2={220}
-            stroke="#FF1801"
+            stroke="rgba(255,255,255,0.18)"
             strokeWidth="0.5"
           />
         ))}
@@ -164,32 +145,18 @@ function HeroAnimation() {
               width={30}
               height={16}
               fill="none"
-              stroke="rgba(255,24,1,0.5)"
+              stroke="rgba(255,255,255,0.18)"
               strokeWidth="0.4"
             />
           );
         })}
         {/* Pole position marker */}
-        <rect x="368" y="280" width="64" height="24" fill="none" stroke="#FF1801" strokeWidth="0.8" />
+        <rect x="368" y="280" width="64" height="24" fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth="0.8" />
         <line x1="400" y1="220" x2="400" y2="600" stroke="rgba(255,255,255,0.15)" strokeWidth="0.4" strokeDasharray="4 8" />
       </svg>
 
-      {/* Red ambient glow at horizon */}
-      <div
-        className="absolute"
-        style={{
-          left: "50%",
-          top: "36%",
-          transform: "translate(-50%, -50%)",
-          width: "60%",
-          height: "200px",
-          background: "radial-gradient(ellipse at center, rgba(255,24,1,0.18) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
-
       {/* Telemetry labels */}
-      <div className="absolute left-6" style={{ top: "76px", color: "rgba(255,24,1,0.7)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" }}>
+      <div className="absolute left-6" style={{ top: "76px", color: "rgba(255,255,255,0.35)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" }}>
         SESSION: FOUNDER / FR1BET
       </div>
       <div className="absolute right-6" style={{ top: "76px", color: "rgba(255,255,255,0.25)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase" }}>
