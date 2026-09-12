@@ -970,6 +970,7 @@ function About() {
               {qualities.map((q) => (
                 <span
                   key={q}
+                  className="quality-tag"
                   style={{
                     fontFamily: "Inter",
                     fontWeight: 600,
