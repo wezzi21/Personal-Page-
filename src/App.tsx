@@ -221,7 +221,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
             <a key={l.label} href={l.href} className="social-link">{l.label}</a>
           ))}
           <a href="https://fr1bet.com" target="_blank" rel="noopener noreferrer" className="social-link">
-            <img src={fr1betLogo} alt="FR1BET" style={{ height: "20px", objectFit: "contain" }} />
+            <img className="fr1bet-logo-hover" src={fr1betLogo} alt="FR1BET" style={{ height: "20px", objectFit: "contain" }} />
           </a>
           <a
             href="#hero"

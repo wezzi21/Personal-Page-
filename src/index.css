@@ -213,6 +213,31 @@ html {
   color: var(--white);
 }
 
+.fr1bet-logo-hover {
+  display: block;
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+  will-change: transform;
+}
+
+.social-link:hover .fr1bet-logo-hover,
+.social-link:focus-visible .fr1bet-logo-hover {
+  transform: scale(2.2);
+  filter: drop-shadow(0 0 14px var(--red-glow));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fr1bet-logo-hover {
+    transition: none;
+  }
+
+  .social-link:hover .fr1bet-logo-hover,
+  .social-link:focus-visible .fr1bet-logo-hover {
+    transform: scale(1.15);
+  }
+}
+
 .wordmark-zoom {
   display: inline-block;
   transform: scale(1);
