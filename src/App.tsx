@@ -390,20 +390,23 @@ function Hero() {
 
         {/* Social links */}
         <div className="flex flex-wrap gap-4 md:gap-6">
-          <a href="https://linkedin.com/in/wesleyjaesch" target="_blank" rel="noopener noreferrer" className="social-link">
+          <a href="https://www.linkedin.com/in/wrjaesch" target="_blank" rel="noopener noreferrer" className="social-link">
             <IconLinkedIn /> LinkedIn
           </a>
-          <a href="https://instagram.com/wesleyjaesch" target="_blank" rel="noopener noreferrer" className="social-link">
+          <a href="https://instagram.com/fr1.bet" target="_blank" rel="noopener noreferrer" className="social-link">
             <IconInstagram /> Instagram
           </a>
-          <a href="https://x.com/wesleyjaesch" target="_blank" rel="noopener noreferrer" className="social-link">
+          <a href="https://x.com/fr1bet" target="_blank" rel="noopener noreferrer" className="social-link">
             <IconX /> X
           </a>
           <a href="https://fr1bet.com" target="_blank" rel="noopener noreferrer" className="social-link">
             <span style={{ color: "var(--red)" }}>●</span>&nbsp;FR1BET
           </a>
-          <a href="https://discord.gg/fr1bet" target="_blank" rel="noopener noreferrer" className="social-link">
+          <a href="https://discord.gg/PUVN3A6XVN" target="_blank" rel="noopener noreferrer" className="social-link">
             <IconDiscord /> Discord
+          </a>
+          <a href="https://pinterest.com/fr1bet" target="_blank" rel="noopener noreferrer" className="social-link">
+            Pinterest
           </a>
         </div>
       </div>
@@ -1129,10 +1132,11 @@ function BuiltOnAI() {
 
 function Connect() {
   const links = [
-    { label: "LinkedIn", icon: <IconLinkedIn />, href: "https://linkedin.com/in/wesleyjaesch" },
-    { label: "Instagram", icon: <IconInstagram />, href: "https://instagram.com/wesleyjaesch" },
-    { label: "X", icon: <IconX />, href: "https://x.com/wesleyjaesch" },
-    { label: "Discord", icon: <IconDiscord />, href: "https://discord.gg/fr1bet" },
+    { label: "LinkedIn", icon: <IconLinkedIn />, href: "https://www.linkedin.com/in/wrjaesch" },
+    { label: "Instagram", icon: <IconInstagram />, href: "https://instagram.com/fr1.bet" },
+    { label: "X", icon: <IconX />, href: "https://x.com/fr1bet" },
+    { label: "Discord", icon: <IconDiscord />, href: "https://discord.gg/PUVN3A6XVN" },
+    { label: "Pinterest", href: "https://pinterest.com/fr1bet" },
     { label: "Email", icon: <IconMail />, href: "mailto:hello@wesleyjaesch.com" },
   ];
 
