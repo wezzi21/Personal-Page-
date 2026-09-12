@@ -32,7 +32,9 @@ export default defineConfig(({ mode }) => {
     server: {
       host: process.env.FIGMA_DEV_SERVER_HOST || '0.0.0.0',
       port: parseInt(process.env.PORT || '8443'),
-      strictPort: true,
+      // Fall back to the next available port instead of failing when the preview
+      // server is already using the configured port.
+      strictPort: false,
       watch: { ignored: ['**/.figma/**'] },
     },
     preview: {
