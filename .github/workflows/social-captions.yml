@@ -1,9 +1,7 @@
 name: Generate social captions
 
+# Paused for development uploads. Run manually when caption generation is needed.
 on:
-  push:
-    paths:
-      - "public/assets/social/**"
   workflow_dispatch:
 
 permissions:
