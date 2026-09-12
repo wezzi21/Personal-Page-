@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700;1,800;1,900&display=swap');
+@import 'tailwindcss';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+* {
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Responsive layout ── */
+.sp { max-width: 1100px; margin: 0 auto; padding: 72px 48px 56px; }
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+.g-ti { display: grid; grid-template-columns: 340px 1fr; gap: 56px; align-items: center; }
+.g-ti2 { display: grid; grid-template-columns: 320px 1fr; gap: 48px; align-items: center; }
+.g-ti3 { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; }
+.g-ti4 { display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: center; }
+
+@media (max-width: 768px) {
+  .sp { padding: 48px 20px 40px; }
+  .g2, .g3, .g-ti, .g-ti2, .g-ti3, .g-ti4 { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .g4 { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+  .mob-hide { display: none !important; }
+}

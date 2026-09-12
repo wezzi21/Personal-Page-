@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import fr1betLogo from "@/imports/red_white_logo.png";
 import generatedSocialPosts from "./social-posts.json";
+import PresentationPage from "./PresentationPage";
+import "./presentation.css";
 
 // ─── Scroll Reveal ────────────────────────────────────────────────────────────
 
@@ -212,8 +214,10 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           WRJ<span style={{ color: "var(--red)", marginLeft: "2px" }}>.</span>
         </a>
 
-        {/* Desktop: empty left */}
-        <div className="hidden md:block" />
+        {/* Desktop: presentation shortcut */}
+        <div className="hidden md:block">
+          <a href="/presentation" className="presentation-nav-link">Presentation</a>
+        </div>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
@@ -1366,7 +1370,9 @@ function SocialsPage() {
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
-  const isSocialsPage = window.location.pathname === "/socials";
+  const path = window.location.pathname;
+  const isSocialsPage = path === "/socials";
+  const isPresentationPage = path === "/presentation";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -1375,6 +1381,7 @@ export default function App() {
   }, []);
 
   if (isSocialsPage) return <SocialsPage />;
+  if (isPresentationPage) return <PresentationPage />;
 
   return (
     <div className="page-with-mesh" style={{ background: "var(--black)", minHeight: "100%" }}>
