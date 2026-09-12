@@ -196,6 +196,7 @@ html {
 
 /* Social icon link */
 .social-link {
+
   display: flex;
   align-items: center;
   gap: 6px;
@@ -210,6 +211,32 @@ html {
 }
 .social-link:hover {
   color: var(--white);
+}
+
+.social-box {
+  transform: scale(1);
+  transition: transform 0.3s ease, border-color 0.2s, background 0.2s;
+}
+
+.social-box:hover,
+.social-box:focus-visible {
+  transform: scale(1.08);
+  position: relative;
+  z-index: 2;
+}
+
+.footer-email {
+  color: var(--neutral-500);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  text-decoration: none;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.footer-email:hover,
+.footer-email:focus-visible {
+  color: var(--white);
+  transform: scale(1.05);
 }
 
 /* Scroll reveal animations */

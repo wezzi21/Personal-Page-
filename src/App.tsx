@@ -78,6 +78,14 @@ function IconDiscord() {
   );
 }
 
+function IconPinterest() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.162 9.429 7.627 11.188-.105-.949-.2-2.405.042-3.441l1.1-4.679s-.281-.563-.281-1.397c0-1.307.758-2.284 1.701-2.284.802 0 1.189.602 1.189 1.324 0 .806-.513 2.012-.778 3.131-.221.936.469 1.699 1.392 1.699 1.671 0 2.956-1.763 2.956-4.307 0-2.251-1.618-3.826-3.929-3.826-2.676 0-4.247 2.008-4.247 4.084 0 .809.312 1.677.701 2.149a.282.282 0 0 1 .065.27l-.261 1.072c-.042.173-.14.21-.324.127-1.208-.562-1.962-2.327-1.962-3.746 0-3.05 2.216-5.849 6.391-5.849 3.355 0 5.963 2.39 5.963 5.585 0 3.333-2.102 6.015-5.019 6.015-.98 0-1.902-.509-2.218-1.11l-.603 2.296c-.218.839-.808 1.89-1.204 2.531.906.28 1.864.431 2.858.431 6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+    </svg>
+  );
+}
+
 // ─── Animation Placeholder ────────────────────────────────────────────────────
 
 function HeroAnimation() {
@@ -765,7 +773,7 @@ function WhatImBuilding() {
   );
 }
 
-// ─── Vision Section ───────────────────────────────────────────────────────────
+// ─── Vision Section ────────────────────────────────��──────────────────────────
 
 function Vision() {
   const milestones = [
@@ -1136,8 +1144,7 @@ function Connect() {
     { label: "Instagram", icon: <IconInstagram />, href: "https://instagram.com/fr1.bet" },
     { label: "X", icon: <IconX />, href: "https://x.com/fr1bet" },
     { label: "Discord", icon: <IconDiscord />, href: "https://discord.gg/PUVN3A6XVN" },
-    { label: "Pinterest", href: "https://pinterest.com/fr1bet" },
-    { label: "Email", icon: <IconMail />, href: "mailto:hello@wesleyjaesch.com" },
+    { label: "Pinterest", icon: <IconPinterest />, href: "https://pinterest.com/fr1bet" },
   ];
 
   return (
@@ -1189,6 +1196,7 @@ function Connect() {
               href={link.href}
               target={link.href.startsWith("mailto") ? undefined : "_blank"}
               rel="noopener noreferrer"
+              className="social-box"
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -1275,6 +1283,7 @@ function Footer() {
             onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = "0.5"; }}
           />
         </a>
+        <a href="mailto:info@fr1bet.com" className="footer-email">info@fr1bet.com</a>
       </div>
       <span
         style={{
