@@ -1251,7 +1251,7 @@ function Footer() {
           </a>
         </span>
         <span style={{ width: "1px", height: "16px", background: "var(--surface-700)", display: "inline-block" }} />
-        <a href="https://fr1bet.com" target="_blank" rel="noopener noreferrer">
+        <a href="https://fr1bet.com" className="footer-logo-hover" target="_blank" rel="noopener noreferrer">
           <img src={fr1betLogo} alt="FR1BET" style={{ height: "22px", objectFit: "contain", opacity: 0.5, transition: "opacity 0.2s" }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = "1"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = "0.5"; }}

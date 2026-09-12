@@ -296,10 +296,38 @@ html {
 
 .footer-email {
   color: var(--neutral-500);
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 0.7rem;
+  letter-spacing: 0.08em;
   text-decoration: none;
-  transition: color 0.2s, transform 0.2s;
+  transition: color 0.2s ease;
+}
+
+.footer-logo-hover {
+  display: inline-block;
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+  will-change: transform;
+}
+
+.footer-logo-hover:hover,
+.footer-logo-hover:focus-visible {
+  position: relative;
+  z-index: 2;
+  transform: scale(2.2);
+  filter: drop-shadow(0 0 14px var(--red-glow));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-logo-hover {
+    transition: none;
+  }
+
+  .footer-logo-hover:hover,
+  .footer-logo-hover:focus-visible {
+    transform: scale(1.15);
+  }
 }
 
 .footer-email:hover,
