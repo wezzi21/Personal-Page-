@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState, ReactNode } from "react";
 import fr1betLogo from "./imports/red_white_logo.png";
 
-const qrCode = fr1betLogo;
-const heroBg = fr1betLogo;
+const qrCode = "/assets/social/qr-code.png";
+const heroBg = "/assets/social/Front%20page.png";
 const logoBg = fr1betLogo;
-const fr1Coin = fr1betLogo;
-const gridScreenshot = fr1betLogo;
-const poolScreenshot = fr1betLogo;
-const insightScreenshot = fr1betLogo;
-const racingDivisionsScreenshot = fr1betLogo;
+const fr1Coin = "/assets/social/ChatGPT%20Image%20Sep%203,%202026,%2005_04_04%20PM.png";
+const gridScreenshot = "/assets/social/ten%20cards.png";
+const poolScreenshot = "/assets/social/six%20tiers.png";
+const insightScreenshot = "/assets/social/sprint%20cards.png";
+const racingDivisionsScreenshot = "/assets/social/countdown.png";
 
 const RED = "#E5001A";
 
@@ -623,7 +623,7 @@ function Currencies() {
           </div>
           <Reveal delay={100}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
-              <img src={fr1Coin} alt="FR1 token" style={{ width: "clamp(200px,28vw,320px)", filter: "drop-shadow(0 20px 60px rgba(200,168,75,0.55))", display: "block" }} />
+              <img src={fr1Coin} alt="FR1 token" style={{ width: "clamp(200px,28vw,320px)", filter: "drop-shadow(0 20px 60px rgba(200,168,75,0.55)) drop-shadow(0 0 34px rgba(229,0,26,0.28))", display: "block" }} />
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
                 {[
                   { v: "200 FR1", l: "= 1 USDC" },
