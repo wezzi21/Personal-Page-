@@ -1034,7 +1034,7 @@ function BuiltOnAI() {
 
       <div className="relative z-10 px-6 md:px-12 max-w-5xl mx-auto">
         <Reveal className="mb-14">
-          <p className="section-label mb-3">Built on AI</p>
+          <p className="section-label mb-3">WRJ Page</p>
           <h2 className="hero-display" style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}>
             I Still Can't Write<br />a Line of Code.
           </h2>
@@ -1384,7 +1384,7 @@ function SocialsPage() {
   );
 }
 
-// ─── App ──────────────────────────────────────────────────────────────────────
+// ─── App ──────────────────────────���───────────────────────────────────────────
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
