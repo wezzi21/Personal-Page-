@@ -135,38 +135,46 @@ function IconPinterest() {
 // ─── Animation Placeholder ────────────────────────────────────────────────────
 
 function HeroAnimation() {
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const updateParallax = () => {
+      hero.style.setProperty("--hero-parallax-y", `${Math.min(window.scrollY * 0.18, 180)}px`);
+    };
+
+    updateParallax();
+    window.addEventListener("scroll", updateParallax, { passive: true });
+    return () => window.removeEventListener("scroll", updateParallax);
+  }, []);
+
   return (
     <div
+      ref={heroRef}
       className="hero-parallax relative w-full h-full overflow-hidden"
       style={{ background: "#0A0A0A" }}
     >
-      {/* Telemetry labels */}
-      <div className="absolute left-6" style={{ top: "76px", color: "rgba(255,255,255,0.35)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" }}>
-        SESSION: FOUNDER / FR1BET
-      </div>
+      <video
+        className="hero-parallax-video"
+        src="/assets/social/looping%20video%20mp4.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+      />
+      <div className="hero-parallax-shade" aria-hidden="true" />
       <div className="absolute right-6" style={{ top: "76px", color: "rgba(255,255,255,0.25)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase" }}>
         P1 &nbsp;|&nbsp; QUALIFYING
       </div>
 
-      {/* Bottom label */}
       <div className="absolute bottom-6 left-0 right-0 flex justify-center">
         <span style={{ color: "rgba(255,255,255,0.15)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase" }}>
           LOOP / FR1BET — LIVE HEADER MEDIA
         </span>
       </div>
-
-      {/* Silhouette / placeholder figure */}
-      <div
-        className="absolute"
-        style={{
-          left: "50%",
-          bottom: "22%",
-          transform: "translateX(-50%)",
-          width: "2px",
-          height: "48px",
-          background: "linear-gradient(to top, rgba(255,255,255,0.6), transparent)",
-        }}
-      />
     </div>
   );
 }
@@ -215,8 +223,10 @@ function Nav({ scrolled }: { scrolled: boolean }) {
         </a>
 
         {/* Desktop: presentation shortcut */}
-        <div className="hidden md:block">
-          <a href="/presentation" className="presentation-nav-link">Presentation</a>
+        <div className="presentation-nav-group hidden md:flex items-center">
+          <a href="/presentation" className="social-link">FR1BET PRESENTATION</a>
+          <span aria-hidden="true" className="presentation-nav-divider">/</span>
+          <a href="#" className="social-link" aria-label="Guide coming soon">Guide</a>
         </div>
 
         {/* Desktop links */}
@@ -316,7 +326,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
   );
 }
 
-// ─── Hero Section ─────────────────────────────────────────────────────────────
+// ─── Hero Section ──────────────────────────────────����──────────────────────────
 
 function Hero() {
   return (
