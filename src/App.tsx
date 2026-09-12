@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import fr1betLogo from "@/imports/red_white_logo.png";
 import generatedSocialPosts from "./social-posts.json";
+import PresentationPage from "./PresentationPage";
+import "./presentation.css";
 
 // ─── Scroll Reveal ────────────────────────────────────────────────────────────
 
@@ -26,6 +28,49 @@ function Reveal({ children, delay = 0, fade = false, className = "" }: { childre
       {children}
     </div>
   );
+}
+
+function ReactiveMesh() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mesh = ref.current;
+    if (!mesh || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let frame = 0;
+    let targetX = 50;
+    let targetY = 42;
+    let currentX = targetX;
+    let currentY = targetY;
+    let currentGlowX = targetX;
+    let currentGlowY = targetY;
+
+    const handlePointerMove = (event: PointerEvent) => {
+      targetX = (event.clientX / window.innerWidth) * 100;
+      targetY = (event.clientY / window.innerHeight) * 100;
+    };
+
+    const animate = () => {
+      currentX += (targetX - currentX) * 0.055;
+      currentY += (targetY - currentY) * 0.055;
+      currentGlowX += (currentX - currentGlowX) * 0.035;
+      currentGlowY += (currentY - currentGlowY) * 0.035;
+      mesh.style.setProperty("--mesh-x", `${currentX}%`);
+      mesh.style.setProperty("--mesh-y", `${currentY}%`);
+      mesh.style.setProperty("--mesh-trail-x", `${currentGlowX}%`);
+      mesh.style.setProperty("--mesh-trail-y", `${currentGlowY}%`);
+      frame = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    frame = requestAnimationFrame(animate);
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return <div ref={ref} className="reactive-mesh" aria-hidden="true" />;
 }
 
 // ─── SVG Icons ───────────────────────────────────────────────────────────────
@@ -93,103 +138,10 @@ function HeroAnimation() {
   return (
     <div
       className="hero-parallax relative w-full h-full overflow-hidden"
-      style={{ background: "linear-gradient(160deg, #0A0A0A 0%, #171717 50%, #0A0A0A 100%)" }}
+      style={{ background: "#0A0A0A" }}
     >
-      <video
-        className="hero-parallax-video"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster="/assets/social/background.jpg"
-        aria-hidden="true"
-      >
-        <source src="/assets/social/Video%20Project%202.mp4" type="video/mp4" />
-      </video>
-      <div
-        className="hero-parallax-photo"
-        aria-hidden="true"
-        style={{ backgroundImage: "url('/assets/social/background.jpg')" }}
-      />
-      <div className="hero-parallax-shade" aria-hidden="true" />
-
-      {/* Grid lines — race track metaphor */}
-      <div className="absolute inset-0 grid-overlay" />
-
-      {/* Perspective grid lines converging to horizon */}
-      <svg
-        className="absolute inset-0 w-full h-full"
-        viewBox="0 0 800 600"
-        preserveAspectRatio="xMidYMid slice"
-        style={{ opacity: 0.18 }}
-      >
-        {/* Converging lines from bottom to horizon */}
-        {[-3,-2,-1,0,1,2,3].map((i) => (
-          <line
-            key={i}
-            x1={400 + i * 280}
-            y1={600}
-            x2={400 + i * 20}
-            y2={220}
-            stroke="#FF1801"
-            strokeWidth="0.5"
-          />
-        ))}
-        {/* Horizontal traverse lines */}
-        {[0,1,2,3,4,5,6,7].map((i) => {
-          const y = 220 + i * 54;
-          const spread = i * 60;
-          return (
-            <line
-              key={i}
-              x1={400 - spread - 60}
-              y1={y}
-              x2={400 + spread + 60}
-              y2={y}
-              stroke="rgba(255,255,255,0.4)"
-              strokeWidth="0.4"
-            />
-          );
-        })}
-        {/* Starting grid boxes */}
-        {[0,1,2,3,4].map((i) => {
-          const y = 330 + i * 54;
-          const spread = (i + 1) * 60;
-          return (
-            <rect
-              key={i}
-              x={400 - spread / 2 - 15}
-              y={y + 4}
-              width={30}
-              height={16}
-              fill="none"
-              stroke="rgba(255,24,1,0.5)"
-              strokeWidth="0.4"
-            />
-          );
-        })}
-        {/* Pole position marker */}
-        <rect x="368" y="280" width="64" height="24" fill="none" stroke="#FF1801" strokeWidth="0.8" />
-        <line x1="400" y1="220" x2="400" y2="600" stroke="rgba(255,255,255,0.15)" strokeWidth="0.4" strokeDasharray="4 8" />
-      </svg>
-
-      {/* Red ambient glow at horizon */}
-      <div
-        className="absolute"
-        style={{
-          left: "50%",
-          top: "36%",
-          transform: "translate(-50%, -50%)",
-          width: "60%",
-          height: "200px",
-          background: "radial-gradient(ellipse at center, rgba(255,24,1,0.18) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
-
       {/* Telemetry labels */}
-      <div className="absolute left-6" style={{ top: "76px", color: "rgba(255,24,1,0.7)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" }}>
+      <div className="absolute left-6" style={{ top: "76px", color: "rgba(255,255,255,0.35)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" }}>
         SESSION: FOUNDER / FR1BET
       </div>
       <div className="absolute right-6" style={{ top: "76px", color: "rgba(255,255,255,0.25)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase" }}>
@@ -262,8 +214,10 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           WRJ<span style={{ color: "var(--red)", marginLeft: "2px" }}>.</span>
         </a>
 
-        {/* Desktop: empty left */}
-        <div className="hidden md:block" />
+        {/* Desktop: presentation shortcut */}
+        <div className="hidden md:block">
+          <a href="/presentation" className="presentation-nav-link">Presentation</a>
+        </div>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
@@ -271,7 +225,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
             <a key={l.label} href={l.href} className="social-link">{l.label}</a>
           ))}
           <a href="https://fr1bet.com" target="_blank" rel="noopener noreferrer" className="social-link">
-            <img src={fr1betLogo} alt="FR1BET" style={{ height: "20px", objectFit: "contain" }} />
+            <img className="fr1bet-logo-hover" src={fr1betLogo} alt="FR1BET" style={{ height: "20px", objectFit: "contain" }} />
           </a>
           <a
             href="#hero"
@@ -704,8 +658,9 @@ function WhatImBuilding() {
               What I'm Building
             </h2>
             <div style={{ paddingBottom: "0.5rem", flexShrink: 0 }}>
-              <a href="https://fr1bet.com" target="_blank" rel="noopener noreferrer">
+              <a className="fr1bet-idea-logo" href="https://fr1bet.com" target="_blank" rel="noopener noreferrer">
                 <img
+                  className="fr1bet-idea-logo-image"
                   src={fr1betLogo}
                   alt="FR1BET — F1 Pari-Mutuel Prediction Platform"
                   style={{ height: "clamp(36px, 5vw, 56px)", objectFit: "contain", opacity: 0.95 }}
@@ -794,7 +749,7 @@ function WhatImBuilding() {
   );
 }
 
-// ─── Vision Section ────────────────────────────────��──────────────────────────
+// ─── Vision Section ────────────────────────────────��───────────────────────���──
 
 function Vision() {
   const milestones = [
@@ -1300,7 +1255,7 @@ function Footer() {
           </a>
         </span>
         <span style={{ width: "1px", height: "16px", background: "var(--surface-700)", display: "inline-block" }} />
-        <a href="https://fr1bet.com" target="_blank" rel="noopener noreferrer">
+        <a href="https://fr1bet.com" className="footer-logo-hover" target="_blank" rel="noopener noreferrer">
           <img src={fr1betLogo} alt="FR1BET" style={{ height: "22px", objectFit: "contain", opacity: 0.5, transition: "opacity 0.2s" }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = "1"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = "0.5"; }}
@@ -1349,7 +1304,8 @@ const socialPosts = generatedSocialPosts as SocialPost[];
 
 function SocialsPage() {
   return (
-    <div className="socials-page" style={{ background: "var(--black)", minHeight: "100vh" }}>
+    <div className="socials-page page-with-mesh" style={{ background: "var(--black)", minHeight: "100vh" }}>
+      <ReactiveMesh />
       <header className="socials-header">
         <a href="/" className="wordmark">WRJ<span>.</span></a>
         <a href="/" className="socials-back">Back to profile</a>
@@ -1361,7 +1317,7 @@ function SocialsPage() {
           <h1 className="hero-display">Socials</h1>
           <span className="rule-red" />
           <p className="socials-lede">
-            A working library for the photos, videos, and captions behind the next post. Add a picture or video to <code>public/assets/social/</code>; GitHub Actions will create a simple caption and publish it here automatically.
+            A working library for the photos, videos, and captions behind the next post.
           </p>
         </div>
 
@@ -1380,15 +1336,21 @@ function SocialsPage() {
           </section>
         ) : (
           <section className="socials-grid" aria-label="Social posts">
-            {socialPosts.map((post) => (
-              <article className="social-card" key={post.asset}>
-                <div className="social-card-media">
-                  {post.type === "video" ? (
-                    <video src={post.asset} controls preload="metadata" aria-label={post.title} />
-                  ) : (
-                    <img src={post.asset} alt={post.title} />
-                  )}
-                </div>
+          {socialPosts.map((post, index) => (
+            <article className="social-card" key={post.asset}>
+              <div className="social-card-media">
+                {post.type === "video" ? (
+                  <video src={post.asset} controls preload="metadata" aria-label={post.title} />
+                ) : (
+                  <img
+                    src={post.asset}
+                    alt={post.title}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                    fetchPriority={index === 0 ? "high" : "low"}
+                  />
+                )}
+              </div>
                 <div className="social-card-copy">
                   <p className="section-label">{post.type} / {post.platforms.join(" · ")}</p>
                   <h2>{post.title}</h2>
@@ -1408,7 +1370,9 @@ function SocialsPage() {
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
-  const isSocialsPage = window.location.pathname === "/socials";
+  const path = window.location.pathname;
+  const isSocialsPage = path === "/socials";
+  const isPresentationPage = path === "/presentation";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -1417,9 +1381,11 @@ export default function App() {
   }, []);
 
   if (isSocialsPage) return <SocialsPage />;
+  if (isPresentationPage) return <PresentationPage />;
 
   return (
-    <div style={{ background: "var(--black)", minHeight: "100%" }}>
+    <div className="page-with-mesh" style={{ background: "var(--black)", minHeight: "100%" }}>
+      <ReactiveMesh />
       <Nav scrolled={scrolled} />
       <Hero />
       <Story />
