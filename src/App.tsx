@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { lazy, Suspense, useState, useEffect, useRef } from "react";
 import fr1betLogo from "@/imports/red_white_logo.png";
 import generatedSocialPosts from "./social-posts.json";
-import PresentationPage from "./PresentationPage";
-import "./presentation.css";
+
+const PresentationPage = lazy(() => import("./PresentationPage"));
 
 // ─── Scroll Reveal ────────────────────────────────────────────────────────────
 
@@ -156,15 +156,23 @@ function HeroAnimation() {
 
   useEffect(() => {
     const hero = heroRef.current;
-    if (!hero) return;
+    if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    let frame = 0;
     const updateParallax = () => {
       hero.style.setProperty("--hero-parallax-y", `${Math.min(window.scrollY * 0.18, 180)}px`);
+      frame = 0;
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(updateParallax);
     };
 
     updateParallax();
-    window.addEventListener("scroll", updateParallax, { passive: true });
-    return () => window.removeEventListener("scroll", updateParallax);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
@@ -177,10 +185,12 @@ function HeroAnimation() {
         ref={videoRef}
         className="hero-parallax-video"
         src="/assets/social/looping%20video%20mp4.mp4"
+        poster="/assets/social/Front%20page.png"
         autoPlay
         muted
         loop
         playsInline
+        preload="none"
         onTimeUpdate={handleVideoTimeUpdate}
         aria-hidden="true"
       />
@@ -1400,7 +1410,7 @@ function SocialsPage() {
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
-  const path = window.location.pathname;
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
   const isSocialsPage = path === "/socials";
   const isPresentationPage = path === "/presentation";
 
@@ -1411,7 +1421,13 @@ export default function App() {
   }, []);
 
   if (isSocialsPage) return <SocialsPage />;
-  if (isPresentationPage) return <PresentationPage />;
+  if (isPresentationPage) {
+    return (
+      <Suspense fallback={<div className="route-loading" role="status">Loading presentation…</div>}>
+        <PresentationPage />
+      </Suspense>
+    );
+  }
 
   return (
     <div className="page-with-mesh" style={{ background: "var(--black)", minHeight: "100%" }}>
