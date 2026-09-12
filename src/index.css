@@ -195,6 +195,19 @@ html {
 }
 
 /* Social icon link */
+.presentation-nav-group {
+  gap: 1.5rem;
+}
+
+.presentation-nav-divider {
+  color: var(--neutral-500);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1;
+}
+
 .social-link {
 
   display: flex;
