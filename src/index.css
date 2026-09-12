@@ -213,6 +213,31 @@ html {
   color: var(--white);
 }
 
+.fr1bet-idea-logo {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
+
+.fr1bet-idea-logo-image {
+  display: block;
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+  will-change: transform;
+}
+
+.fr1bet-idea-logo:hover,
+.fr1bet-idea-logo:focus-visible {
+  z-index: 2;
+}
+
+.fr1bet-idea-logo:hover .fr1bet-idea-logo-image,
+.fr1bet-idea-logo:focus-visible .fr1bet-idea-logo-image {
+  transform: scale(2.5);
+  filter: drop-shadow(0 0 16px var(--red-glow));
+}
+
 .fr1bet-logo-hover {
   display: block;
   transform: scale(1);

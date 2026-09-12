@@ -654,8 +654,9 @@ function WhatImBuilding() {
               What I'm Building
             </h2>
             <div style={{ paddingBottom: "0.5rem", flexShrink: 0 }}>
-              <a href="https://fr1bet.com" target="_blank" rel="noopener noreferrer">
+              <a className="fr1bet-idea-logo" href="https://fr1bet.com" target="_blank" rel="noopener noreferrer">
                 <img
+                  className="fr1bet-idea-logo-image"
                   src={fr1betLogo}
                   alt="FR1BET — F1 Pari-Mutuel Prediction Platform"
                   style={{ height: "clamp(36px, 5vw, 56px)", objectFit: "contain", opacity: 0.95 }}
