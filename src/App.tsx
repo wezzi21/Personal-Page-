@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import fr1betLogo from "@/imports/red_white_logo.png";
+import generatedSocialPosts from "./social-posts.json";
 
 // ─── Scroll Reveal ────────────────────────────────────────────────────────────
 
@@ -91,9 +92,16 @@ function IconPinterest() {
 function HeroAnimation() {
   return (
     <div
-      className="relative w-full h-full overflow-hidden"
+      className="hero-parallax relative w-full h-full overflow-hidden"
       style={{ background: "linear-gradient(160deg, #0A0A0A 0%, #171717 50%, #0A0A0A 100%)" }}
     >
+      <div
+        className="hero-parallax-photo"
+        aria-hidden="true"
+        style={{ backgroundImage: "url('/assets/social/background.jpg')" }}
+      />
+      <div className="hero-parallax-shade" aria-hidden="true" />
+
       {/* Grid lines — race track metaphor */}
       <div className="absolute inset-0 grid-overlay" />
 
@@ -255,6 +263,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           </a>
           <a
             href="#hero"
+            className="wordmark-zoom"
             style={{
               fontFamily: "Inter",
               fontWeight: 900,
@@ -397,7 +406,7 @@ function Hero() {
         </div>
 
         {/* Social links */}
-        <div className="flex flex-wrap gap-4 md:gap-6">
+        <div className="home-social-links flex flex-col items-start gap-4 md:items-end md:gap-5">
           <a href="https://www.linkedin.com/in/wrjaesch" target="_blank" rel="noopener noreferrer" className="social-link">
             <IconLinkedIn /> LinkedIn
           </a>
@@ -414,7 +423,7 @@ function Hero() {
             <IconDiscord /> Discord
           </a>
           <a href="https://pinterest.com/fr1bet" target="_blank" rel="noopener noreferrer" className="social-link">
-            Pinterest
+            <IconPinterest /> Pinterest
           </a>
         </div>
       </div>
@@ -1033,7 +1042,7 @@ function BuiltOnAI() {
 
       <div className="relative z-10 px-6 md:px-12 max-w-5xl mx-auto">
         <Reveal className="mb-14">
-          <p className="section-label mb-3">Built on AI</p>
+          <p className="section-label mb-3">WRJ Page</p>
           <h2 className="hero-display" style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}>
             I Still Can't Write<br />a Line of Code.
           </h2>
@@ -1274,7 +1283,9 @@ function Footer() {
             color: "var(--neutral-500)",
           }}
         >
-          WRJ<span style={{ color: "var(--red)" }}>.</span>
+          <a href="#hero" className="wordmark-zoom" style={{ color: "inherit", textDecoration: "none" }}>
+            WRJ<span style={{ color: "var(--red)" }}>.</span>
+          </a>
         </span>
         <span style={{ width: "1px", height: "16px", background: "var(--surface-700)", display: "inline-block" }} />
         <a href="https://fr1bet.com" target="_blank" rel="noopener noreferrer">
@@ -1322,7 +1333,7 @@ type SocialPost = {
   platforms: string[];
 };
 
-const socialPosts: SocialPost[] = [];
+const socialPosts = generatedSocialPosts as SocialPost[];
 
 function SocialsPage() {
   return (
@@ -1338,7 +1349,7 @@ function SocialsPage() {
           <h1 className="hero-display">Socials</h1>
           <span className="rule-red" />
           <p className="socials-lede">
-            A working library for the photos, videos, and captions behind the next post. Add an asset to <code>public/assets/social/</code>, then add its caption to the post list in this page.
+            A working library for the photos, videos, and captions behind the next post. Add a picture or video to <code>public/assets/social/</code>; GitHub Actions will create a simple caption and publish it here automatically.
           </p>
         </div>
 
@@ -1348,7 +1359,7 @@ function SocialsPage() {
             <p className="section-label">Ready for the first drop</p>
             <h2 id="socials-empty-title">No posts yet.</h2>
             <p>
-              Upload your media to <code>public/assets/social/</code>. Each file becomes available at <code>/assets/social/filename</code>, ready to share with your AI posting workflow.
+              Upload a picture or video to <code>public/assets/social/</code>. The GitHub Action creates its caption automatically, then the new post appears here after the site rebuilds.
             </p>
             <div className="socials-file-note">
               <span>Recommended format</span>
@@ -1381,7 +1392,7 @@ function SocialsPage() {
   );
 }
 
-// ─── App ──────────────────────────────────────────────────────────────────────
+// ─── App ──────────────────────────�����───────────────────────────────────────────
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);

@@ -1,0 +1,97 @@
+name: Generate social captions
+
+# Paused for development uploads. Run manually when caption generation is needed.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-captions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Generate post manifest with GitHub Models
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<'PY'
+          import base64
+          import json
+          import mimetypes
+          import os
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+
+          media_dir = Path("public/assets/social")
+          manifest_path = media_dir / "posts.json"
+          image_extensions = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
+          video_extensions = {".mp4", ".webm", ".mov", ".m4v"}
+          previous = {}
+          if manifest_path.exists():
+              previous = {item["asset"]: item for item in json.loads(manifest_path.read_text())}
+
+          posts = []
+          for path in sorted(media_dir.iterdir()):
+              if not path.is_file() or path.name == "posts.json":
+                  continue
+              suffix = path.suffix.lower()
+              if suffix not in image_extensions | video_extensions:
+                  continue
+
+              asset = f"/assets/social/{path.name}"
+              kind = "video" if suffix in video_extensions else "image"
+              old = previous.get(asset)
+              if old:
+                  posts.append(old)
+                  continue
+
+              caption = f"A new {kind} from WRJ."
+              if kind == "image":
+                  content_type = mimetypes.guess_type(path.name)[0] or "image/jpeg"
+                  encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+                  body = json.dumps({
+                      "model": "openai/gpt-4o-mini",
+                      "messages": [{
+                          "role": "user",
+                          "content": [
+                              {"type": "text", "text": "Write one short, easy social media caption for this image. Use plain language, no quotes, no hashtags, and keep it under 100 characters."},
+                              {"type": "image_url", "image_url": {"url": f"data:{content_type};base64,{encoded}"}},
+                          ],
+                      }],
+                      "max_tokens": 40,
+                  }).encode()
+                  request = Request("https://models.github.ai/inference/chat/completions", data=body, headers={
+                      "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
+                      "Content-Type": "application/json",
+                  })
+                  try:
+                      with urlopen(request) as response:
+                          result = json.loads(response.read())
+                      caption = result["choices"][0]["message"]["content"].strip()
+                  except Exception as error:
+                      print(f"Caption fallback for {path.name}: {error}")
+
+              posts.append({
+                  "title": path.stem.replace("-", " ").replace("_", " ").title(),
+                  "caption": caption,
+                  "asset": asset,
+                  "type": kind,
+                  "platforms": ["Instagram", "X", "Pinterest"],
+              })
+
+          manifest_text = json.dumps(posts, indent=2) + "\n"
+          manifest_path.write_text(manifest_text)
+          Path("src/social-posts.json").write_text(manifest_text)
+          PY
+
+      - name: Commit generated captions
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/assets/social/posts.json src/social-posts.json
+          git diff --cached --quiet || git commit -m "Generate social media captions"
+          git push
