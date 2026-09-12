@@ -201,6 +201,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
     { label: "Vision", href: "#vision" },
     { label: "About", href: "#about" },
     { label: "AI", href: "#built-on-ai" },
+    { label: "Socials", href: "/socials" },
   ];
 
   return (
@@ -1298,16 +1299,88 @@ function Footer() {
   );
 }
 
+// ─── Socials Page ──────────────────────────────────────────────────────────────
+
+type SocialPost = {
+  title: string;
+  caption: string;
+  asset: string;
+  type: "image" | "video";
+  platforms: string[];
+};
+
+const socialPosts: SocialPost[] = [];
+
+function SocialsPage() {
+  return (
+    <div className="socials-page" style={{ background: "var(--black)", minHeight: "100vh" }}>
+      <header className="socials-header">
+        <a href="/" className="wordmark">WRJ<span>.</span></a>
+        <a href="/" className="socials-back">Back to profile</a>
+      </header>
+
+      <main className="socials-main">
+        <div className="socials-intro">
+          <p className="section-label">Content library</p>
+          <h1 className="hero-display">Socials</h1>
+          <span className="rule-red" />
+          <p className="socials-lede">
+            A working library for the photos, videos, and captions behind the next post. Add an asset to <code>public/assets/social/</code>, then add its caption to the post list in this page.
+          </p>
+        </div>
+
+        {socialPosts.length === 0 ? (
+          <section className="socials-empty" aria-labelledby="socials-empty-title">
+            <div className="socials-empty-mark">+</div>
+            <p className="section-label">Ready for the first drop</p>
+            <h2 id="socials-empty-title">No posts yet.</h2>
+            <p>
+              Upload your media to <code>public/assets/social/</code>. Each file becomes available at <code>/assets/social/filename</code>, ready to share with your AI posting workflow.
+            </p>
+            <div className="socials-file-note">
+              <span>Recommended format</span>
+              <strong>image · video · caption</strong>
+            </div>
+          </section>
+        ) : (
+          <section className="socials-grid" aria-label="Social posts">
+            {socialPosts.map((post) => (
+              <article className="social-card" key={post.asset}>
+                <div className="social-card-media">
+                  {post.type === "video" ? (
+                    <video src={post.asset} controls preload="metadata" aria-label={post.title} />
+                  ) : (
+                    <img src={post.asset} alt={post.title} />
+                  )}
+                </div>
+                <div className="social-card-copy">
+                  <p className="section-label">{post.type} / {post.platforms.join(" · ")}</p>
+                  <h2>{post.title}</h2>
+                  <p>{post.caption}</p>
+                </div>
+              </article>
+            ))}
+          </section>
+        )}
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
 // ─── App ──────────────────────────────────────────────────────────────────────
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
+  const isSocialsPage = window.location.pathname === "/socials";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (isSocialsPage) return <SocialsPage />;
 
   return (
     <div style={{ background: "var(--black)", minHeight: "100%" }}>
