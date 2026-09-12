@@ -95,66 +95,6 @@ function HeroAnimation() {
       className="hero-parallax relative w-full h-full overflow-hidden"
       style={{ background: "#0A0A0A" }}
     >
-      {/* Grid lines — race track metaphor */}
-      <div className="absolute inset-0 grid-overlay" />
-
-      {/* Perspective grid lines converging to horizon */}
-      <svg
-        className="absolute inset-0 w-full h-full"
-        viewBox="0 0 800 600"
-        preserveAspectRatio="xMidYMid slice"
-        style={{ opacity: 0.18 }}
-      >
-        {/* Converging lines from bottom to horizon */}
-        {[-3,-2,-1,0,1,2,3].map((i) => (
-          <line
-            key={i}
-            x1={400 + i * 280}
-            y1={600}
-            x2={400 + i * 20}
-            y2={220}
-            stroke="rgba(255,255,255,0.18)"
-            strokeWidth="0.5"
-          />
-        ))}
-        {/* Horizontal traverse lines */}
-        {[0,1,2,3,4,5,6,7].map((i) => {
-          const y = 220 + i * 54;
-          const spread = i * 60;
-          return (
-            <line
-              key={i}
-              x1={400 - spread - 60}
-              y1={y}
-              x2={400 + spread + 60}
-              y2={y}
-              stroke="rgba(255,255,255,0.4)"
-              strokeWidth="0.4"
-            />
-          );
-        })}
-        {/* Starting grid boxes */}
-        {[0,1,2,3,4].map((i) => {
-          const y = 330 + i * 54;
-          const spread = (i + 1) * 60;
-          return (
-            <rect
-              key={i}
-              x={400 - spread / 2 - 15}
-              y={y + 4}
-              width={30}
-              height={16}
-              fill="none"
-              stroke="rgba(255,255,255,0.18)"
-              strokeWidth="0.4"
-            />
-          );
-        })}
-        {/* Pole position marker */}
-        <rect x="368" y="280" width="64" height="24" fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth="0.8" />
-        <line x1="400" y1="220" x2="400" y2="600" stroke="rgba(255,255,255,0.15)" strokeWidth="0.4" strokeDasharray="4 8" />
-      </svg>
-
       {/* Telemetry labels */}
       <div className="absolute left-6" style={{ top: "76px", color: "rgba(255,255,255,0.35)", fontFamily: "Inter", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" }}>
         SESSION: FOUNDER / FR1BET
