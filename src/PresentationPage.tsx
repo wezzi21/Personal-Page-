@@ -330,7 +330,7 @@ function PoolsExplained() {
             </Reveal>
           </div>
           <Reveal delay={100}>
-            <img className="presentation-content-image cinematic-image" src={insightScreenshot} alt="FR1BET pool view" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block" }} />
+            <img className="presentation-content-image cinematic-image" src={insightScreenshot} alt="FR1BET pool view" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 8, objectFit: "contain", boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", fontSize: "14px" }} />
           </Reveal>
         </div>
       </div>
@@ -773,7 +773,7 @@ export default function App() {
   }, []);
 
   return (
-    <div style={{ background: "#080808" }}>
+    <div className="presentation-page">
       <ScrollProgress />
       <Hero />
       <HowItWorks />
