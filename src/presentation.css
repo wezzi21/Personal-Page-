@@ -27,7 +27,7 @@ body,
 .presentation-page {
   width: calc(100% - 48px);
   max-width: 1600px;
-  margin: 0 auto;
+  margin: 24px auto;
   overflow: hidden;
   background: #080808;
   border-inline: 1px solid rgba(255, 255, 255, 0.08);
@@ -78,9 +78,9 @@ body,
   display: block;
 }
 
-.presentation-insight-image {
-  width: min(100%, 440px) !important;
-  margin-left: auto;
+.presentation-grid-image {
+  width: min(100%, 880px) !important;
+  margin-inline: auto;
 }
 
 .cinematic-image {
