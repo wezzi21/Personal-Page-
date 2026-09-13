@@ -15,7 +15,7 @@ body,
 }
 
 /* ── Responsive layout ── */
-.sp { max-width: 1320px; margin: 0 auto; padding: 88px clamp(28px, 5vw, 72px) 72px; }
+.sp { width: calc(100% - 48px); max-width: 1320px; margin: 0 auto; padding: 88px clamp(28px, 5vw, 72px) 72px; box-sizing: border-box; }
 .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
 .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
 .g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
