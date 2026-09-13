@@ -438,6 +438,10 @@ html {
   min-height: 65vh;
 }
 
+.hero-copy-overlay {
+  transform: translateY(19px);
+}
+
 .hero-support-content {
   margin-top: 19px;
   background: linear-gradient(to bottom, rgba(10, 10, 10, 0.86), var(--black) 24%);

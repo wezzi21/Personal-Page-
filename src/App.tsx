@@ -345,7 +345,7 @@ function Hero() {
       <div className="hero-headline-content relative z-10 w-full" style={{ minHeight: "65vh" }}>
         {/* Hero copy overlay — bottom of animation */}
         <div
-          className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-10"
+          className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-10 hero-copy-overlay"
           style={{
             background: "linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.7) 60%, transparent 100%)",
           }}
@@ -379,7 +379,7 @@ function Hero() {
               <span>The Story</span>
             </a>
             <a href="https://fr1bet.com" target="_blank" rel="noopener noreferrer" className="cta-ghost" style={{ padding: "8px 14px" }}>
-              <img src={fr1betLogo} alt="FR1BET" style={{ height: "28px", objectFit: "contain" }} />
+              <img src={fr1betLogo} alt="FR1BET" width="140" height="28" loading="eager" decoding="async" fetchPriority="high" style={{ height: "28px", width: "140px", objectFit: "contain" }} />
             </a>
           </div>
           </Reveal>
