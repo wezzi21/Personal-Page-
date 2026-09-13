@@ -330,7 +330,7 @@ function PoolsExplained() {
             </Reveal>
           </div>
           <Reveal delay={100}>
-            <img className="presentation-content-image cinematic-image" src={insightScreenshot} alt="FR1BET pool view" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 8, objectFit: "contain", boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", fontSize: "14px" }} />
+            <img className="presentation-content-image cinematic-image presentation-insight-image" src={insightScreenshot} alt="FR1BET pool view" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 8, objectFit: "contain", boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", fontSize: "14px" }} />
           </Reveal>
         </div>
       </div>
@@ -339,14 +339,6 @@ function PoolsExplained() {
 }
 
 function StakeTiers() {
-  const tiers = [
-    { name: "ROOKIE",   pts: "1",   bg: "linear-gradient(135deg,#1c1c1e,#2a2a2e)", accent: "#888",    icon: "⊙" },
-    { name: "AMATEUR",  pts: "5",   bg: "linear-gradient(135deg,#0d1b2e,#1a3050)", accent: "#4A9EFF", icon: "⚡" },
-    { name: "PRO",      pts: "10",  bg: "linear-gradient(135deg,#1e1a00,#3a3000)", accent: "#F5C400", icon: "♛" },
-    { name: "EXPERT",   pts: "25",  bg: "linear-gradient(135deg,#2a1200,#4a2200)", accent: "#FF7A00", icon: "◈" },
-    { name: "ELITE",    pts: "50",  bg: "linear-gradient(135deg,#1a0a2e,#2e1050)", accent: "#A855F7", icon: "✦" },
-    { name: "LEGEND",   pts: "100", bg: "linear-gradient(135deg,#2a0008,#4a0010)", accent: RED,       icon: "🏆" },
-  ];
   return (
     <Slide id="tiers">
       <div className="sp">
@@ -371,25 +363,6 @@ function StakeTiers() {
           <img className="presentation-content-image cinematic-image" src={poolScreenshot} alt="Select stake — active racing divisions" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 24px 64px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
         </Reveal>
 
-        <div className="g3" style={{ gap: 10 }}>
-          {tiers.map((t, i) => (
-            <Reveal key={t.name} delay={260 + i * 50}>
-              <div style={{ background: t.bg, borderRadius: 12, padding: "18px 18px 16px", border: `1px solid ${t.accent}22`, display: "flex", flexDirection: "column", gap: 12 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <div style={{ width: 34, height: 34, borderRadius: 8, background: `${t.accent}22`, border: `1px solid ${t.accent}44`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, color: t.accent, flexShrink: 0 }}>{t.icon}</div>
-                  <div>
-                    <div style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontSize: 13, color: t.accent, letterSpacing: 1 }}>{t.name}</div>
-                    <div style={{ fontFamily: "'Barlow',sans-serif", fontSize: 10, color: "#666", letterSpacing: 1 }}>Stake per card</div>
-                  </div>
-                </div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 5 }}>
-                  <span style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 900, fontStyle: "italic", fontSize: 34, color: "#fff", lineHeight: 1 }}>{t.pts}</span>
-                  <span style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontSize: 13, color: t.accent }}>PTS</span>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
       </div>
     </Slide>
   );
