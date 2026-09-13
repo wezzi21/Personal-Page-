@@ -78,7 +78,7 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
     return () => obs.disconnect();
   }, [delay]);
   return (
-    <div ref={ref} className={className} style={{ opacity: 0, transform: "translateY(48px)", willChange: "opacity, transform" }}>
+    <div ref={ref} className={`presentation-reveal ${className}`} style={{ opacity: 0, transform: "translate3d(0, 34px, 0) scale(0.985)", willChange: "opacity, transform" }}>
       {children}
     </div>
   );
@@ -137,7 +137,7 @@ function Divider() {
 
 function Card({ children, highlight = false, style }: { children: ReactNode; highlight?: boolean; style?: React.CSSProperties }) {
   return (
-    <div style={{ background: highlight ? "rgba(229,0,26,0.10)" : "rgba(255,255,255,0.04)", border: `1px solid ${highlight ? "rgba(229,0,26,0.3)" : "rgba(255,255,255,0.08)"}`, borderRadius: 8, padding: "22px 26px", ...style }}>
+    <div className="presentation-card" style={{ background: highlight ? "rgba(229,0,26,0.10)" : "rgba(255,255,255,0.04)", border: `1px solid ${highlight ? "rgba(229,0,26,0.3)" : "rgba(255,255,255,0.08)"}`, borderRadius: 8, padding: "22px 26px", ...style }}>
       {children}
     </div>
   );
@@ -268,7 +268,7 @@ function HowItWorks() {
 
         {/* Screenshot full-width */}
         <Reveal delay={160}>
-          <img src={gridScreenshot} alt="FR1BET prediction grid — 10 cards per race weekend" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
+          <img className="presentation-content-image cinematic-image" src={gridScreenshot} alt="FR1BET prediction grid — 10 cards per race weekend" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
         </Reveal>
 
         <div className="g3">
@@ -330,7 +330,7 @@ function PoolsExplained() {
             </Reveal>
           </div>
           <Reveal delay={100}>
-            <img src={insightScreenshot} alt="FR1BET pool view" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block" }} />
+            <img className="presentation-content-image cinematic-image" src={insightScreenshot} alt="FR1BET pool view" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block" }} />
           </Reveal>
         </div>
       </div>
@@ -368,7 +368,7 @@ function StakeTiers() {
         </div>
 
         <Reveal delay={160}>
-          <img src={poolScreenshot} alt="Select stake — active racing divisions" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 24px 64px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
+          <img className="presentation-content-image cinematic-image" src={poolScreenshot} alt="Select stake — active racing divisions" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 24px 64px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
         </Reveal>
 
         <div className="g3" style={{ gap: 10 }}>
@@ -746,6 +746,32 @@ function GetStarted() {
 
 /* ─── Root ─── */
 export default function App() {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let frame = 0;
+    const updateImageParallax = () => {
+      document.querySelectorAll<HTMLElement>(".cinematic-image").forEach((image) => {
+        const rect = image.getBoundingClientRect();
+        const distance = (window.innerHeight * 0.5 - (rect.top + rect.height * 0.5)) * 0.055;
+        image.style.setProperty("--image-parallax-y", `${Math.max(-22, Math.min(22, distance))}px`);
+      });
+      frame = 0;
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(updateImageParallax);
+    };
+
+    updateImageParallax();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <div style={{ background: "#080808" }}>
       <ScrollProgress />
