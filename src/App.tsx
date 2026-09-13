@@ -154,7 +154,7 @@ function HeroAnimation() {
     <div
       ref={heroRef}
       className="hero-parallax relative w-full h-full overflow-hidden"
-      style={{ background: "#0A0A0A" }}
+      style={{ background: "transparent" }}
     >
       <video
         className="hero-parallax-video"
@@ -326,7 +326,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
   );
 }
 
-// ─── Hero Section ──────────────────────────────────����───────────��──────────────
+// ─── Hero Section ──────────────────────────────────����───────────���──────────────
 
 function Hero() {
   return (
