@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState, ReactNode } from "react";
 import fr1betLogo from "./imports/red_white_logo.png";
 
-const qrCode = "/assets/social/qr-code.png";
-const heroBg = "/assets/social/Front%20page.png";
+const qrCode = fr1betLogo;
+const heroBg = fr1betLogo;
 const logoBg = fr1betLogo;
-const fr1Coin = "/assets/social/ChatGPT%20Image%20Sep%203,%202026,%2005_04_04%20PM.png";
-const gridScreenshot = "/assets/social/ten%20cards.png";
-const poolScreenshot = "/assets/social/six%20tiers.png";
-const insightScreenshot = "/assets/social/race%20divisions.png";
-const racingDivisionsScreenshot = "/assets/social/countdown.png";
-const sprintCardsScreenshot = "/assets/social/sprint%20cards.png";
+const fr1Coin = fr1betLogo;
+const gridScreenshot = fr1betLogo;
+const poolScreenshot = fr1betLogo;
+const insightScreenshot = fr1betLogo;
+const racingDivisionsScreenshot = fr1betLogo;
 
 const RED = "#E5001A";
 
@@ -78,7 +77,7 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
     return () => obs.disconnect();
   }, [delay]);
   return (
-    <div ref={ref} className={`presentation-reveal ${className}`} style={{ opacity: 0, transform: "translate3d(0, 34px, 0) scale(0.985)", willChange: "opacity, transform" }}>
+    <div ref={ref} className={className} style={{ opacity: 0, transform: "translateY(48px)", willChange: "opacity, transform" }}>
       {children}
     </div>
   );
@@ -137,7 +136,7 @@ function Divider() {
 
 function Card({ children, highlight = false, style }: { children: ReactNode; highlight?: boolean; style?: React.CSSProperties }) {
   return (
-    <div className="presentation-card" style={{ background: highlight ? "rgba(229,0,26,0.10)" : "rgba(255,255,255,0.04)", border: `1px solid ${highlight ? "rgba(229,0,26,0.3)" : "rgba(255,255,255,0.08)"}`, borderRadius: 8, padding: "22px 26px", ...style }}>
+    <div style={{ background: highlight ? "rgba(229,0,26,0.10)" : "rgba(255,255,255,0.04)", border: `1px solid ${highlight ? "rgba(229,0,26,0.3)" : "rgba(255,255,255,0.08)"}`, borderRadius: 8, padding: "22px 26px", ...style }}>
       {children}
     </div>
   );
@@ -172,42 +171,21 @@ function Pill({ children, active }: { children: ReactNode; active?: boolean }) {
 /* ─── Slides ─── */
 
 function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const hero = heroRef.current;
-    if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    let frame = 0;
-    const updateParallax = () => {
-      const offset = Math.min(window.scrollY * 0.16, 140);
-      hero.style.setProperty("--presentation-parallax-y", `${offset}px`);
-      frame = 0;
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(updateParallax);
-    };
-
-    updateParallax();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, []);
-
   return (
     <Slide id="hero" noLogo>
-      <div ref={heroRef} className="presentation-hero-background" aria-hidden="true" />
+      <div style={{ backgroundImage: `url(${heroBg})`, backgroundSize: "cover", backgroundPosition: "center 30%", position: "absolute", inset: 0, opacity: 0.32 }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(8,8,8,0.05) 0%, rgba(8,8,8,0.5) 50%, #080808 100%)" }} />
 
       {/* Nav */}
       <nav style={{ position: "relative", zIndex: 10, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 32px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span className="presentation-brand">FR1BET PRESENTATION</span>
+          <div style={{ width: 32, height: 32, background: RED, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Barlow',sans-serif", fontWeight: 900, fontSize: 16, color: "#fff" }}>F</div>
+          <span style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontSize: 15, color: "#fff", letterSpacing: 2 }}>FR1BET</span>
         </div>
-        <div className="mob-hide" style={{ display: "flex", alignItems: "center" }}>
-          <a href="/" className="presentation-back-link">BACK TO MAIN PAGE</a>
+        <div className="mob-hide" style={{ display: "flex", alignItems: "center", gap: 24 }}>
+          {[["How it works", "#how"], ["Tiers", "#tiers"], ["Pit Pass", "#pitpass"], ["Play now", "#cta"]].map(([l, href]) => (
+            <a key={l} href={href} style={{ fontFamily: "'Barlow',sans-serif", fontSize: 13, color: l === "Play now" ? "#fff" : "#aaa", textDecoration: "none", ...(l === "Play now" ? { background: RED, padding: "8px 18px", borderRadius: 6, fontWeight: 700, letterSpacing: 1 } : {}) }}>{l}</a>
+          ))}
         </div>
       </nav>
 
@@ -236,10 +214,10 @@ function Hero() {
         </Reveal>
         <Reveal delay={320}>
           <div style={{ display: "flex", gap: 14, marginTop: 32, flexWrap: "wrap" }}>
-            <a href="https://fr1bet.com" target="_blank" rel="noreferrer" className="presentation-hero-action presentation-hero-action-primary" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: RED, color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 16, letterSpacing: 1.5, padding: "14px 28px", borderRadius: 6, textDecoration: "none", boxShadow: `0 8px 32px rgba(229,0,26,0.45)` }}>
+            <a href="https://fr1bet.com" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: RED, color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 16, letterSpacing: 1.5, padding: "14px 28px", borderRadius: 6, textDecoration: "none", boxShadow: `0 8px 32px rgba(229,0,26,0.45)` }}>
               ENTER THE GRID ›
             </a>
-            <a href="#how" className="presentation-hero-action presentation-hero-action-secondary" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", border: "1px solid rgba(255,255,255,0.18)", color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontStyle: "italic", fontSize: 15, letterSpacing: 1, padding: "14px 24px", borderRadius: 6, textDecoration: "none" }}>
+            <a href="#how" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", border: "1px solid rgba(255,255,255,0.18)", color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontStyle: "italic", fontSize: 15, letterSpacing: 1, padding: "14px 24px", borderRadius: 6, textDecoration: "none" }}>
               HOW IT WORKS
             </a>
           </div>
@@ -268,7 +246,7 @@ function HowItWorks() {
 
         {/* Screenshot full-width */}
         <Reveal delay={160}>
-          <img className="presentation-content-image cinematic-image presentation-grid-image" src={gridScreenshot} alt="FR1BET prediction grid — 10 cards per race weekend" loading="lazy" decoding="async" width="960" height="540" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
+          <img src={gridScreenshot} alt="FR1BET prediction grid — 10 cards per race weekend" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
         </Reveal>
 
         <div className="g3">
@@ -329,7 +307,9 @@ function PoolsExplained() {
               </div>
             </Reveal>
           </div>
-
+          <Reveal delay={100}>
+            <img src={insightScreenshot} alt="FR1BET pool view" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block" }} />
+          </Reveal>
         </div>
       </div>
     </Slide>
@@ -337,6 +317,14 @@ function PoolsExplained() {
 }
 
 function StakeTiers() {
+  const tiers = [
+    { name: "ROOKIE",   pts: "1",   bg: "linear-gradient(135deg,#1c1c1e,#2a2a2e)", accent: "#888",    icon: "⊙" },
+    { name: "AMATEUR",  pts: "5",   bg: "linear-gradient(135deg,#0d1b2e,#1a3050)", accent: "#4A9EFF", icon: "⚡" },
+    { name: "PRO",      pts: "10",  bg: "linear-gradient(135deg,#1e1a00,#3a3000)", accent: "#F5C400", icon: "♛" },
+    { name: "EXPERT",   pts: "25",  bg: "linear-gradient(135deg,#2a1200,#4a2200)", accent: "#FF7A00", icon: "◈" },
+    { name: "ELITE",    pts: "50",  bg: "linear-gradient(135deg,#1a0a2e,#2e1050)", accent: "#A855F7", icon: "✦" },
+    { name: "LEGEND",   pts: "100", bg: "linear-gradient(135deg,#2a0008,#4a0010)", accent: RED,       icon: "🏆" },
+  ];
   return (
     <Slide id="tiers">
       <div className="sp">
@@ -358,9 +346,28 @@ function StakeTiers() {
         </div>
 
         <Reveal delay={160}>
-          <img className="presentation-content-image cinematic-image" src={poolScreenshot} alt="Select stake — active racing divisions" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 24px 64px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
+          <img src={poolScreenshot} alt="Select stake — active racing divisions" style={{ width: "100%", borderRadius: 14, boxShadow: "0 24px 64px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
         </Reveal>
 
+        <div className="g3" style={{ gap: 10 }}>
+          {tiers.map((t, i) => (
+            <Reveal key={t.name} delay={260 + i * 50}>
+              <div style={{ background: t.bg, borderRadius: 12, padding: "18px 18px 16px", border: `1px solid ${t.accent}22`, display: "flex", flexDirection: "column", gap: 12 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ width: 34, height: 34, borderRadius: 8, background: `${t.accent}22`, border: `1px solid ${t.accent}44`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, color: t.accent, flexShrink: 0 }}>{t.icon}</div>
+                  <div>
+                    <div style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontSize: 13, color: t.accent, letterSpacing: 1 }}>{t.name}</div>
+                    <div style={{ fontFamily: "'Barlow',sans-serif", fontSize: 10, color: "#666", letterSpacing: 1 }}>Stake per card</div>
+                  </div>
+                </div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 5 }}>
+                  <span style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 900, fontStyle: "italic", fontSize: 34, color: "#fff", lineHeight: 1 }}>{t.pts}</span>
+                  <span style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontSize: 13, color: t.accent }}>PTS</span>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </Slide>
   );
@@ -399,9 +406,21 @@ function SprintWeekends() {
               </div>
             </Reveal>
           </div>
-          <Reveal delay={100}>
-            <img className="presentation-content-image" src={sprintCardsScreenshot} alt="FR1BET sprint prediction cards" loading="lazy" decoding="async" />
-          </Reveal>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {sprintCards.map((card, i) => (
+              <Reveal key={card.pos} delay={100 + i * 60}>
+                <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "14px 16px", display: "flex", alignItems: "center", gap: 14 }}>
+                  <div style={{ width: 44, height: 44, background: RED, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <span style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 900, fontStyle: "italic", fontSize: 13, color: "#fff", letterSpacing: 0.5 }}>{card.pos}</span>
+                  </div>
+                  <div>
+                    <div style={{ fontFamily: "'Barlow',sans-serif", fontSize: 10, color: RED, letterSpacing: 2, marginBottom: 3 }}>{card.session}</div>
+                    <div style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontSize: 13, color: "#fff" }}>{card.desc}</div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </Slide>
@@ -426,7 +445,7 @@ function Dashboard() {
         </Reveal>
 
         <Reveal delay={155}>
-          <img src={racingDivisionsScreenshot} alt="FR1BET dashboard — active racing divisions and countdown" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
+          <img src={racingDivisionsScreenshot} alt="FR1BET dashboard — active racing divisions and countdown" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
         </Reveal>
 
         <div className="g3">
@@ -583,7 +602,7 @@ function Currencies() {
           </div>
           <Reveal delay={100}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
-              <img src={fr1Coin} alt="FR1 token" style={{ width: "clamp(200px,28vw,320px)", filter: "drop-shadow(0 20px 60px rgba(200,168,75,0.55)) drop-shadow(0 0 34px rgba(229,0,26,0.28))", display: "block" }} />
+              <img src={fr1Coin} alt="FR1 token" style={{ width: "clamp(200px,28vw,320px)", filter: "drop-shadow(0 20px 60px rgba(200,168,75,0.55))", display: "block" }} />
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
                 {[
                   { v: "200 FR1", l: "= 1 USDC" },
@@ -717,34 +736,8 @@ function GetStarted() {
 
 /* ─── Root ─── */
 export default function App() {
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    let frame = 0;
-    const updateImageParallax = () => {
-      document.querySelectorAll<HTMLElement>(".cinematic-image").forEach((image) => {
-        const rect = image.getBoundingClientRect();
-        const distance = (window.innerHeight * 0.5 - (rect.top + rect.height * 0.5)) * 0.055;
-        image.style.setProperty("--image-parallax-y", `${Math.max(-22, Math.min(22, distance))}px`);
-      });
-      frame = 0;
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(updateImageParallax);
-    };
-
-    updateImageParallax();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, []);
-
   return (
-    <div className="presentation-page">
+    <div style={{ background: "#080808" }}>
       <ScrollProgress />
       <Hero />
       <HowItWorks />
