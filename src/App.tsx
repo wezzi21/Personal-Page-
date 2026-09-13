@@ -185,7 +185,6 @@ function HeroAnimation() {
         ref={videoRef}
         className="hero-parallax-video"
         src="/assets/social/looping%20video%20mp4.mp4"
-        poster="/assets/social/Front%20page.png"
         autoPlay
         muted
         loop
