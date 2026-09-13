@@ -24,6 +24,72 @@ body,
 .g-ti3 { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; }
 .g-ti4 { display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: center; }
 
+.presentation-brand {
+  color: #fff;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(20px, 3vw, 32px);
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.presentation-back-link {
+  color: #aaa;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.presentation-back-link:hover,
+.presentation-back-link:focus-visible {
+  color: #fff;
+  transform: translateX(-3px);
+}
+
+.presentation-hero-action {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.presentation-hero-action:hover,
+.presentation-hero-action:focus-visible {
+  transform: translateY(-4px);
+}
+
+.presentation-hero-action-primary:hover,
+.presentation-hero-action-primary:focus-visible {
+  background: #ff1932 !important;
+  box-shadow: 0 14px 42px rgba(229, 0, 26, 0.64) !important;
+}
+
+.presentation-hero-action-secondary:hover,
+.presentation-hero-action-secondary:focus-visible {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.presentation-stat-block {
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 420ms ease, border-color 420ms ease;
+}
+
+.presentation-stat-block:hover {
+  transform: scale(0.72);
+  border-color: rgba(255, 255, 255, 0.34) !important;
+  box-shadow: 0 0 34px rgba(255, 255, 255, 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .presentation-back-link,
+  .presentation-hero-action,
+  .presentation-stat-block {
+    transition: none;
+  }
+}
+
 @media (max-width: 768px) {
   .sp { padding: 48px 20px 40px; }
   .g2, .g3, .g-ti, .g-ti2, .g-ti3, .g-ti4 { grid-template-columns: 1fr !important; gap: 24px !important; }

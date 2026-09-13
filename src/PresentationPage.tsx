@@ -152,7 +152,7 @@ function CardTitle({ children }: { children: ReactNode }) {
 
 function StatBlock({ value, label }: { value: ReactNode; label: string }) {
   return (
-    <div style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 6, padding: "12px 20px", minWidth: 110 }}>
+    <div className="presentation-stat-block" style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 6, padding: "12px 20px", minWidth: 110 }}>
       <div style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontSize: 26, color: "#fff", lineHeight: 1 }}>{value}</div>
       <div style={{ fontFamily: "'Barlow',sans-serif", fontSize: 10, letterSpacing: 2, color: "#888", marginTop: 4, textTransform: "uppercase" }}>{label}</div>
     </div>
@@ -178,15 +178,13 @@ function Hero() {
 
       {/* Nav */}
       <nav style={{ position: "relative", zIndex: 10, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 32px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ width: 32, height: 32, background: RED, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Barlow',sans-serif", fontWeight: 900, fontSize: 16, color: "#fff" }}>F</div>
-          <span style={{ fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontSize: 15, color: "#fff", letterSpacing: 2 }}>FR1BET</span>
+        <div className="presentation-brand-wrap">
+          <span className="presentation-brand">FR1BET PRESENTATION</span>
         </div>
-        <div className="mob-hide" style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          {[["How it works", "#how"], ["Tiers", "#tiers"], ["Pit Pass", "#pitpass"], ["Play now", "#cta"]].map(([l, href]) => (
-            <a key={l} href={href} style={{ fontFamily: "'Barlow',sans-serif", fontSize: 13, color: l === "Play now" ? "#fff" : "#aaa", textDecoration: "none", ...(l === "Play now" ? { background: RED, padding: "8px 18px", borderRadius: 6, fontWeight: 700, letterSpacing: 1 } : {}) }}>{l}</a>
-          ))}
+        <div className="mob-hide">
+          <a className="presentation-back-link" href="/">BACK TO MAIN PAGE</a>
         </div>
+
       </nav>
 
       {/* Hero content */}
@@ -214,10 +212,10 @@ function Hero() {
         </Reveal>
         <Reveal delay={320}>
           <div style={{ display: "flex", gap: 14, marginTop: 32, flexWrap: "wrap" }}>
-            <a href="https://fr1bet.com" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: RED, color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 16, letterSpacing: 1.5, padding: "14px 28px", borderRadius: 6, textDecoration: "none", boxShadow: `0 8px 32px rgba(229,0,26,0.45)` }}>
+            <a className="presentation-hero-action presentation-hero-action-primary" href="https://fr1bet.com" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: RED, color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 16, letterSpacing: 1.5, padding: "14px 28px", borderRadius: 6, textDecoration: "none", boxShadow: `0 8px 32px rgba(229,0,26,0.45)` }}>
               ENTER THE GRID ›
             </a>
-            <a href="#how" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", border: "1px solid rgba(255,255,255,0.18)", color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontStyle: "italic", fontSize: 15, letterSpacing: 1, padding: "14px 24px", borderRadius: 6, textDecoration: "none" }}>
+            <a className="presentation-hero-action presentation-hero-action-secondary" href="#how" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", border: "1px solid rgba(255,255,255,0.18)", color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 700, fontStyle: "italic", fontSize: 15, letterSpacing: 1, padding: "14px 24px", borderRadius: 6, textDecoration: "none" }}>
               HOW IT WORKS
             </a>
           </div>
@@ -512,7 +510,7 @@ function PitPass() {
                   </div>
                 ))}
               </div>
-              <a href="https://fr1bet.com" target="_blank" rel="noreferrer" style={{ display: "block", textAlign: "center", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 14, letterSpacing: 2, padding: "14px", borderRadius: 8, textDecoration: "none", marginTop: "auto" }}>
+              <a className="presentation-hero-action presentation-hero-action-primary" href="https://fr1bet.com" target="_blank" rel="noreferrer" style={{ display: "block", textAlign: "center", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 14, letterSpacing: 2, padding: "14px", borderRadius: 8, textDecoration: "none", marginTop: "auto" }}>
                 START FOR FREE
               </a>
             </div>
@@ -550,7 +548,7 @@ function PitPass() {
                   </div>
                 ))}
               </div>
-              <a href="https://fr1bet.com" target="_blank" rel="noreferrer" style={{ display: "block", textAlign: "center", background: RED, color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 14, letterSpacing: 2, padding: "14px", borderRadius: 8, textDecoration: "none", marginTop: "auto", boxShadow: `0 8px 32px rgba(229,0,26,0.4)` }}>
+              <a className="presentation-hero-action presentation-hero-action-primary" href="https://fr1bet.com" target="_blank" rel="noreferrer" style={{ display: "block", textAlign: "center", background: RED, color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 14, letterSpacing: 2, padding: "14px", borderRadius: 8, textDecoration: "none", marginTop: "auto", boxShadow: `0 8px 32px rgba(229,0,26,0.4)` }}>
                 UPGRADE NOW
               </a>
             </div>
@@ -709,7 +707,7 @@ function GetStarted() {
 
             <Reveal delay={500}>
               <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                <a href="https://fr1bet.com" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: RED, color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 16, letterSpacing: 1.5, padding: "16px 32px", borderRadius: 8, textDecoration: "none", boxShadow: `0 8px 32px rgba(229,0,26,0.45)` }}>
+                <a className="presentation-hero-action presentation-hero-action-primary" href="https://fr1bet.com" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: RED, color: "#fff", fontFamily: "'Barlow',sans-serif", fontWeight: 800, fontStyle: "italic", fontSize: 16, letterSpacing: 1.5, padding: "16px 32px", borderRadius: 8, textDecoration: "none", boxShadow: `0 8px 32px rgba(229,0,26,0.45)` }}>
                   ENTER THE GRID ›
                 </a>
               </div>
