@@ -2,8 +2,9 @@ import { useEffect, useRef, useState, ReactNode } from "react";
 import "./presentation.css";
 import fr1betLogo from "./imports/red_white_logo.png";
 
+const presentationHeroImage = "/assets/social/ChatGPT%20Image%20Aug%2024%2C%202026%2C%2011_55_37%20AM.png";
 const qrCode = fr1betLogo;
-const heroBg = fr1betLogo;
+const heroBg = presentationHeroImage;
 const logoBg = fr1betLogo;
 const fr1Coin = fr1betLogo;
 const gridScreenshot = fr1betLogo;
