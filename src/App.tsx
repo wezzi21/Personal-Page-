@@ -163,6 +163,7 @@ function HeroAnimation() {
         muted
         loop
         playsInline
+        preload="metadata"
         aria-hidden="true"
       />
       <div className="hero-parallax-shade" aria-hidden="true" />
@@ -326,7 +327,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
   );
 }
 
-// ─── Hero Section ──────────────────────────────────����───────────���──────────────
+// ─── Hero Section ──────────────────────────────────����──────────������──────────────
 
 function Hero() {
   return (
