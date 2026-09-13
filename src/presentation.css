@@ -24,14 +24,25 @@ body,
 .g-ti3 { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; }
 .g-ti4 { display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: center; }
 
+.presentation-page {
+  width: calc(100% - 48px);
+  max-width: 1600px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #080808;
+  border-inline: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.32);
+}
+
 .presentation-hero-background {
   position: absolute;
-  inset: -4% 0 0;
-  background-image: linear-gradient(to bottom, rgba(8,8,8,0.08) 0%, rgba(8,8,8,0.5) 52%, #080808 100%), url('/assets/social/Front%20page.png');
-  background-size: 100% auto;
+  inset: -6% -3% 0;
+  background-image: linear-gradient(to bottom, rgba(8,8,8,0.05) 0%, rgba(8,8,8,0.46) 52%, #080808 100%), url('/assets/social/Front%20page.png');
+  background-size: cover;
   background-position: center calc(30% + var(--presentation-parallax-y, 0px));
-  opacity: 0.5;
-  transform: translate3d(0, calc(var(--presentation-parallax-y, 0px) * -0.18), 0) scale(1.06);
+  background-repeat: no-repeat;
+  opacity: 0.58;
+  transform: translate3d(0, calc(var(--presentation-parallax-y, 0px) * -0.2), 0) scale(1.04);
   will-change: background-position, transform;
 }
 
@@ -141,6 +152,10 @@ body,
 }
 
 @media (max-width: 768px) {
+  .presentation-page {
+    width: calc(100% - 20px);
+  }
+
   .sp { padding: 48px 20px 40px; }
   .g2, .g3, .g-ti, .g-ti2, .g-ti3, .g-ti4 { grid-template-columns: 1fr !important; gap: 24px !important; }
   .g4 { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }

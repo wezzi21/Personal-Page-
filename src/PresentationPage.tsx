@@ -773,7 +773,7 @@ export default function App() {
   }, []);
 
   return (
-    <div style={{ background: "#080808" }}>
+    <div className="presentation-page">
       <ScrollProgress />
       <Hero />
       <HowItWorks />
