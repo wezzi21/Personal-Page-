@@ -375,8 +375,14 @@ html {
   position: absolute;
   inset: 0;
   min-height: 65vh;
+  overflow: hidden;
   pointer-events: none;
   z-index: 0;
+  background:
+    radial-gradient(circle at 70% 35%, rgba(255, 24, 1, 0.22), transparent 28%),
+    linear-gradient(120deg, #090909, #24100e 48%, #090909);
+  background-size: 140% 140%;
+  animation: heroFallbackMotion 14s ease-in-out infinite alternate;
 }
 
 .hero-background-layer .hero-parallax {
@@ -407,7 +413,7 @@ html {
 }
 
 .hero-parallax-video {
-  z-index: -3;
+  z-index: 0;
   object-fit: cover;
   object-position: center;
   filter: saturate(0.7) contrast(1.08);
@@ -433,6 +439,17 @@ html {
   background:
     linear-gradient(90deg, rgba(10, 10, 10, 0.82) 0%, rgba(10, 10, 10, 0.42) 48%, rgba(10, 10, 10, 0.76) 100%),
     linear-gradient(180deg, rgba(10, 10, 10, 0.2) 0%, rgba(10, 10, 10, 0.08) 45%, rgba(10, 10, 10, 0.94) 100%);
+}
+
+@keyframes heroFallbackMotion {
+  from { background-position: 0% 42%; }
+  to { background-position: 100% 58%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-background-layer {
+    animation: none;
+  }
 }
 
 /* Scroll reveal animations */
