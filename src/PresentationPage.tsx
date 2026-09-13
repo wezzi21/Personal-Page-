@@ -268,7 +268,7 @@ function HowItWorks() {
 
         {/* Screenshot full-width */}
         <Reveal delay={160}>
-          <img className="presentation-content-image cinematic-image" src={gridScreenshot} alt="FR1BET prediction grid — 10 cards per race weekend" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
+          <img className="presentation-content-image cinematic-image presentation-grid-image" src={gridScreenshot} alt="FR1BET prediction grid — 10 cards per race weekend" loading="lazy" decoding="async" width="960" height="540" style={{ width: "100%", borderRadius: 14, boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", marginBottom: 32 }} />
         </Reveal>
 
         <div className="g3">
@@ -329,9 +329,7 @@ function PoolsExplained() {
               </div>
             </Reveal>
           </div>
-          <Reveal delay={100}>
-            <img className="presentation-content-image cinematic-image presentation-insight-image" src={insightScreenshot} alt="FR1BET pool view" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 8, objectFit: "contain", boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", fontSize: "14px" }} />
-          </Reveal>
+
         </div>
       </div>
     </Slide>
