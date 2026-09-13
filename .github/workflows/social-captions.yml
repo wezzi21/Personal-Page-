@@ -1,7 +1,12 @@
 name: Generate social captions
 
-# Paused for development uploads. Run manually when caption generation is needed.
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "public/assets/social/**"
+      - ".github/workflows/social-captions.yml"
   workflow_dispatch:
 
 permissions:
@@ -82,6 +87,8 @@ jobs:
                   "type": kind,
                   "platforms": ["Instagram", "X", "Pinterest"],
               })
+
+          posts.sort(key=lambda item: item["asset"], reverse=True)
 
           manifest_text = json.dumps(posts, indent=2) + "\n"
           manifest_path.write_text(manifest_text)

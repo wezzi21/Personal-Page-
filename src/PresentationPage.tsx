@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, ReactNode } from "react";
+import "./presentation.css";
 import fr1betLogo from "./imports/red_white_logo.png";
 
 const qrCode = fr1betLogo;

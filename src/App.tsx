@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { lazy, Suspense, useState, useEffect, useRef } from "react";
 import fr1betLogo from "@/imports/red_white_logo.png";
 import generatedSocialPosts from "./social-posts.json";
-import PresentationPage from "./PresentationPage";
-import "./presentation.css";
+
+const PresentationPage = lazy(() => import("./PresentationPage"));
 
 // ─── Scroll Reveal ────────────────────────────────────────────────────────────
 
@@ -163,6 +163,7 @@ function HeroAnimation() {
         muted
         loop
         playsInline
+        preload="metadata"
         aria-hidden="true"
       />
       <div className="hero-parallax-shade" aria-hidden="true" />
@@ -326,7 +327,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
   );
 }
 
-// ─── Hero Section ──────────────────────────────────����───────────���──────────────
+// ─── Hero Section ──────────────────────────────────�������─────────������──────────────
 
 function Hero() {
   return (
@@ -344,7 +345,7 @@ function Hero() {
       <div className="hero-headline-content relative z-10 w-full" style={{ minHeight: "65vh" }}>
         {/* Hero copy overlay — bottom of animation */}
         <div
-          className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-10"
+          className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-10 hero-copy-overlay"
           style={{
             background: "linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.7) 60%, transparent 100%)",
           }}
@@ -378,7 +379,7 @@ function Hero() {
               <span>The Story</span>
             </a>
             <a href="https://fr1bet.com" target="_blank" rel="noopener noreferrer" className="cta-ghost" style={{ padding: "8px 14px" }}>
-              <img src={fr1betLogo} alt="FR1BET" style={{ height: "28px", objectFit: "contain" }} />
+              <img src={fr1betLogo} alt="FR1BET" width="140" height="28" loading="eager" decoding="async" fetchPriority="high" style={{ height: "28px", width: "140px", objectFit: "contain" }} />
             </a>
           </div>
           </Reveal>
@@ -608,7 +609,7 @@ function Story() {
               </p>
               <div className="mt-8">
                 {storyBeats.map((b, i) => (
-                  <div key={i} className="flex items-center gap-3 mb-3">
+                  <div key={i} className="story-nav-item flex items-center gap-3 mb-3">
                     <div
                       style={{
                         width: "6px",
@@ -952,9 +953,10 @@ function About() {
             <p className="section-label mb-4">Background</p>
             <div className="flex flex-wrap gap-2">
               {qualities.map((q) => (
-                <span
-                  key={q}
-                  style={{
+<span
+  key={q}
+  className="quality-tag"
+  style={{
                     fontFamily: "Inter",
                     fontWeight: 600,
                     fontSize: "0.65rem",
@@ -1383,7 +1385,7 @@ function SocialsPage() {
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
-  const path = window.location.pathname;
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
   const isSocialsPage = path === "/socials";
   const isPresentationPage = path === "/presentation";
 
@@ -1394,7 +1396,13 @@ export default function App() {
   }, []);
 
   if (isSocialsPage) return <SocialsPage />;
-  if (isPresentationPage) return <PresentationPage />;
+  if (isPresentationPage) {
+    return (
+      <Suspense fallback={<div className="presentation-route-loading" role="status">Loading presentation…</div>}>
+        <PresentationPage />
+      </Suspense>
+    );
+  }
 
   return (
     <div className="page-with-mesh" style={{ background: "var(--black)", minHeight: "100%" }}>
