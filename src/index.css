@@ -371,6 +371,27 @@ html {
 }
 
 /* Personal photo parallax background */
+.hero-background-layer {
+  position: absolute;
+  inset: 0;
+  min-height: 65vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-background-layer .hero-parallax {
+  isolation: isolate;
+  height: 100%;
+}
+
+.hero-headline-content {
+  min-height: 65vh;
+}
+
+.hero-support-content {
+  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.86), var(--black) 24%);
+}
+
 .hero-parallax {
   isolation: isolate;
 }

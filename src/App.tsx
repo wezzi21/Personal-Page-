@@ -326,7 +326,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
   );
 }
 
-// ─── Hero Section ──────────────────────────────────����──────────────────────────
+// ─── Hero Section ──────────────────────────────────����───────────��──────────────
 
 function Hero() {
   return (
@@ -335,10 +335,13 @@ function Hero() {
       className="relative min-h-screen flex flex-col"
       style={{ background: "var(--black)" }}
     >
-      {/* Animation fills top portion */}
-      <div className="relative w-full" style={{ height: "65vh", minHeight: "400px" }}>
+      {/* Full-bleed animation behind the headline */}
+      <div className="hero-background-layer" aria-hidden="true">
         <HeroAnimation />
+      </div>
 
+      {/* Hero content */}
+      <div className="hero-headline-content relative z-10 w-full" style={{ minHeight: "65vh" }}>
         {/* Hero copy overlay — bottom of animation */}
         <div
           className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-10"
@@ -349,12 +352,12 @@ function Hero() {
           <Reveal delay={100}><p className="section-label mb-4">Founder · FR1BET</p></Reveal>
           <Reveal delay={200}><h1 className="hero-display" style={{ fontSize: "clamp(3.5rem, 9vw, 8rem)" }}>
             Wesley <span style={{ fontSize: "0.45em", fontWeight: 700, letterSpacing: "0.04em", verticalAlign: "middle", opacity: 0.7 }}>Robin</span><br />Jaesch
-          </h1></Reveal>
+          </h1>          </Reveal>
         </div>
       </div>
 
-      {/* Below animation */}
-      <div className="px-6 md:px-12 pt-8 pb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+      {/* Supporting hero content */}
+      <div className="hero-support-content relative z-10 px-6 md:px-12 pt-8 pb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
         <div style={{ maxWidth: "560px" }}>
           <Reveal delay={100}>
           <p
@@ -1376,7 +1379,7 @@ function SocialsPage() {
   );
 }
 
-// ─── App ──────────────────────────�����───────────────────────────────────────────
+// ─── App ──────────────────────────�����─���─────────────────────────────────────────
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
