@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { lazy, Suspense, useState, useEffect, useRef } from "react";
 import fr1betLogo from "@/imports/red_white_logo.png";
 import generatedSocialPosts from "./social-posts.json";
-import PresentationPage from "./PresentationPage";
-import "./presentation.css";
+
+const PresentationPage = lazy(() => import("./PresentationPage"));
 
 // ─── Scroll Reveal ────────────────────────────────────────────────────────────
 
@@ -327,7 +327,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
   );
 }
 
-// ─── Hero Section ──────────────────────────────────����──────────������──────────────
+// ─── Hero Section ──────────────────────────────────�������─────────������──────────────
 
 function Hero() {
   return (
@@ -1385,7 +1385,7 @@ function SocialsPage() {
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
-  const path = window.location.pathname;
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
   const isSocialsPage = path === "/socials";
   const isPresentationPage = path === "/presentation";
 
@@ -1396,7 +1396,13 @@ export default function App() {
   }, []);
 
   if (isSocialsPage) return <SocialsPage />;
-  if (isPresentationPage) return <PresentationPage />;
+  if (isPresentationPage) {
+    return (
+      <Suspense fallback={<div className="presentation-route-loading" role="status">Loading presentation…</div>}>
+        <PresentationPage />
+      </Suspense>
+    );
+  }
 
   return (
     <div className="page-with-mesh" style={{ background: "var(--black)", minHeight: "100%" }}>
