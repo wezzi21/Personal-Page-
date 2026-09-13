@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "title": "Looping Video Mp4",
+    "caption": "A new video from WRJ.",
+    "asset": "/assets/social/looping video mp4.mp4",
+    "type": "video",
+    "platforms": [
+      "Instagram",
+      "X",
+      "Pinterest"
+    ]
+  }
+]
