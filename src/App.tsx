@@ -1,8 +1,8 @@
-import { lazy, Suspense, useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import fr1betLogo from "@/imports/red_white_logo.png";
 import generatedSocialPosts from "./social-posts.json";
-
-const PresentationPage = lazy(() => import("./PresentationPage"));
+import PresentationPage from "./PresentationPage";
+import "./presentation.css";
 
 // ─── Scroll Reveal ────────────────────────────────────────────────────────────
 
@@ -136,43 +136,18 @@ function IconPinterest() {
 
 function HeroAnimation() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const loopFadeRef = useRef(false);
-
-  const handleVideoTimeUpdate = () => {
-    const video = videoRef.current;
-    if (!video || !Number.isFinite(video.duration)) return;
-
-    const shouldFade = video.duration - video.currentTime <= 0.35;
-    if (shouldFade !== loopFadeRef.current) {
-      loopFadeRef.current = shouldFade;
-      video.classList.toggle("hero-parallax-video-fading", shouldFade);
-    }
-
-    if (video.currentTime < 0.1 && shouldFade === false) {
-      video.classList.remove("hero-parallax-video-fading");
-    }
-  };
 
   useEffect(() => {
     const hero = heroRef.current;
-    if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!hero) return;
 
-    let frame = 0;
     const updateParallax = () => {
       hero.style.setProperty("--hero-parallax-y", `${Math.min(window.scrollY * 0.18, 180)}px`);
-      frame = 0;
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(updateParallax);
     };
 
     updateParallax();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (frame) cancelAnimationFrame(frame);
-    };
+    window.addEventListener("scroll", updateParallax, { passive: true });
+    return () => window.removeEventListener("scroll", updateParallax);
   }, []);
 
   return (
@@ -182,15 +157,12 @@ function HeroAnimation() {
       style={{ background: "#0A0A0A" }}
     >
       <video
-        ref={videoRef}
         className="hero-parallax-video"
         src="/assets/social/looping%20video%20mp4.mp4"
         autoPlay
         muted
         loop
         playsInline
-        preload="none"
-        onTimeUpdate={handleVideoTimeUpdate}
         aria-hidden="true"
       />
       <div className="hero-parallax-shade" aria-hidden="true" />
@@ -363,10 +335,13 @@ function Hero() {
       className="relative min-h-screen flex flex-col"
       style={{ background: "var(--black)" }}
     >
-      {/* Animation fills top portion */}
-      <div className="relative w-full" style={{ height: "65vh", minHeight: "400px" }}>
+      {/* Full-bleed animation behind the headline */}
+      <div className="hero-background-layer" aria-hidden="true">
         <HeroAnimation />
+      </div>
 
+      {/* Hero content */}
+      <div className="hero-headline-content relative z-10 w-full" style={{ minHeight: "65vh" }}>
         {/* Hero copy overlay — bottom of animation */}
         <div
           className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-10"
@@ -377,12 +352,12 @@ function Hero() {
           <Reveal delay={100}><p className="section-label mb-4">Founder · FR1BET</p></Reveal>
           <Reveal delay={200}><h1 className="hero-display" style={{ fontSize: "clamp(3.5rem, 9vw, 8rem)" }}>
             Wesley <span style={{ fontSize: "0.45em", fontWeight: 700, letterSpacing: "0.04em", verticalAlign: "middle", opacity: 0.7 }}>Robin</span><br />Jaesch
-          </h1></Reveal>
+          </h1>          </Reveal>
         </div>
       </div>
 
-      {/* Below animation */}
-      <div className="px-6 md:px-12 pt-8 pb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+      {/* Supporting hero content */}
+      <div className="hero-support-content relative z-10 px-6 md:px-12 pt-8 pb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
         <div style={{ maxWidth: "560px" }}>
           <Reveal delay={100}>
           <p
@@ -633,7 +608,7 @@ function Story() {
               </p>
               <div className="mt-8">
                 {storyBeats.map((b, i) => (
-                  <div key={i} className="story-nav-item flex items-center gap-3 mb-3">
+                  <div key={i} className="flex items-center gap-3 mb-3">
                     <div
                       style={{
                         width: "6px",
@@ -979,7 +954,6 @@ function About() {
               {qualities.map((q) => (
                 <span
                   key={q}
-                  className="quality-tag"
                   style={{
                     fontFamily: "Inter",
                     fontWeight: 600,
@@ -1409,7 +1383,7 @@ function SocialsPage() {
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
-  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  const path = window.location.pathname;
   const isSocialsPage = path === "/socials";
   const isPresentationPage = path === "/presentation";
 
@@ -1420,13 +1394,7 @@ export default function App() {
   }, []);
 
   if (isSocialsPage) return <SocialsPage />;
-  if (isPresentationPage) {
-    return (
-      <Suspense fallback={<div className="route-loading" role="status">Loading presentation…</div>}>
-        <PresentationPage />
-      </Suspense>
-    );
-  }
+  if (isPresentationPage) return <PresentationPage />;
 
   return (
     <div className="page-with-mesh" style={{ background: "var(--black)", minHeight: "100%" }}>
