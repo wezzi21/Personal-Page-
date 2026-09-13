@@ -608,7 +608,7 @@ function Story() {
               </p>
               <div className="mt-8">
                 {storyBeats.map((b, i) => (
-                  <div key={i} className="flex items-center gap-3 mb-3">
+                  <div key={i} className="story-nav-item flex items-center gap-3 mb-3">
                     <div
                       style={{
                         width: "6px",
@@ -952,9 +952,10 @@ function About() {
             <p className="section-label mb-4">Background</p>
             <div className="flex flex-wrap gap-2">
               {qualities.map((q) => (
-                <span
-                  key={q}
-                  style={{
+<span
+  key={q}
+  className="quality-tag"
+  style={{
                     fontFamily: "Inter",
                     fontWeight: 600,
                     fontSize: "0.65rem",
