@@ -330,7 +330,7 @@ function PoolsExplained() {
             </Reveal>
           </div>
           <Reveal delay={100}>
-            <img className="presentation-content-image cinematic-image" src={insightScreenshot} alt="FR1BET pool view" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 8, objectFit: "contain", boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", fontSize: "14px" }} />
+            <img className="presentation-content-image cinematic-image presentation-insight-image" src={insightScreenshot} alt="FR1BET pool view" loading="lazy" decoding="async" style={{ width: "100%", borderRadius: 8, objectFit: "contain", boxShadow: "0 32px 72px rgba(0,0,0,0.85)", display: "block", fontSize: "14px" }} />
           </Reveal>
         </div>
       </div>
