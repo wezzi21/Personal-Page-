@@ -17,7 +17,7 @@ function RaceCarForm() {
 
   return (
     <Float speed={1.1} rotationIntensity={0.12} floatIntensity={0.25}>
-      <group ref={group} scale={1.35} position={[0, -0.35, 0]}>
+      <group ref={group} scale={1.05} position={[0, -0.2, 0]}>
         <mesh castShadow>
           <boxGeometry args={[2.8, 0.22, 1.15]} />
           <meshStandardMaterial
@@ -143,7 +143,7 @@ export default function LowerPage3DScene() {
   return (
     <div className="lower-3d-scene" aria-hidden="true">
       <Canvas dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}>
-        <PerspectiveCamera makeDefault position={[0, 0.3, 5.4]} fov={38} />
+        <PerspectiveCamera makeDefault position={[0, 0.35, 6.8]} fov={42} />
         <ambientLight intensity={0.7} />
         <spotLight
           position={[3, 4, 4]}

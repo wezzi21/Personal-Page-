@@ -799,6 +799,31 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat index: number }) {
 }
 
 function Story() {
+  useEffect(() => {
+    const section = document.getElementById("story")
+    if (!section) return
+
+    const updateParallax = () => {
+      const bounds = section.getBoundingClientRect()
+      const offset = Math.max(
+        -140,
+        Math.min(
+          140,
+          (window.innerHeight / 2 - (bounds.top + bounds.height / 2)) * 0.16,
+        ),
+      )
+      section.style.setProperty("--story-parallax-y", `${offset}px`)
+    }
+
+    updateParallax()
+    window.addEventListener("scroll", updateParallax, { passive: true })
+    window.addEventListener("resize", updateParallax)
+    return () => {
+      window.removeEventListener("scroll", updateParallax)
+      window.removeEventListener("resize", updateParallax)
+    }
+  }, [])
+
   return (
     <section
       id="story"
@@ -807,11 +832,14 @@ function Story() {
     >
       <div className="story-poster-layer" aria-hidden="true">
         <img
-          src="/assets/social/ChatGPT Image Aug 24, 2026, 11_55_37 AM.png"
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2014%2C%202026%2C%2011_19_32%20AM-bii78bxt7KlqUj5mzzinMQo6ls0iA1.png"
           alt=""
           loading="lazy"
           decoding="async"
         />
+      </div>
+      <div className="story-presentation-logo" aria-hidden="true">
+        <img src={fr1betLogo} alt="" loading="lazy" decoding="async" />
       </div>
       <Suspense fallback={null}>
         <LowerPage3DScene />
@@ -1880,7 +1908,7 @@ function SocialsPage() {
   )
 }
 
-// ─── App ──────────────────────────�����─�����─────────────────────────────────────────
+// ─── App ──────────────────────────�����─������─────────────────────────────────────────
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false)
