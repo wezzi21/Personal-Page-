@@ -225,6 +225,63 @@ html {
   box-shadow: 0 0 14px rgba(255, 50, 40, 0.24);
 }
 
+.story-3d-section {
+  isolation: isolate;
+  overflow: clip;
+}
+
+.story-poster-layer,
+.lower-3d-scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.story-poster-layer {
+  z-index: 0;
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  transform: scale(1.08);
+}
+
+.story-poster-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--black) 0%, rgba(10, 10, 10, 0.7) 45%, rgba(10, 10, 10, 0.35) 100%);
+}
+
+.story-poster-layer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.75) contrast(1.12);
+}
+
+.lower-3d-scene {
+  z-index: 1;
+  height: 100%;
+  min-height: 100%;
+  opacity: 0.92;
+}
+
+.lower-3d-scene canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 767px) {
+  .story-poster-layer {
+    opacity: 0.1;
+  }
+
+  .lower-3d-scene {
+    opacity: 0.68;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .story-nav-item,
   .quality-tag {
