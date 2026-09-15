@@ -1,0 +1,275 @@
+import { Suspense, lazy, useEffect } from "react"
+import fr1betLogo from "@/imports/red_white_logo.png"
+import { Reveal } from "@/components/Reveal"
+
+const LowerPage3DScene = lazy(() => import("@/features/home/LowerPage3DScene"))
+
+// ─── Story Section ────────────────────────────────────────────────────────────
+
+type StoryBeat = {
+  number: string
+  label: string
+  headline: string
+  body: string[]
+  quote?: string
+}
+
+const storyBeats: StoryBeat[] = [
+  {
+    number: "01",
+    label: "Friday",
+    headline: "Friday Betting.",
+    body: [
+      "It started as something my father and I did together. Every Friday before an F1 weekend, we sat down with a printed spreadsheet and went through the grid.",
+      "We called it Friday Betting. Ten predictions, one race weekend — a father and son, and a group of friends who'd gather to make their picks. We had our opinions about everything — not just who would win, but who would fight, who would fall, when strategy would change the order.",
+      "We did it for years. It was ours.",
+    ],
+  },
+  {
+    number: "02",
+    label: "The Question",
+    headline: "What Are We Really Watching For?",
+    body: [
+      "Sitting there with my father, I started asking a bigger question. When people follow Formula 1, what is it they are actually watching for?",
+      "Is it the podium? The strategy calls? The split-second battles through the chicane? Or the moment everything changes — a safety car, an unexpected overtake, a retirement that reshapes the race?",
+    ],
+    quote: "The uncertainty of not knowing what happens next.",
+  },
+  {
+    number: "03",
+    label: "The Turning Point",
+    headline: "Then I Lost My Father.",
+    body: [
+      "My father passed away due to leukemia.",
+      "After losing him, I sat with the idea we had built together every Friday. I thought about the question we had been asking. I thought about how much more there was to say about it.",
+      "And I decided to act.",
+    ],
+    quote: "The idea deserved to exist outside my head.",
+  },
+  {
+    number: "04",
+    label: "The Build",
+    headline: "So I Started Building.",
+    body: [
+      "I imagined a platform where every fan could become part of that experience — a place to predict, compete, react, and follow the race together.",
+      "Not just who wins. The whole grid. The whole weekend.",
+      "I started turning what had only ever existed in my mind into something real.",
+    ],
+  },
+  {
+    number: "05",
+    label: "FR1BET",
+    headline: "That Idea Became FR1BET.",
+    body: [],
+    quote:
+      "Built to bring the grid to life — not just as a race to watch, but as a world to enter.",
+  },
+]
+
+function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
+  const isLast = index === storyBeats.length - 1
+  return (
+    <Reveal delay={index * 80}>
+      <div
+        className="relative"
+        style={{
+          paddingLeft: "2rem",
+          paddingBottom: isLast ? "0" : "4rem",
+          borderLeft: "1px solid var(--surface-800)",
+        }}
+      >
+        {/* Red dot on timeline */}
+        <div
+          style={{
+            position: "absolute",
+            left: "-5px",
+            top: "2px",
+            width: "9px",
+            height: "9px",
+            borderRadius: "50%",
+            background: index === 0 ? "var(--red)" : "var(--surface-700)",
+            border: index === 0 ? "none" : "1px solid var(--surface-600)",
+            boxShadow: index === 0 ? "0 0 12px var(--red-glow)" : "none",
+          }}
+        />
+
+        {/* Label */}
+        <p className="section-label mb-3">
+          {beat.number} / {beat.label}
+        </p>
+
+        {/* Headline */}
+        <h2
+          className="story-number mb-5"
+          style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)" }}
+        >
+          {beat.headline}
+        </h2>
+
+        {/* Body */}
+        {beat.body.map((para, i) => (
+          <p
+            key={i}
+            style={{
+              fontFamily: "Inter",
+              fontWeight: 400,
+              fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
+              color: "var(--neutral-400)",
+              lineHeight: 1.75,
+              maxWidth: "560px",
+              marginBottom: "1rem",
+            }}
+          >
+            {para}
+          </p>
+        ))}
+
+        {/* Quote */}
+        {beat.quote && (
+          <blockquote className="pull-quote mt-5" style={{ maxWidth: "500px" }}>
+            {beat.quote}
+          </blockquote>
+        )}
+      </div>
+    </Reveal>
+  )
+}
+
+export function Story() {
+  useEffect(() => {
+    const section = document.getElementById("story")
+    if (!section) return
+
+    const updateParallax = () => {
+      const bounds = section.getBoundingClientRect()
+      const offset = Math.max(
+        -140,
+        Math.min(
+          140,
+          (window.innerHeight / 2 - (bounds.top + bounds.height / 2)) * 0.16,
+        ),
+      )
+      section.style.setProperty("--story-parallax-y", `${offset}px`)
+    }
+
+    updateParallax()
+    window.addEventListener("scroll", updateParallax, { passive: true })
+    window.addEventListener("resize", updateParallax)
+    return () => {
+      window.removeEventListener("scroll", updateParallax)
+      window.removeEventListener("resize", updateParallax)
+    }
+  }, [])
+
+  return (
+    <section
+      id="story"
+      className="relative story-3d-section"
+      style={{ background: "var(--black)", padding: "7rem 0" }}
+    >
+      <div className="story-poster-layer" aria-hidden="true">
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2014%2C%202026%2C%2011_19_32%20AM-bii78bxt7KlqUj5mzzinMQo6ls0iA1.png"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div className="story-presentation-logo" aria-hidden="true">
+        <img src={fr1betLogo} alt="" loading="lazy" decoding="async" />
+      </div>
+      <Suspense fallback={null}>
+        <LowerPage3DScene />
+      </Suspense>
+      <div className="dot-grid absolute inset-0 opacity-60" />
+
+      <div className="relative z-10 px-6 md:px-12 max-w-5xl mx-auto">
+        <Reveal className="mb-14">
+          <p className="section-label mb-3">Origin</p>
+          <h2
+            className="hero-display"
+            style={{
+              fontSize: "clamp(2.5rem, 6vw, 5rem)",
+              color: "var(--white)",
+            }}
+          >
+            The Story
+          </h2>
+          <span className="rule-red mt-5 block" />
+        </Reveal>
+
+        <div className="grid md:grid-cols-[1fr_2fr] gap-12 md:gap-20">
+          {/* Left: sticky context on desktop */}
+          <div className="hidden md:block">
+            <div
+              style={{
+                position: "sticky",
+                top: "100px",
+                borderTop: "1px solid var(--surface-800)",
+                paddingTop: "1.5rem",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "Inter",
+                  fontWeight: 600,
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "var(--neutral-500)",
+                  lineHeight: 2,
+                }}
+              >
+                Founder
+                <br />
+                Wesley Robin Jaesch
+                <br />
+                <br />
+                <span style={{ color: "var(--red)" }}>FR1BET</span>
+                <br />
+                Origin Story
+              </p>
+              <div className="mt-8">
+                {storyBeats.map((b, i) => (
+                  <div
+                    key={i}
+                    className="story-nav-item flex items-center gap-3 mb-3"
+                  >
+                    <div
+                      style={{
+                        width: "6px",
+                        height: "6px",
+                        borderRadius: "50%",
+                        background: "var(--surface-700)",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span
+                      style={{
+                        fontFamily: "Inter",
+                        fontWeight: 600,
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        color: "var(--neutral-500)",
+                      }}
+                    >
+                      {b.number} / {b.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right: story beats */}
+          <div>
+            {storyBeats.map((beat, i) => (
+              <StoryBeatBlock key={i} beat={beat} index={i} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

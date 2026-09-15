@@ -4,6 +4,10 @@ import { Environment, Float, PerspectiveCamera } from "@react-three/drei"
 import gsap from "gsap"
 import type { Group } from "three"
 
+// ─── Lower-page 3D scene ──────────────────────────────────────────────────────
+// Renders a stylized race car behind the "Story" section that rotates and
+// pushes back as the user scrolls. Lazy-loaded from HomePage.
+
 function RaceCarForm() {
   const group = useRef<Group>(null)
 
