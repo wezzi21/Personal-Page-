@@ -130,35 +130,74 @@ function Reveal({
   )
 }
 
-/* ─── Logo background ─── */
+/* ─── Logo background (with scroll parallax) ─── */
 function LogoBg() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [offset, setOffset] = useState(0)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    let frame = 0
+
+    function update() {
+      const rect = el.getBoundingClientRect()
+      const vh = window.innerHeight || 1
+      // normalized distance of the slide's center from the viewport center
+      const centerDelta = (rect.top + rect.height / 2 - vh / 2) / vh
+      setOffset(centerDelta * 70)
+    }
+
+    function onScroll() {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("resize", onScroll)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("resize", onScroll)
+    }
+  }, [])
+
   return (
-    <>
+    <div
+      ref={containerRef}
+      aria-hidden
+      style={{
+        position: "absolute",
+        inset: 0,
+        overflow: "hidden",
+        pointerEvents: "none",
+      }}
+    >
       <div
-        aria-hidden
         style={{
           position: "absolute",
-          inset: 0,
+          inset: "-10% 0",
           backgroundImage: `url(${logoBg})`,
           backgroundSize: "90%",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center center",
           mixBlendMode: "screen",
           opacity: 0.18,
-          pointerEvents: "none",
+          transform: `translate3d(0, ${offset}px, 0)`,
+          willChange: "transform",
         }}
       />
       <div
-        aria-hidden
         style={{
           position: "absolute",
           inset: 0,
           background:
             "radial-gradient(ellipse 70% 60% at 50% 50%, transparent 0%, rgba(8,8,8,0.72) 100%)",
-          pointerEvents: "none",
         }}
       />
-    </>
+    </div>
   )
 }
 
