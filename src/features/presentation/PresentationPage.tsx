@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState, ReactNode } from "react"
 import "./presentation.css"
 import fr1betLogo from "@/imports/red_white_logo.png"
+import cardSpecialPitStop from "@/imports/card-special-pit-stop.png"
+import cardSpecialTeamP5 from "@/imports/card-special-team-p5.png"
+import cardQualifyingP5 from "@/imports/card-qualifying-p5.png"
 
 const presentationHeroImage =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/this%20one-IUlE5S5w2X4ONx9rRKOoejhOtcZ56K.jpg"
@@ -8,7 +11,6 @@ const qrCode = fr1betLogo
 const heroBg = presentationHeroImage
 const logoBg = fr1betLogo
 const fr1Coin = fr1betLogo
-const gridScreenshot = fr1betLogo
 const poolScreenshot = fr1betLogo
 const insightScreenshot = fr1betLogo
 const racingDivisionsScreenshot = fr1betLogo
@@ -253,6 +255,68 @@ function Body({
 function Divider() {
   return (
     <div style={{ width: 36, height: 3, background: RED, margin: "18px 0" }} />
+  )
+}
+
+function TiltCard({
+  src,
+  alt,
+  rotate,
+  offsetY = 0,
+  style,
+}: {
+  src: string
+  alt: string
+  rotate: number
+  offsetY?: number
+  style?: React.CSSProperties
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const restTransform = `perspective(900px) rotate(${rotate}deg) translateY(${offsetY}px)`
+  const [transform, setTransform] = useState(restTransform)
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const px = (e.clientX - rect.left) / rect.width - 0.5
+    const py = (e.clientY - rect.top) / rect.height - 0.5
+    const rotateX = (-py * 20).toFixed(2)
+    const rotateY = (px * 20).toFixed(2)
+    setTransform(
+      `perspective(900px) rotate(${rotate}deg) translateY(${offsetY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.06)`
+    )
+  }
+
+  function handleMouseLeave() {
+    setTransform(restTransform)
+  }
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform,
+        transition: "transform 0.35s cubic-bezier(0.22,1,0.36,1)",
+        transformStyle: "preserve-3d",
+        willChange: "transform",
+        cursor: "pointer",
+        ...style,
+      }}
+    >
+      <img
+        src={src}
+        alt={alt}
+        style={{
+          width: "100%",
+          display: "block",
+          borderRadius: 14,
+          boxShadow: "0 24px 56px rgba(0,0,0,0.85)",
+        }}
+      />
+    </div>
   )
 }
 
@@ -557,19 +621,41 @@ function HowItWorks() {
           </Body>
         </Reveal>
 
-        {/* Screenshot full-width */}
+        {/* Prediction card examples */}
         <Reveal delay={160}>
-          <img
-            src={gridScreenshot}
-            alt="FR1BET prediction grid — 10 cards per race weekend"
+          <div
             style={{
-              width: "100%",
-              borderRadius: 14,
-              boxShadow: "0 32px 72px rgba(0,0,0,0.85)",
-              display: "block",
-              marginBottom: 32,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 28,
+              marginBottom: 48,
+              paddingTop: 12,
+              paddingBottom: 24,
             }}
-          />
+          >
+            <TiltCard
+              src={cardQualifyingP5}
+              alt="Qualifying P5 prediction card"
+              rotate={-7}
+              offsetY={10}
+              style={{ width: "27%", maxWidth: 300 }}
+            />
+            <TiltCard
+              src={cardSpecialPitStop}
+              alt="First Pit Stop prediction card"
+              rotate={4}
+              offsetY={-14}
+              style={{ width: "27%", maxWidth: 300, zIndex: 2 }}
+            />
+            <TiltCard
+              src={cardSpecialTeamP5}
+              alt="Team P5 season prediction card"
+              rotate={-3}
+              offsetY={6}
+              style={{ width: "27%", maxWidth: 300 }}
+            />
+          </div>
         </Reveal>
 
         <div className="g3">
