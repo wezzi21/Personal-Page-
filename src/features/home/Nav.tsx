@@ -110,12 +110,16 @@ export function Nav({ scrolled }: { scrolled: boolean }) {
           className="md:hidden flex flex-col justify-center items-center gap-1.5"
           onClick={() => setMenuOpen((v) => !v)}
           style={{
-            background: "none",
+            position: "relative",
+            zIndex: 60,
+            background: menuOpen ? "rgba(255,255,255,0.08)" : "none",
             border: "none",
+            borderRadius: "8px",
             cursor: "pointer",
             padding: "4px",
-            width: "32px",
-            height: "32px",
+            width: "36px",
+            height: "36px",
+            transition: "background 0.2s",
           }}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
@@ -193,6 +197,32 @@ export function Nav({ scrolled }: { scrolled: boolean }) {
                 {l.label}
               </a>
             ))}
+            <a
+              href="/presentation"
+              onClick={() => setMenuOpen(false)}
+              style={{
+                fontFamily: "Inter",
+                fontWeight: 700,
+                fontSize: "0.75rem",
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "var(--red)",
+                textDecoration: "none",
+                padding: "1rem 0",
+                borderBottom: "1px solid var(--surface-800)",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                ;(e.currentTarget as HTMLAnchorElement).style.color =
+                  "var(--white)"
+              }}
+              onMouseLeave={(e) => {
+                ;(e.currentTarget as HTMLAnchorElement).style.color =
+                  "var(--red)"
+              }}
+            >
+              FR1BET Presentation
+            </a>
             <div
               style={{
                 paddingTop: "1.25rem",
