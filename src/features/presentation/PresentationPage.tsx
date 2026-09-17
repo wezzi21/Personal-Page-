@@ -3,7 +3,7 @@ import "./presentation.css"
 import fr1betLogo from "@/imports/red_white_logo.png"
 
 const presentationHeroImage =
-  "/assets/social/ChatGPT%20Image%20Aug%2024%2C%202026%2C%2011_55_37%20AM.png"
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-08-18%20124005-C1dxxyMHOIqwsBhipm268AjWzRqYDA.png"
 const qrCode = fr1betLogo
 const heroBg = presentationHeroImage
 const logoBg = fr1betLogo
