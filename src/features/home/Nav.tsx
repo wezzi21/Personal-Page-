@@ -198,6 +198,33 @@ export function Nav({ scrolled }: { scrolled: boolean }) {
               </a>
             ))}
             <a
+              href="#"
+              aria-label="Guide coming soon"
+              onClick={(e) => e.preventDefault()}
+              style={{
+                fontFamily: "Inter",
+                fontWeight: 700,
+                fontSize: "0.75rem",
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "var(--neutral-400)",
+                textDecoration: "none",
+                padding: "1rem 0",
+                borderBottom: "1px solid var(--surface-800)",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                ;(e.currentTarget as HTMLAnchorElement).style.color =
+                  "var(--white)"
+              }}
+              onMouseLeave={(e) => {
+                ;(e.currentTarget as HTMLAnchorElement).style.color =
+                  "var(--neutral-400)"
+              }}
+            >
+              Guide
+            </a>
+            <a
               href="/presentation"
               onClick={() => setMenuOpen(false)}
               style={{
