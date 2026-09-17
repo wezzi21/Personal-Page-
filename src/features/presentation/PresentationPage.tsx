@@ -3,7 +3,7 @@ import "./presentation.css"
 import fr1betLogo from "@/imports/red_white_logo.png"
 
 const presentationHeroImage =
-  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-08-18%20124005-C1dxxyMHOIqwsBhipm268AjWzRqYDA.png"
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/this%20one-IUlE5S5w2X4ONx9rRKOoejhOtcZ56K.jpg"
 const qrCode = fr1betLogo
 const heroBg = presentationHeroImage
 const logoBg = fr1betLogo
