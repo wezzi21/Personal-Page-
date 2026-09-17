@@ -150,7 +150,7 @@ export function Nav({ scrolled }: { scrolled: boolean }) {
               height: "1.5px",
               background: "var(--white)",
               transition: "transform 0.2s, opacity 0.2s",
-              transform: menuOpen ? "translateY(-5px) rotate(-45deg)" : "none",
+              transform: menuOpen ? "translateY(-7.5px) rotate(-45deg)" : "none",
             }}
           />
         </button>
