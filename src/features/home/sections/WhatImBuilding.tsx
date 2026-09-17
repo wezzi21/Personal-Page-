@@ -113,53 +113,54 @@ export function WhatImBuilding() {
               gap: "1.25rem",
             }}
           >
-            {buildingItems.map((item) => (
-              <div
-                key={item.label}
-                className="flex items-start gap-4"
-                style={{
-                  borderBottom: "1px solid var(--surface-800)",
-                  paddingBottom: "1.25rem",
-                }}
-              >
+            {buildingItems.map((item, i) => (
+              <Reveal key={item.label} fade delay={i * 140}>
                 <div
+                  className="flex items-start gap-4"
                   style={{
-                    width: "6px",
-                    height: "6px",
-                    borderRadius: "50%",
-                    background: "var(--red)",
-                    marginTop: "6px",
-                    flexShrink: 0,
-                    boxShadow: "0 0 8px var(--red-glow)",
+                    borderBottom: "1px solid var(--surface-800)",
+                    paddingBottom: "1.25rem",
                   }}
-                />
-                <div>
-                  <p
+                >
+                  <div
                     style={{
-                      fontFamily: "Inter",
-                      fontWeight: 700,
-                      fontSize: "0.75rem",
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                      color: "var(--white)",
-                      marginBottom: "2px",
+                      width: "6px",
+                      height: "6px",
+                      borderRadius: "50%",
+                      background: "var(--red)",
+                      marginTop: "6px",
+                      flexShrink: 0,
+                      boxShadow: "0 0 8px var(--red-glow)",
                     }}
-                  >
-                    {item.label}
-                  </p>
-                  <p
-                    style={{
-                      fontFamily: "Inter",
-                      fontWeight: 400,
-                      fontSize: "0.85rem",
-                      color: "var(--neutral-500)",
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    {item.desc}
-                  </p>
+                  />
+                  <div>
+                    <p
+                      style={{
+                        fontFamily: "Inter",
+                        fontWeight: 700,
+                        fontSize: "0.75rem",
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        color: "var(--white)",
+                        marginBottom: "2px",
+                      }}
+                    >
+                      {item.label}
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "Inter",
+                        fontWeight: 400,
+                        fontSize: "0.85rem",
+                        color: "var(--neutral-500)",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
