@@ -51,6 +51,30 @@ body,
   transform: translateX(-3px);
 }
 
+.presentation-back-mobile {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+
+.presentation-back-mobile:active {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
 .presentation-hero-action {
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
 }
@@ -95,4 +119,5 @@ body,
   .g2, .g3, .g-ti, .g-ti2, .g-ti3, .g-ti4 { grid-template-columns: 1fr !important; gap: 24px !important; }
   .g4 { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
   .mob-hide { display: none !important; }
+  .presentation-back-mobile.mob-only { display: inline-flex !important; }
 }
