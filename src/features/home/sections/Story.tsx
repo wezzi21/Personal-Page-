@@ -1,3 +1,4 @@
+import { useRef, useState } from "react"
 import fr1betLogo from "@/imports/red_white_logo.png"
 import { Reveal } from "@/components/Reveal"
 import { useRafScroll } from "@/lib/use-raf-scroll"
@@ -13,6 +14,7 @@ type StoryBeat = {
   body: string[]
   quote?: string
   flipImage?: { src: string; alt: string }
+  flipVideo?: { src: string }
 }
 
 const storyBeats: StoryBeat[] = [
@@ -68,6 +70,9 @@ const storyBeats: StoryBeat[] = [
       "Not just who wins. The whole grid. The whole weekend.",
       "I started turning what had only ever existed in my mind into something real.",
     ],
+    flipVideo: {
+      src: "/assets/fr1bet-build-animation.mp4",
+    },
   },
   {
     number: "05",
@@ -125,6 +130,117 @@ function StoryArtwork() {
   )
 }
 
+// Flip card for beats whose back face plays a video instead of a static
+// photo. The flip is driven by state rather than pure CSS :hover, so the
+// card can be flipped back automatically once the clip finishes playing.
+function StoryVideoFlipCard({ beat }: { beat: StoryBeat }) {
+  const [flipped, setFlipped] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const startFlip = () => {
+    if (flipped) return
+    setFlipped(true)
+    const video = videoRef.current
+    if (video) {
+      video.currentTime = 0
+      video.play().catch(() => {})
+    }
+  }
+
+  const handleVideoEnded = () => {
+    setFlipped(false)
+    const video = videoRef.current
+    if (video) video.currentTime = 0
+  }
+
+  return (
+    <div
+      className="flip-card"
+      tabIndex={0}
+      onMouseEnter={startFlip}
+      onFocus={startFlip}
+      onClick={startFlip}
+      style={{ maxWidth: "560px", height: "440px", outline: "none" }}
+    >
+      <div
+        className="flip-card-hint"
+        aria-hidden="true"
+        style={{
+          opacity: flipped ? 0.9 : 0.6,
+          color: flipped ? "var(--red)" : "var(--neutral-400)",
+          transform: flipped ? "scale(1.05)" : "none",
+        }}
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ transform: flipped ? "rotate(180deg)" : "rotate(0deg)" }}
+        >
+          <path d="M17 2.1 21 6l-4 3.9" />
+          <path d="M3 12.5v-2A5 5 0 0 1 8 5.5h13" />
+          <path d="M7 21.9 3 18l4-3.9" />
+          <path d="M21 11.5v2a5 5 0 0 1-5 5H3" />
+        </svg>
+      </div>
+      <div
+        className="flip-card-inner"
+        style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
+      >
+        {/* Front: story text */}
+        <div
+          className="flip-card-front"
+          style={{
+            padding: "1.75rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          {beat.body.map((para, i) => (
+            <p
+              key={i}
+              style={{
+                fontFamily: "Inter",
+                fontWeight: 400,
+                fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
+                color: "var(--neutral-400)",
+                lineHeight: 1.75,
+                marginBottom: "1rem",
+              }}
+            >
+              {para}
+            </p>
+          ))}
+          {beat.quote && (
+            <blockquote className="pull-quote mt-2">{beat.quote}</blockquote>
+          )}
+        </div>
+
+        {/* Back: video */}
+        <div className="flip-card-back">
+          <video
+            ref={videoRef}
+            src={beat.flipVideo!.src}
+            muted
+            playsInline
+            preload="metadata"
+            onEnded={handleVideoEnded}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
   const isLast = index === storyBeats.length - 1
   return (
@@ -166,7 +282,9 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
         </h2>
 
         {/* Body */}
-        {beat.flipImage ? (
+        {beat.flipVideo ? (
+          <StoryVideoFlipCard beat={beat} />
+        ) : beat.flipImage ? (
           <div
             className="flip-card"
             tabIndex={0}
