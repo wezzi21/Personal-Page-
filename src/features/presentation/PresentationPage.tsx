@@ -14,7 +14,7 @@ const qrCode = fr1betLogo
 const heroBg = presentationHeroImage
 const logoBg = fr1betLogo
 const fr1Coin = fr1betLogo
-const insightScreenshot = fr1betLogo
+
 const racingDivisionsScreenshot = countdownLock
 
 const RED = "#E5001A"
@@ -746,8 +746,12 @@ function PoolsExplained() {
     <Slide>
       <div className="sp">
         <div
-          className="g-ti2"
-          style={{ alignItems: "flex-start", marginBottom: 40 }}
+          style={{
+            maxWidth: 720,
+            margin: "0 auto",
+            alignItems: "flex-start",
+            marginBottom: 40,
+          }}
         >
           <div>
             <Reveal>
@@ -828,18 +832,6 @@ function PoolsExplained() {
               </div>
             </Reveal>
           </div>
-          <Reveal delay={100}>
-            <img
-              src={insightScreenshot}
-              alt="FR1BET pool view"
-              style={{
-                width: "100%",
-                borderRadius: 14,
-                boxShadow: "0 32px 72px rgba(0,0,0,0.85)",
-                display: "block",
-              }}
-            />
-          </Reveal>
         </div>
       </div>
     </Slide>
