@@ -4,6 +4,7 @@ import fr1betLogo from "@/imports/red_white_logo.png"
 import cardSpecialPitStop from "@/imports/card-special-pit-stop.png"
 import cardSpecialTeamP5 from "@/imports/card-special-team-p5.png"
 import cardQualifyingP5 from "@/imports/card-qualifying-p5.png"
+import tiersSelectStake from "@/imports/tiers-select-stake.png"
 
 const presentationHeroImage =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/this%20one-IUlE5S5w2X4ONx9rRKOoejhOtcZ56K.jpg"
@@ -11,7 +12,6 @@ const qrCode = fr1betLogo
 const heroBg = presentationHeroImage
 const logoBg = fr1betLogo
 const fr1Coin = fr1betLogo
-const poolScreenshot = fr1betLogo
 const insightScreenshot = fr1betLogo
 const racingDivisionsScreenshot = fr1betLogo
 
@@ -917,16 +917,11 @@ function StakeTiers() {
         </div>
 
         <Reveal delay={160}>
-          <img
-            src={poolScreenshot}
+          <TiltCard
+            src={tiersSelectStake}
             alt="Select stake — active racing divisions"
-            style={{
-              width: "100%",
-              borderRadius: 14,
-              boxShadow: "0 24px 64px rgba(0,0,0,0.85)",
-              display: "block",
-              marginBottom: 32,
-            }}
+            rotate={0}
+            style={{ width: "100%", marginBottom: 32 }}
           />
         </Reveal>
 
