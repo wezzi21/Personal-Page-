@@ -306,12 +306,14 @@ function TiltCard({
   rotate,
   offsetY = 0,
   style,
+  imageStyle,
 }: {
   src: string
   alt: string
   rotate: number
   offsetY?: number
   style?: React.CSSProperties
+  imageStyle?: React.CSSProperties
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const restTransform = `perspective(900px) rotate(${rotate}deg) translateY(${offsetY}px)`
@@ -356,6 +358,7 @@ function TiltCard({
           display: "block",
           borderRadius: 14,
           boxShadow: "0 24px 56px rgba(0,0,0,0.85)",
+          ...imageStyle,
         }}
       />
     </div>
@@ -1565,8 +1568,12 @@ function Currencies() {
   rotate={0}
   style={{
   width: "clamp(200px,28vw,320px)",
-  filter: "drop-shadow(0 20px 60px rgba(200,168,75,0.55))",
   background: "transparent",
+  }}
+  imageStyle={{
+  borderRadius: 0,
+  boxShadow: "none",
+  filter: "drop-shadow(0 20px 60px rgba(200,168,75,0.55))",
   }}
   />
               <div
