@@ -1,9 +1,6 @@
-import { useEffect, useRef } from "react"
 import fr1betLogo from "@/imports/red_white_logo.png"
 import { Reveal } from "@/components/Reveal"
 import { useRafScroll } from "@/lib/use-raf-scroll"
-
-const clamp01 = (value: number) => Math.min(1, Math.max(0, value))
 
 // ─── Story Section ────────────────────────────────────────────────────────────
 
@@ -136,70 +133,6 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
   )
 }
 
-function StoryCarReveal() {
-  const trackRef = useRef<HTMLDivElement>(null)
-
-  useRafScroll(() => {
-    const track = trackRef.current
-    if (!track) return
-    const bounds = track.getBoundingClientRect()
-    const total = bounds.height + window.innerHeight
-    const scrolled = window.innerHeight - bounds.top
-    const progress = clamp01(scrolled / total)
-    track.style.setProperty("--car-progress", progress.toFixed(3))
-    track.style.setProperty(
-      "--car-logo-progress",
-      clamp01((progress - 0.15) / 0.55).toFixed(3),
-    )
-  })
-
-  return (
-    <div ref={trackRef} className="story-car-track" style={{ flex: 1, minHeight: "560px", position: "relative" }}>
-      <div className="story-car-sticky" style={{ position: "sticky", top: "120px", height: "min(64vh, 620px)" }}>
-        <div
-          className="story-car-logo"
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            opacity: "var(--car-logo-progress)",
-            transform: "scale(calc(0.9 + var(--car-logo-progress) * 0.1))",
-          }}
-        >
-          <img
-            src={fr1betLogo}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            style={{ width: "78%", maxWidth: "260px", opacity: 0.5, filter: "drop-shadow(0 0 40px rgba(220, 38, 38, 0.25))" }}
-          />
-        </div>
-        <img
-          src="/assets/fr1bet-story-car.png"
-          alt="FR1BET-liveried Formula 1 car viewed from above, gold FR1BET wordmark beside it"
-          loading="lazy"
-          decoding="async"
-          className="story-car-image"
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "block",
-            width: "100%",
-            maxWidth: "300px",
-            margin: "0 auto",
-            opacity: 0.82,
-            transform: "translateY(calc((1 - var(--car-progress)) * 26px))",
-            filter: "saturate(0.9) brightness(0.92)",
-          }}
-        />
-      </div>
-    </div>
-  )
-}
-
 export function Story() {
   useRafScroll(() => {
     const section = document.getElementById("story")
@@ -254,23 +187,6 @@ export function Story() {
                 background: "var(--black)",
               }}
             >
-              <img
-                src="/assets/fr1bet-story-poster.png"
-                alt="FR1BET gold lettering over a black and red textured background"
-                loading="lazy"
-                decoding="async"
-                style={{
-                  display: "block",
-                  width: "100%",
-                  maxWidth: "220px",
-                  aspectRatio: "2 / 3",
-                  objectFit: "cover",
-                  objectPosition: "center",
-                  marginBottom: "1.5rem",
-                  border: "1px solid var(--surface-800)",
-                  boxShadow: "0 18px 50px rgba(0, 0, 0, 0.35)",
-                }}
-              />
               <p
                 style={{
                   fontFamily: "Inter",
@@ -323,7 +239,6 @@ export function Story() {
               </div>
             </div>
 
-            <StoryCarReveal />
           </div>
 
           {/* Right: story beats */}
