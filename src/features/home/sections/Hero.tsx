@@ -34,6 +34,7 @@ export function Hero() {
           style={{
             background:
               "linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.7) 60%, transparent 100%)",
+            transform: "translateY(6mm)",
           }}
         >
           <Reveal delay={100}>
@@ -64,7 +65,10 @@ export function Hero() {
       </div>
 
       {/* Supporting hero content */}
-      <div className="hero-support-content relative z-10 px-6 md:px-12 pt-8 pb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+      <div
+        className="hero-support-content relative z-10 px-6 md:px-12 pt-8 pb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between"
+        style={{ top: "6mm" }}
+      >
         <div style={{ maxWidth: "560px" }}>
           <Reveal delay={100}>
             <p

@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useRef, useState, type MouseEvent } from "re
 import fr1betLogo from "@/imports/red_white_logo.png"
 import countdownLock from "@/imports/countdown-lock.png"
 import { Reveal } from "@/components/Reveal"
+import { useRafScroll } from "@/lib/use-raf-scroll"
 
 const LowerPage3DScene = lazy(() => import("@/features/home/LowerPage3DScene"))
 
@@ -163,30 +164,19 @@ function StoryPosterTilt() {
 }
 
 export function Story() {
-  useEffect(() => {
+  useRafScroll(() => {
     const section = document.getElementById("story")
     if (!section) return
-
-    const updateParallax = () => {
-      const bounds = section.getBoundingClientRect()
-      const offset = Math.max(
-        -140,
-        Math.min(
-          140,
-          (window.innerHeight / 2 - (bounds.top + bounds.height / 2)) * 0.16,
-        ),
-      )
-      section.style.setProperty("--story-parallax-y", `${offset}px`)
-    }
-
-    updateParallax()
-    window.addEventListener("scroll", updateParallax, { passive: true })
-    window.addEventListener("resize", updateParallax)
-    return () => {
-      window.removeEventListener("scroll", updateParallax)
-      window.removeEventListener("resize", updateParallax)
-    }
-  }, [])
+    const bounds = section.getBoundingClientRect()
+    const offset = Math.max(
+      -140,
+      Math.min(
+        140,
+        (window.innerHeight / 2 - (bounds.top + bounds.height / 2)) * 0.16,
+      ),
+    )
+    section.style.setProperty("--story-parallax-y", `${offset}px`)
+  })
 
   return (
     <section
