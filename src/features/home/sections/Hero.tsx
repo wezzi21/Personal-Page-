@@ -34,7 +34,7 @@ export function Hero() {
           style={{
             background:
               "linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.7) 60%, transparent 100%)",
-            transform: "translateY(12mm)",
+            transform: "translateY(18mm)",
           }}
         >
           <Reveal delay={100}>
