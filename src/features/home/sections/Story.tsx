@@ -214,6 +214,23 @@ export function Story() {
                 paddingTop: "1.5rem",
               }}
             >
+              <img
+                src="/assets/fr1bet-story-poster.png"
+                alt="FR1BET gold lettering over a black and red textured background"
+                loading="lazy"
+                decoding="async"
+                style={{
+                  display: "block",
+                  width: "100%",
+                  maxWidth: "220px",
+                  aspectRatio: "2 / 3",
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  marginBottom: "1.5rem",
+                  border: "1px solid var(--surface-800)",
+                  boxShadow: "0 18px 50px rgba(0, 0, 0, 0.35)",
+                }}
+              />
               <p
                 style={{
                   fontFamily: "Inter",
