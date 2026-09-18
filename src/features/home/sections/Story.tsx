@@ -185,6 +185,9 @@ export function Story() {
                 paddingTop: "1.5rem",
                 zIndex: 1,
                 background: "var(--black)",
+                display: "flex",
+                flexDirection: "column",
+                height: "calc(100vh - 140px)",
               }}
             >
               <p
@@ -239,19 +242,18 @@ export function Story() {
               </div>
 
               {/* Static track banner — starts under "05 / FR1BET" and
-                  stretches toward the bottom of the slide. */}
+                  stretches all the way to the bottom of the sticky rail.
+                  The full image is shown (stretched vertically rather than
+                  cropped) and faded on every edge so it reads as part of
+                  the page background instead of a floating image. */}
               <div
                 className="mt-10"
                 style={{
                   position: "relative",
+                  flex: 1,
+                  minHeight: "320px",
                   width: "100%",
-                  maxHeight: "calc(100vh - 320px)",
                   overflow: "hidden",
-                  borderRadius: "4px",
-                  maskImage:
-                    "linear-gradient(to bottom, transparent 0%, black 6%, black 92%, transparent 100%)",
-                  WebkitMaskImage:
-                    "linear-gradient(to bottom, transparent 0%, black 6%, black 92%, transparent 100%)",
                 }}
               >
                 <img
@@ -260,12 +262,18 @@ export function Story() {
                   loading="lazy"
                   decoding="async"
                   style={{
-                    display: "block",
+                    position: "absolute",
+                    inset: 0,
                     width: "100%",
-                    height: "auto",
-                    objectFit: "cover",
+                    height: "100%",
+                    objectFit: "fill",
                     mixBlendMode: "screen",
-                    opacity: 0.9,
+                    opacity: 0.55,
+                    filter: "brightness(0.85)",
+                    maskImage:
+                      "radial-gradient(85% 100% at 50% 42%, black 50%, transparent 100%)",
+                    WebkitMaskImage:
+                      "radial-gradient(85% 100% at 50% 42%, black 50%, transparent 100%)",
                   }}
                 />
               </div>
