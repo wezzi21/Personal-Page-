@@ -236,7 +236,7 @@ export function Story() {
                 borderTop: "1px solid var(--surface-800)",
                 paddingTop: "1.5rem",
                 zIndex: 1,
-                background: "var(--black)",
+                background: "transparent",
                 display: "flex",
                 flexDirection: "column",
                 height: "calc(100vh - 140px)",
@@ -249,7 +249,7 @@ export function Story() {
                   fontSize: "0.75rem",
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "var(--neutral-500)",
+                  color: "var(--white)",
                   lineHeight: 2,
                 }}
               >
