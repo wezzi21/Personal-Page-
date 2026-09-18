@@ -94,7 +94,7 @@ function StoryArtwork() {
       <img
         src="/assets/fr1bet-track-banner.png"
         alt=""
-        loading="eager"
+        loading="lazy"
         decoding="async"
         style={{
           display: "block",
