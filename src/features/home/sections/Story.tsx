@@ -1,6 +1,7 @@
 import fr1betLogo from "@/imports/red_white_logo.png"
 import { Reveal } from "@/components/Reveal"
 import { useRafScroll } from "@/lib/use-raf-scroll"
+import { CarScrollReveal } from "./CarScrollReveal"
 
 // ─── Story Section ────────────────────────────────────────────────────────────
 
@@ -237,6 +238,10 @@ export function Story() {
                   </div>
                 ))}
               </div>
+
+              {/* Scroll-scrubbed car reveal — starts under "05 / FR1BET" and
+                  stretches toward the bottom of the slide. */}
+              <CarScrollReveal className="mt-10" scrollTargetId="story" />
             </div>
 
           </div>
