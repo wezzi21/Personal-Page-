@@ -4,51 +4,41 @@ import { useRafScroll } from "@/lib/use-raf-scroll"
 /**
  * CarScrollReveal
  * ────────────────────────────────────────────────────────────────────────────
- * A scroll-scrubbed visual: a pre-rendered F1 car animation whose playback
- * position is driven directly by scroll progress, with a FIXED FR1BET logo
- * layer that is progressively revealed "underneath" the moving car.
+ * A scroll-scrubbed visual: a pre-rendered F1 car + logo reveal animation whose
+ * playback position is driven directly by scroll progress. The clip carries the
+ * ENTIRE reveal (car, motion, and the FR1BET logo emerging) — there is no
+ * separate overlay layer.
  *
  * The video NEVER autoplays or loops — its `currentTime` is set manually from
  * scroll progress on every animation frame. Scrolling backwards scrubs back.
  *
- * The component is written so the video source can later be swapped for an
- * image-sequence / canvas implementation without touching the layout.
+ * INTEGRATION: the source clip is composed on a black field, so it is blended
+ * into the page with `mix-blend-mode: screen`. Black pixels merge seamlessly
+ * into the section's black background (no rectangular "video card" edge) while
+ * the car, gold, and red detail read as if they are printed into the page. A
+ * soft feather mask fades the top and bottom so it dissolves into the layout.
  *
  * ┌─ CONFIG ────────────────────────────────────────────────────────────────┐
  * All tunable values live in the `CONFIG` object below. Adjust freely.
  */
 const CONFIG = {
-  // ── Sources ──────────────────────────────────────────────────────────────
+  // ── Source ───────────────────────────────────────────────────────────────
   videoSrc: "/assets/fr1bet-car-reveal.mp4",
-  logoSrc: "/assets/fr1bet-story-poster.png", // FR1BET wordmark, fixed layer
 
   // ── Scroll mapping ─────────────────────────────────────────────────────────
   // Progress through the parent scroll target (0 → 1) is remapped into the
   // active animation window below. Before `animationStart` the video sits on
   // its first frame; after `animationEnd` it holds the last frame.
   animationStart: 0.05, // scroll progress where scrubbing begins
-  animationEnd: 0.95, // scroll progress where scrubbing ends
+  animationEnd: 0.98, // scroll progress where scrubbing ends
 
-  // ── Logo reveal window (share the same scroll progress) ────────────────────
-  logoRevealStart: 0.15, // logo starts appearing
-  logoRevealEnd: 0.85, // logo fully revealed
-
-  // ── Logo placement (fixed within the scene; does NOT move with the car) ────
-  logo: {
-    // percentage-based so it scales with the scene
-    widthPct: 78, // width relative to scene width
-    topPct: 50, // vertical center anchor
-    leftPct: 50, // horizontal center anchor
-    opacityFloor: 0.0, // opacity before reveal starts
-    opacityCeil: 1.0, // opacity at full reveal
-  },
+  // ── Sizing ──────────────────────────────────────────────────────────────────
+  // Height is viewport-driven so, inside the sticky rail, the clip stretches
+  // from just under "05 / FR1BET" down to the bottom edge of the slide.
+  height: "min(76vh, 880px)",
 
   // ── Video scaling ──────────────────────────────────────────────────────────
   objectFit: "contain" as const, // never distort; preserve aspect ratio
-
-  // ── Desktop vs mobile scene sizing ──────────────────────────────────────────
-  desktop: { maxWidth: 420 },
-  mobile: { maxWidth: 300 },
 } as const
 
 function clamp(v: number, min = 0, max = 1) {
@@ -72,17 +62,17 @@ export function CarScrollReveal({
   className,
 }: CarScrollRevealProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
-  const logoRef = useRef<HTMLImageElement | null>(null)
   const durationRef = useRef(0)
   const reducedMotionRef = useRef(false)
 
-  // Cache reduced-motion preference; render a static frame + logo instead.
+  // Cache reduced-motion preference; hold the final frame instead of scrubbing.
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
     const apply = () => {
       reducedMotionRef.current = mq.matches
-      if (mq.matches && logoRef.current) {
-        logoRef.current.style.opacity = String(CONFIG.logo.opacityCeil)
+      const video = videoRef.current
+      if (mq.matches && video && durationRef.current > 0) {
+        video.currentTime = durationRef.current
       }
     }
     apply()
@@ -129,23 +119,12 @@ export function CarScrollReveal({
         video.currentTime = t
       }
     }
-
-    // ── Reveal fixed logo ──────────────────────────────────────────────────────
-    const reveal = remap01(
-      rawProgress,
-      CONFIG.logoRevealStart,
-      CONFIG.logoRevealEnd,
-    )
-    if (logoRef.current) {
-      const opacity =
-        CONFIG.logo.opacityFloor +
-        (CONFIG.logo.opacityCeil - CONFIG.logo.opacityFloor) * reveal
-      logoRef.current.style.opacity = String(opacity)
-      // Wipe-in reveal from bottom → top as the car "uncovers" the logo.
-      const wipe = (1 - reveal) * 100
-      logoRef.current.style.clipPath = `inset(${wipe}% 0 0 0)`
-    }
   })
+
+  // Feather mask fades the clip into the page at top and bottom so it never
+  // reads as a hard-edged rectangle sitting on top of the layout.
+  const featherMask =
+    "linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)"
 
   return (
     <div
@@ -153,37 +132,16 @@ export function CarScrollReveal({
       style={{
         position: "relative",
         width: "100%",
-        maxWidth: `${CONFIG.desktop.maxWidth}px`,
-        aspectRatio: "2 / 3",
-        margin: "0 auto",
-        overflow: "hidden",
-        borderRadius: "14px",
-        // Sits in the background but stays visible.
-        opacity: 0.92,
+        height: CONFIG.height,
+        // Blend the black-field clip into the section background.
+        mixBlendMode: "screen",
+        WebkitMaskImage: featherMask,
+        maskImage: featherMask,
+        pointerEvents: "none",
       }}
+      aria-hidden="true"
     >
-      {/* ── Fixed logo layer (revealed, never moves) ─────────────────────────── */}
-      <img
-        ref={logoRef}
-        src={CONFIG.logoSrc}
-        alt="FR1BET"
-        loading="lazy"
-        decoding="async"
-        style={{
-          position: "absolute",
-          top: `${CONFIG.logo.topPct}%`,
-          left: `${CONFIG.logo.leftPct}%`,
-          width: `${CONFIG.logo.widthPct}%`,
-          transform: "translate(-50%, -50%)",
-          opacity: CONFIG.logo.opacityFloor,
-          clipPath: "inset(100% 0 0 0)",
-          zIndex: 1,
-          pointerEvents: "none",
-          willChange: "opacity, clip-path",
-        }}
-      />
-
-      {/* ── Scroll-scrubbed car animation (foreground) ───────────────────────── */}
+      {/* ── Scroll-scrubbed car + logo reveal ────────────────────────────────── */}
       <video
         ref={videoRef}
         src={CONFIG.videoSrc}
@@ -197,8 +155,6 @@ export function CarScrollReveal({
           width: "100%",
           height: "100%",
           objectFit: CONFIG.objectFit,
-          zIndex: 2,
-          pointerEvents: "none",
           willChange: "transform",
         }}
       />
