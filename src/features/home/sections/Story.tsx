@@ -1,10 +1,9 @@
-import { Suspense, lazy, useEffect, useRef, useState, type MouseEvent } from "react"
+import { useRef, useState } from "react"
 import fr1betLogo from "@/imports/red_white_logo.png"
-import countdownLock from "@/imports/countdown-lock.png"
 import { Reveal } from "@/components/Reveal"
 import { useRafScroll } from "@/lib/use-raf-scroll"
 
-const LowerPage3DScene = lazy(() => import("@/features/home/LowerPage3DScene"))
+const STORY_POSTER_SRC = "/assets/fr1bet-story-bg.png"
 
 // ─── Story Section ────────────────────────────────────────────────────────────
 
@@ -14,6 +13,8 @@ type StoryBeat = {
   headline: string
   body: string[]
   quote?: string
+  flipImage?: { src: string; alt: string }
+  flipVideo?: { src: string }
 }
 
 const storyBeats: StoryBeat[] = [
@@ -26,6 +27,10 @@ const storyBeats: StoryBeat[] = [
       "We called it Friday Betting. Ten predictions, one race weekend — a father and son, and a group of friends who'd gather to make their picks. We had our opinions about everything — not just who would win, but who would fight, who would fall, when strategy would change the order.",
       "We did it for years. It was ours.",
     ],
+    flipImage: {
+      src: "/assets/fr1bet-friday-betting.jpg",
+      alt: "Father and son sitting at a table filling out a printed Formula 1 prediction spreadsheet, with a cat resting between them",
+    },
   },
   {
     number: "02",
@@ -36,6 +41,10 @@ const storyBeats: StoryBeat[] = [
       "Is it the podium? The strategy calls? The split-second battles through the chicane? Or the moment everything changes — a safety car, an unexpected overtake, a retirement that reshapes the race?",
     ],
     quote: "The uncertainty of not knowing what happens next.",
+    flipImage: {
+      src: "/assets/fr1bet-the-question.jpg",
+      alt: "Fans watching the pit lane and grandstands packed with spectators during a race weekend",
+    },
   },
   {
     number: "03",
@@ -47,6 +56,10 @@ const storyBeats: StoryBeat[] = [
       "And I decided to act.",
     ],
     quote: "The idea deserved to exist outside my head.",
+    flipImage: {
+      src: "/assets/fr1bet-turning-point.jpg",
+      alt: "An empty, solemn crematorium chapel with a coffin resting on a stand before a window",
+    },
   },
   {
     number: "04",
@@ -57,6 +70,9 @@ const storyBeats: StoryBeat[] = [
       "Not just who wins. The whole grid. The whole weekend.",
       "I started turning what had only ever existed in my mind into something real.",
     ],
+    flipVideo: {
+      src: "/assets/fr1bet-build-animation.mp4",
+    },
   },
   {
     number: "05",
@@ -67,6 +83,163 @@ const storyBeats: StoryBeat[] = [
       "Built to bring the grid to life — not just as a race to watch, but as a world to enter.",
   },
 ]
+
+// Large decorative artwork pinned to the left side of the story section.
+// It is intentionally oversized and much taller than the viewport — the full
+// image is always shown at its native aspect ratio (never cropped), and it
+// fades softly into the page background instead of sitting in a hard box.
+// Tweak these values to resize/reposition it without touching the JSX below.
+const STORY_ARTWORK = {
+  width: "380px", // rendered width — height follows automatically from the image's aspect ratio
+  scale: 1, // quick overall size multiplier
+  top: "-40px", // vertical offset from the top of the section
+  left: "-60px", // horizontal offset from the left edge of the section (negative bleeds off-screen)
+  opacity: 0.8, // how visible the artwork is at its most opaque point
+  fadeInner: 55, // % of the artwork radius that stays fully opaque before the fade begins
+}
+
+function StoryArtwork() {
+  return (
+    <div
+      aria-hidden="true"
+      style={{
+        position: "absolute",
+        top: STORY_ARTWORK.top,
+        left: STORY_ARTWORK.left,
+        width: `calc(${STORY_ARTWORK.width} * ${STORY_ARTWORK.scale})`,
+        zIndex: 0,
+        pointerEvents: "none",
+      }}
+    >
+      <img
+        src="/assets/fr1bet-track-banner.png"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        style={{
+          display: "block",
+          width: "100%",
+          height: "auto",
+          mixBlendMode: "screen",
+          opacity: STORY_ARTWORK.opacity,
+          maskImage: `radial-gradient(70% 45% at 50% 38%, black ${STORY_ARTWORK.fadeInner}%, transparent 100%)`,
+          WebkitMaskImage: `radial-gradient(70% 45% at 50% 38%, black ${STORY_ARTWORK.fadeInner}%, transparent 100%)`,
+        }}
+      />
+    </div>
+  )
+}
+
+// Flip card for beats whose back face plays a video instead of a static
+// photo. The flip is driven by state rather than pure CSS :hover, so the
+// card can be flipped back automatically once the clip finishes playing.
+function StoryVideoFlipCard({ beat }: { beat: StoryBeat }) {
+  const [flipped, setFlipped] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const startFlip = () => {
+    if (flipped) return
+    setFlipped(true)
+    const video = videoRef.current
+    if (video) {
+      video.currentTime = 0
+      video.play().catch(() => {})
+    }
+  }
+
+  const handleVideoEnded = () => {
+    setFlipped(false)
+    const video = videoRef.current
+    if (video) video.currentTime = 0
+  }
+
+  return (
+    <div
+      className="flip-card"
+      tabIndex={0}
+      onMouseEnter={startFlip}
+      onFocus={startFlip}
+      onClick={startFlip}
+      style={{ maxWidth: "560px", height: "440px", outline: "none" }}
+    >
+      <div
+        className="flip-card-hint"
+        aria-hidden="true"
+        style={{
+          opacity: flipped ? 0.9 : 0.6,
+          color: flipped ? "var(--red)" : "var(--neutral-400)",
+          transform: flipped ? "scale(1.05)" : "none",
+        }}
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ transform: flipped ? "rotate(180deg)" : "rotate(0deg)" }}
+        >
+          <path d="M17 2.1 21 6l-4 3.9" />
+          <path d="M3 12.5v-2A5 5 0 0 1 8 5.5h13" />
+          <path d="M7 21.9 3 18l4-3.9" />
+          <path d="M21 11.5v2a5 5 0 0 1-5 5H3" />
+        </svg>
+      </div>
+      <div
+        className="flip-card-inner"
+        style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
+      >
+        {/* Front: story text */}
+        <div
+          className="flip-card-front"
+          style={{
+            padding: "1.75rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          {beat.body.map((para, i) => (
+            <p
+              key={i}
+              style={{
+                fontFamily: "Inter",
+                fontWeight: 400,
+                fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
+                color: "var(--neutral-400)",
+                lineHeight: 1.75,
+                marginBottom: "1rem",
+              }}
+            >
+              {para}
+            </p>
+          ))}
+          {beat.quote && (
+            <blockquote className="pull-quote mt-2">{beat.quote}</blockquote>
+          )}
+        </div>
+
+        {/* Back: video */}
+        <div className="flip-card-back">
+          <video
+            ref={videoRef}
+            src={beat.flipVideo!.src}
+            muted
+            playsInline
+            preload="metadata"
+            onEnded={handleVideoEnded}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
   const isLast = index === storyBeats.length - 1
@@ -109,57 +282,106 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
         </h2>
 
         {/* Body */}
-        {beat.body.map((para, i) => (
-          <p
-            key={i}
+        {beat.flipVideo ? (
+          <StoryVideoFlipCard beat={beat} />
+        ) : beat.flipImage ? (
+          <div
+            className="flip-card"
+            tabIndex={0}
             style={{
-              fontFamily: "Inter",
-              fontWeight: 400,
-              fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
-              color: "var(--neutral-400)",
-              lineHeight: 1.75,
               maxWidth: "560px",
-              marginBottom: "1rem",
+              height: "440px",
+              outline: "none",
             }}
           >
-            {para}
-          </p>
-        ))}
+            <div className="flip-card-hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 2.1 21 6l-4 3.9" />
+                <path d="M3 12.5v-2A5 5 0 0 1 8 5.5h13" />
+                <path d="M7 21.9 3 18l4-3.9" />
+                <path d="M21 11.5v2a5 5 0 0 1-5 5H3" />
+              </svg>
+            </div>
+            <div className="flip-card-inner">
+              {/* Front: story text */}
+              <div
+                className="flip-card-front"
+                style={{
+                  padding: "1.75rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                {beat.body.map((para, i) => (
+                  <p
+                    key={i}
+                    style={{
+                      fontFamily: "Inter",
+                      fontWeight: 400,
+                      fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
+                      color: "var(--neutral-400)",
+                      lineHeight: 1.75,
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    {para}
+                  </p>
+                ))}
+                {beat.quote && (
+                  <blockquote className="pull-quote mt-2">
+                    {beat.quote}
+                  </blockquote>
+                )}
+              </div>
 
-        {/* Quote */}
-        {beat.quote && (
-          <blockquote className="pull-quote mt-5" style={{ maxWidth: "500px" }}>
-            {beat.quote}
-          </blockquote>
+              {/* Back: photo */}
+              <div className="flip-card-back">
+                <img
+                  src={beat.flipImage.src}
+                  alt={beat.flipImage.alt}
+                  loading="lazy"
+                  decoding="async"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            {beat.body.map((para, i) => (
+              <p
+                key={i}
+                style={{
+                  fontFamily: "Inter",
+                  fontWeight: 400,
+                  fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
+                  color: "var(--neutral-400)",
+                  lineHeight: 1.75,
+                  maxWidth: "560px",
+                  marginBottom: "1rem",
+                }}
+              >
+                {para}
+              </p>
+            ))}
+
+            {beat.quote && (
+              <blockquote
+                className="pull-quote mt-5"
+                style={{ maxWidth: "500px" }}
+              >
+                {beat.quote}
+              </blockquote>
+            )}
+          </>
         )}
       </div>
     </Reveal>
-  )
-}
-
-function StoryPosterTilt() {
-  const ref = useRef<HTMLDivElement>(null)
-  const [transform, setTransform] = useState("perspective(1000px) rotateX(0deg) rotateY(0deg)")
-
-  function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
-    const element = ref.current
-    if (!element) return
-    const bounds = element.getBoundingClientRect()
-    const x = (event.clientX - bounds.left) / bounds.width - 0.5
-    const y = (event.clientY - bounds.top) / bounds.height - 0.5
-    setTransform(`perspective(1000px) rotateX(${(-y * 10).toFixed(2)}deg) rotateY(${(x * 12).toFixed(2)}deg) scale(1.02)`)
-  }
-
-  return (
-    <div
-      ref={ref}
-      className="story-poster-layer"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setTransform("perspective(1000px) rotateX(0deg) rotateY(0deg)")}
-      style={{ pointerEvents: "auto", transform, transition: "transform 220ms ease-out", transformStyle: "preserve-3d", willChange: "transform" }}
-    >
-      <img src={countdownLock} alt="Qualifying betting lock countdown" loading="lazy" decoding="async" />
-    </div>
   )
 }
 
@@ -184,14 +406,14 @@ export function Story() {
       className="relative story-3d-section"
       style={{ background: "var(--black)", padding: "7rem 0" }}
     >
-      <StoryPosterTilt />
+      <div className="story-poster-layer" aria-hidden="true">
+        <img src={STORY_POSTER_SRC} alt="" loading="eager" decoding="async" />
+      </div>
       <div className="story-presentation-logo" aria-hidden="true">
         <img src={fr1betLogo} alt="" loading="lazy" decoding="async" />
       </div>
-      <Suspense fallback={null}>
-        <LowerPage3DScene />
-      </Suspense>
       <div className="dot-grid absolute inset-0 opacity-60" />
+      <StoryArtwork />
 
       <div className="relative z-10 px-6 md:px-12 max-w-5xl mx-auto">
         <Reveal className="mb-14">
@@ -210,13 +432,18 @@ export function Story() {
 
         <div className="grid md:grid-cols-[1fr_2fr] gap-12 md:gap-20">
           {/* Left: sticky context on desktop */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex md:flex-col">
             <div
               style={{
                 position: "sticky",
                 top: "100px",
                 borderTop: "1px solid var(--surface-800)",
                 paddingTop: "1.5rem",
+                zIndex: 1,
+                background: "transparent",
+                display: "flex",
+                flexDirection: "column",
+                height: "calc(100vh - 140px)",
               }}
             >
               <p
@@ -226,7 +453,7 @@ export function Story() {
                   fontSize: "0.75rem",
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "var(--neutral-500)",
+                  color: "var(--white)",
                   lineHeight: 2,
                 }}
               >

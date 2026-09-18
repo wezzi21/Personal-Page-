@@ -78,6 +78,8 @@ export function Vision() {
           {milestones.map((m, i) => (
             <Reveal key={m.marker} delay={i * 100}>
               <div
+                tabIndex={0}
+                className="vision-milestone"
                 style={{
                   borderTop: `1px solid ${
                     m.active ? "var(--red)" : "var(--surface-700)"
@@ -86,10 +88,11 @@ export function Vision() {
                   paddingRight: i < 2 ? "2rem" : "0",
                   paddingLeft: i > 0 ? "2rem" : "0",
                   borderLeft: i > 0 ? "1px solid var(--surface-800)" : "none",
+                  outline: "none",
                 }}
               >
                 <p
-                  className="section-label mb-3"
+                  className="section-label vision-milestone-marker mb-3"
                   style={{
                     color: m.active ? "var(--red)" : "var(--neutral-500)",
                   }}
@@ -97,6 +100,7 @@ export function Vision() {
                   {m.marker}
                 </p>
                 <h3
+                  className="vision-milestone-headline"
                   style={{
                     fontFamily: "Inter",
                     fontWeight: 900,
