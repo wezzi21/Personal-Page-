@@ -11,7 +11,7 @@ import fr1GoldCoin from "@/imports/fr1-gold-coin.png"
 
 const presentationHeroImage =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/this%20one-IUlE5S5w2X4ONx9rRKOoejhOtcZ56K.jpg"
-const qrCode = fr1betLogo
+const qrCode = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/qr-code-CwTLvk1UIrIrpgzn4ThdWfdwkaLeBJ.png"
 const heroBg = presentationHeroImage
 const logoBg = fr1betLogo
 const fr1Coin = fr1GoldCoin
@@ -577,7 +577,17 @@ function Hero() {
               flexWrap: "wrap",
             }}
           >
-            <StatBlock value={<CountUp to={10} />} label="Cards per race" />
+            <StatBlock
+              value={
+                <>
+                  <CountUp to={10} />
+                  <span style={{ fontSize: 13, color: RED, marginLeft: 8, whiteSpace: "nowrap" }}>
+                    +5 sprint weekend
+                  </span>
+                </>
+              }
+              label="Cards per race"
+            />
             <StatBlock value={<CountUp to={6} />} label="Stake tiers" />
             <StatBlock value="0%" label="Rake on pools" />
           </div>
