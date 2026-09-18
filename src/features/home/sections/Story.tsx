@@ -64,6 +64,52 @@ const storyBeats: StoryBeat[] = [
   },
 ]
 
+// Large decorative artwork pinned to the left side of the story section.
+// It is intentionally oversized and much taller than the viewport — the full
+// image is always shown at its native aspect ratio (never cropped), and it
+// fades softly into the page background instead of sitting in a hard box.
+// Tweak these values to resize/reposition it without touching the JSX below.
+const STORY_ARTWORK = {
+  width: "380px", // rendered width — height follows automatically from the image's aspect ratio
+  scale: 1, // quick overall size multiplier
+  top: "-40px", // vertical offset from the top of the section
+  left: "-60px", // horizontal offset from the left edge of the section (negative bleeds off-screen)
+  opacity: 0.8, // how visible the artwork is at its most opaque point
+  fadeInner: 55, // % of the artwork radius that stays fully opaque before the fade begins
+}
+
+function StoryArtwork() {
+  return (
+    <div
+      aria-hidden="true"
+      style={{
+        position: "absolute",
+        top: STORY_ARTWORK.top,
+        left: STORY_ARTWORK.left,
+        width: `calc(${STORY_ARTWORK.width} * ${STORY_ARTWORK.scale})`,
+        zIndex: 0,
+        pointerEvents: "none",
+      }}
+    >
+      <img
+        src="/assets/fr1bet-track-banner.png"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        style={{
+          display: "block",
+          width: "100%",
+          height: "auto",
+          mixBlendMode: "screen",
+          opacity: STORY_ARTWORK.opacity,
+          maskImage: `radial-gradient(70% 45% at 50% 38%, black ${STORY_ARTWORK.fadeInner}%, transparent 100%)`,
+          WebkitMaskImage: `radial-gradient(70% 45% at 50% 38%, black ${STORY_ARTWORK.fadeInner}%, transparent 100%)`,
+        }}
+      />
+    </div>
+  )
+}
+
 function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
   const isLast = index === storyBeats.length - 1
   return (
@@ -158,6 +204,7 @@ export function Story() {
         <img src={fr1betLogo} alt="" loading="lazy" decoding="async" />
       </div>
       <div className="dot-grid absolute inset-0 opacity-60" />
+      <StoryArtwork />
 
       <div className="relative z-10 px-6 md:px-12 max-w-5xl mx-auto">
         <Reveal className="mb-14">
@@ -240,45 +287,7 @@ export function Story() {
                   </div>
                 ))}
               </div>
-
-              {/* Static track banner — starts under "05 / FR1BET" and
-                  stretches all the way to the bottom of the sticky rail.
-                  The full image is shown (stretched vertically rather than
-                  cropped) and faded on every edge so it reads as part of
-                  the page background instead of a floating image. */}
-              <div
-                className="mt-10"
-                style={{
-                  position: "relative",
-                  flex: 1,
-                  minHeight: "320px",
-                  width: "100%",
-                  overflow: "hidden",
-                }}
-              >
-                <img
-                  src="/assets/fr1bet-track-banner.png"
-                  alt="FR1BET wordmark on a race track under red and gold light"
-                  loading="lazy"
-                  decoding="async"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "fill",
-                    mixBlendMode: "screen",
-                    opacity: 0.55,
-                    filter: "brightness(0.85)",
-                    maskImage:
-                      "radial-gradient(85% 100% at 50% 42%, black 50%, transparent 100%)",
-                    WebkitMaskImage:
-                      "radial-gradient(85% 100% at 50% 42%, black 50%, transparent 100%)",
-                  }}
-                />
-              </div>
             </div>
-
           </div>
 
           {/* Right: story beats */}
