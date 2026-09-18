@@ -1,6 +1,7 @@
-import { Suspense, lazy, useEffect } from "react"
+import { Suspense, lazy } from "react"
 import fr1betLogo from "@/imports/red_white_logo.png"
 import { Reveal } from "@/components/Reveal"
+import { useRafScroll } from "@/lib/use-raf-scroll"
 
 const LowerPage3DScene = lazy(() => import("@/features/home/LowerPage3DScene"))
 
@@ -136,30 +137,19 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
 }
 
 export function Story() {
-  useEffect(() => {
+  useRafScroll(() => {
     const section = document.getElementById("story")
     if (!section) return
-
-    const updateParallax = () => {
-      const bounds = section.getBoundingClientRect()
-      const offset = Math.max(
-        -140,
-        Math.min(
-          140,
-          (window.innerHeight / 2 - (bounds.top + bounds.height / 2)) * 0.16,
-        ),
-      )
-      section.style.setProperty("--story-parallax-y", `${offset}px`)
-    }
-
-    updateParallax()
-    window.addEventListener("scroll", updateParallax, { passive: true })
-    window.addEventListener("resize", updateParallax)
-    return () => {
-      window.removeEventListener("scroll", updateParallax)
-      window.removeEventListener("resize", updateParallax)
-    }
-  }, [])
+    const bounds = section.getBoundingClientRect()
+    const offset = Math.max(
+      -140,
+      Math.min(
+        140,
+        (window.innerHeight / 2 - (bounds.top + bounds.height / 2)) * 0.16,
+      ),
+    )
+    section.style.setProperty("--story-parallax-y", `${offset}px`)
+  })
 
   return (
     <section
