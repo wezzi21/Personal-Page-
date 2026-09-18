@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState, type MouseEvent } from "react"
+import { useEffect, useRef } from "react"
 import fr1betLogo from "@/imports/red_white_logo.png"
-import countdownLock from "@/imports/countdown-lock.png"
 import { Reveal } from "@/components/Reveal"
 import { useRafScroll } from "@/lib/use-raf-scroll"
 
@@ -137,32 +136,6 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
   )
 }
 
-function StoryPosterTilt() {
-  const ref = useRef<HTMLDivElement>(null)
-  const [transform, setTransform] = useState("perspective(1000px) rotateX(0deg) rotateY(0deg)")
-
-  function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
-    const element = ref.current
-    if (!element) return
-    const bounds = element.getBoundingClientRect()
-    const x = (event.clientX - bounds.left) / bounds.width - 0.5
-    const y = (event.clientY - bounds.top) / bounds.height - 0.5
-    setTransform(`perspective(1000px) rotateX(${(-y * 10).toFixed(2)}deg) rotateY(${(x * 12).toFixed(2)}deg) scale(1.02)`)
-  }
-
-  return (
-    <div
-      ref={ref}
-      className="story-poster-layer"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setTransform("perspective(1000px) rotateX(0deg) rotateY(0deg)")}
-      style={{ pointerEvents: "auto", transform, transition: "transform 220ms ease-out", transformStyle: "preserve-3d", willChange: "transform" }}
-    >
-      <img src={countdownLock} alt="Qualifying betting lock countdown" loading="lazy" decoding="async" />
-    </div>
-  )
-}
-
 function StoryCarReveal() {
   const trackRef = useRef<HTMLDivElement>(null)
 
@@ -248,7 +221,6 @@ export function Story() {
       className="relative story-3d-section"
       style={{ background: "var(--black)", padding: "7rem 0" }}
     >
-      <StoryPosterTilt />
       <div className="story-presentation-logo" aria-hidden="true">
         <img src={fr1betLogo} alt="" loading="lazy" decoding="async" />
       </div>
