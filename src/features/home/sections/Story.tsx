@@ -25,6 +25,10 @@ const storyBeats: StoryBeat[] = [
       "We called it Friday Betting. Ten predictions, one race weekend — a father and son, and a group of friends who'd gather to make their picks. We had our opinions about everything — not just who would win, but who would fight, who would fall, when strategy would change the order.",
       "We did it for years. It was ours.",
     ],
+    flipImage: {
+      src: "/assets/fr1bet-friday-betting.jpg",
+      alt: "Father and son sitting at a table filling out a printed Formula 1 prediction spreadsheet, with a cat resting between them",
+    },
   },
   {
     number: "02",
