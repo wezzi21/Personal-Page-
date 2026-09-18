@@ -4,7 +4,8 @@ import fr1betLogo from "@/imports/red_white_logo.png"
 import cardSpecialPitStop from "@/imports/card-special-pit-stop.png"
 import cardSpecialTeamP5 from "@/imports/card-special-team-p5.png"
 import cardQualifyingP5 from "@/imports/card-qualifying-p5.png"
-import tiersSelectStake from "@/imports/tiers-select-stake.png"
+ import tiersSelectStake from "@/imports/tiers-select-stake.png"
+ import sprintWeekendsCards from "@/imports/sprint-weekends-cards.png"
 
 const presentationHeroImage =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/this%20one-IUlE5S5w2X4ONx9rRKOoejhOtcZ56K.jpg"
@@ -1017,25 +1018,6 @@ function StakeTiers() {
 }
 
 function SprintWeekends() {
-  const sprintCards = [
-    {
-      pos: "P2",
-      session: "Sprint Quali",
-      desc: "Who qualifies second for the Sprint?",
-    },
-    { pos: "WIN", session: "Sprint Race", desc: "Sprint race winner" },
-    {
-      pos: "P8",
-      session: "Sprint Race",
-      desc: "Who finishes 8th in the Sprint?",
-    },
-    {
-      pos: "LAST",
-      session: "Sprint Race",
-      desc: "The final classified finisher",
-    },
-    { pos: "PTS", session: "Sprint Teams", desc: "Constructor 5th in Sprint" },
-  ]
   return (
     <Slide>
       <div className="sp">
@@ -1093,72 +1075,14 @@ function SprintWeekends() {
               </div>
             </Reveal>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {sprintCards.map((card, i) => (
-              <Reveal key={card.pos} delay={100 + i * 60}>
-                <div
-                  style={{
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: 10,
-                    padding: "14px 16px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 14,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 44,
-                      height: 44,
-                      background: RED,
-                      borderRadius: 8,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontFamily: "'Barlow',sans-serif",
-                        fontWeight: 900,
-                        fontStyle: "italic",
-                        fontSize: 13,
-                        color: "#fff",
-                        letterSpacing: 0.5,
-                      }}
-                    >
-                      {card.pos}
-                    </span>
-                  </div>
-                  <div>
-                    <div
-                      style={{
-                        fontFamily: "'Barlow',sans-serif",
-                        fontSize: 10,
-                        color: RED,
-                        letterSpacing: 2,
-                        marginBottom: 3,
-                      }}
-                    >
-                      {card.session}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: "'Barlow',sans-serif",
-                        fontWeight: 700,
-                        fontSize: 13,
-                        color: "#fff",
-                      }}
-                    >
-                      {card.desc}
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={100}>
+            <TiltCard
+              src={sprintWeekendsCards}
+              alt="Sprint race prediction cards"
+              rotate={0}
+              style={{ width: "100%", alignSelf: "flex-start", marginTop: 70 }}
+            />
+          </Reveal>
         </div>
       </div>
     </Slide>
