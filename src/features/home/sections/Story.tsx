@@ -12,6 +12,7 @@ type StoryBeat = {
   headline: string
   body: string[]
   quote?: string
+  flipImage?: { src: string; alt: string }
 }
 
 const storyBeats: StoryBeat[] = [
@@ -34,6 +35,10 @@ const storyBeats: StoryBeat[] = [
       "Is it the podium? The strategy calls? The split-second battles through the chicane? Or the moment everything changes — a safety car, an unexpected overtake, a retirement that reshapes the race?",
     ],
     quote: "The uncertainty of not knowing what happens next.",
+    flipImage: {
+      src: "/assets/fr1bet-the-question.jpg",
+      alt: "Fans watching the pit lane and grandstands packed with spectators during a race weekend",
+    },
   },
   {
     number: "03",
@@ -153,7 +158,7 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
         </h2>
 
         {/* Body */}
-        {index === 0 ? (
+        {beat.flipImage ? (
           <div
             className="flip-card"
             tabIndex={0}
@@ -207,8 +212,8 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
               {/* Back: photo */}
               <div className="flip-card-back">
                 <img
-                  src="/assets/fr1bet-friday-betting.jpg"
-                  alt="Wesley and his father reviewing their Friday Betting spreadsheet at the kitchen table"
+                  src={beat.flipImage.src}
+                  alt={beat.flipImage.alt}
                   loading="lazy"
                   decoding="async"
                   style={{
