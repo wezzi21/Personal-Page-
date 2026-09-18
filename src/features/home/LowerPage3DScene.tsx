@@ -1,8 +1,9 @@
-import { Suspense, useEffect, useRef } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Environment, Float, PerspectiveCamera } from "@react-three/drei"
 import gsap from "gsap"
 import type { Group } from "three"
+import { useRafScroll } from "@/lib/use-raf-scroll"
 
 // ─── Lower-page 3D scene ──────────────────────────────────────────────────────
 // Renders a stylized race car behind the "Story" section that rotates and
@@ -90,47 +91,35 @@ function RaceCarForm() {
 function ScrollRig({ reducedMotion }: { reducedMotion: boolean }) {
   const rig = useRef<Group>(null)
 
-  useEffect(() => {
+  useRafScroll(() => {
     if (reducedMotion) return
     const element = document.getElementById("story")
-    if (!element) return
+    if (!element || !rig.current) return
 
-    const update = () => {
-      const bounds = element.getBoundingClientRect()
-      const progress = Math.min(
-        1,
-        Math.max(
-          0,
-          (window.innerHeight - bounds.top) /
-            (window.innerHeight + bounds.height),
-        ),
-      )
-      if (rig.current) {
-        gsap.to(rig.current.rotation, {
-          y: progress * Math.PI * 1.7,
-          x: progress * -0.16,
-          duration: 0.5,
-          overwrite: true,
-          ease: "power2.out",
-        })
-        gsap.to(rig.current.position, {
-          z: progress * 0.7,
-          y: progress * 0.25,
-          duration: 0.5,
-          overwrite: true,
-          ease: "power2.out",
-        })
-      }
-    }
-
-    update()
-    window.addEventListener("scroll", update, { passive: true })
-    window.addEventListener("resize", update)
-    return () => {
-      window.removeEventListener("scroll", update)
-      window.removeEventListener("resize", update)
-    }
-  }, [reducedMotion])
+    const bounds = element.getBoundingClientRect()
+    const progress = Math.min(
+      1,
+      Math.max(
+        0,
+        (window.innerHeight - bounds.top) /
+          (window.innerHeight + bounds.height),
+      ),
+    )
+    gsap.to(rig.current.rotation, {
+      y: progress * Math.PI * 1.7,
+      x: progress * -0.16,
+      duration: 0.5,
+      overwrite: true,
+      ease: "power2.out",
+    })
+    gsap.to(rig.current.position, {
+      z: progress * 0.7,
+      y: progress * 0.25,
+      duration: 0.5,
+      overwrite: true,
+      ease: "power2.out",
+    })
+  })
 
   return (
     <group ref={rig}>
@@ -144,9 +133,31 @@ export default function LowerPage3DScene() {
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [inView, setInView] = useState(false)
+
+  // The scene's render loop competes with the main/compositor thread for
+  // every scroll frame. Only run it while the scene is actually on screen
+  // (plus a little lookahead) so scrolling elsewhere on the page isn't
+  // fighting a 3D render that's invisible anyway.
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "200px 0px" },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className="lower-3d-scene" aria-hidden="true">
-      <Canvas dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}>
+    <div ref={containerRef} className="lower-3d-scene" aria-hidden="true">
+      <Canvas
+        dpr={[1, 1.5]}
+        gl={{ antialias: true, alpha: true }}
+        frameloop={inView ? "always" : "never"}
+      >
         <PerspectiveCamera makeDefault position={[0, 0.35, 6.8]} fov={42} />
         <ambientLight intensity={0.7} />
         <spotLight

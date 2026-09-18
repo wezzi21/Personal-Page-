@@ -1,25 +1,19 @@
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
+import { useRafScroll } from "@/lib/use-raf-scroll"
 
 // ─── Hero looping video with scroll parallax ─────────────────────────────────
 
 export function HeroAnimation() {
   const heroRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  useRafScroll(() => {
     const hero = heroRef.current
     if (!hero) return
-
-    const updateParallax = () => {
-      hero.style.setProperty(
-        "--hero-parallax-y",
-        `${Math.min(window.scrollY * 0.18, 180)}px`,
-      )
-    }
-
-    updateParallax()
-    window.addEventListener("scroll", updateParallax, { passive: true })
-    return () => window.removeEventListener("scroll", updateParallax)
-  }, [])
+    hero.style.setProperty(
+      "--hero-parallax-y",
+      `${Math.min(window.scrollY * 0.18, 180)}px`,
+    )
+  })
 
   return (
     <div
