@@ -1,17 +1,22 @@
 import { useEffect, useRef, useState, ReactNode } from "react"
 import "./presentation.css"
 import fr1betLogo from "@/imports/red_white_logo.png"
+import cardSpecialPitStop from "@/imports/card-special-pit-stop.png"
+import cardSpecialTeamP5 from "@/imports/card-special-team-p5.png"
+import cardQualifyingP5 from "@/imports/card-qualifying-p5.png"
+ import tiersSelectStake from "@/imports/tiers-select-stake.png"
+ import sprintWeekendsCards from "@/imports/sprint-weekends-cards.png"
+import countdownLock from "@/imports/countdown-lock.png"
+import fr1GoldCoin from "@/imports/fr1-gold-coin.png"
 
 const presentationHeroImage =
-  "/assets/social/ChatGPT%20Image%20Aug%2024%2C%202026%2C%2011_55_37%20AM.png"
-const qrCode = fr1betLogo
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/this%20one-IUlE5S5w2X4ONx9rRKOoejhOtcZ56K.jpg"
+const qrCode = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/qr-code-CwTLvk1UIrIrpgzn4ThdWfdwkaLeBJ.png"
 const heroBg = presentationHeroImage
 const logoBg = fr1betLogo
-const fr1Coin = fr1betLogo
-const gridScreenshot = fr1betLogo
-const poolScreenshot = fr1betLogo
-const insightScreenshot = fr1betLogo
-const racingDivisionsScreenshot = fr1betLogo
+const fr1Coin = fr1GoldCoin
+
+const racingDivisionsScreenshot = countdownLock
 
 const RED = "#E5001A"
 
@@ -128,35 +133,74 @@ function Reveal({
   )
 }
 
-/* ─── Logo background ─── */
+/* ─── Logo background (with scroll parallax) ─── */
 function LogoBg() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [offset, setOffset] = useState(0)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    let frame = 0
+
+    function update() {
+      const rect = el.getBoundingClientRect()
+      const vh = window.innerHeight || 1
+      // normalized distance of the slide's center from the viewport center
+      const centerDelta = (rect.top + rect.height / 2 - vh / 2) / vh
+      setOffset(centerDelta * 70)
+    }
+
+    function onScroll() {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("resize", onScroll)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("resize", onScroll)
+    }
+  }, [])
+
   return (
-    <>
+    <div
+      ref={containerRef}
+      aria-hidden
+      style={{
+        position: "absolute",
+        inset: 0,
+        overflow: "hidden",
+        pointerEvents: "none",
+      }}
+    >
       <div
-        aria-hidden
         style={{
           position: "absolute",
-          inset: 0,
+          inset: "-10% 0",
           backgroundImage: `url(${logoBg})`,
           backgroundSize: "90%",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center center",
           mixBlendMode: "screen",
           opacity: 0.18,
-          pointerEvents: "none",
+          transform: `translate3d(0, ${offset}px, 0)`,
+          willChange: "transform",
         }}
       />
       <div
-        aria-hidden
         style={{
           position: "absolute",
           inset: 0,
           background:
             "radial-gradient(ellipse 70% 60% at 50% 50%, transparent 0%, rgba(8,8,8,0.72) 100%)",
-          pointerEvents: "none",
         }}
       />
-    </>
+    </div>
   )
 }
 
@@ -253,6 +297,71 @@ function Body({
 function Divider() {
   return (
     <div style={{ width: 36, height: 3, background: RED, margin: "18px 0" }} />
+  )
+}
+
+function TiltCard({
+  src,
+  alt,
+  rotate,
+  offsetY = 0,
+  style,
+  imageStyle,
+}: {
+  src: string
+  alt: string
+  rotate: number
+  offsetY?: number
+  style?: React.CSSProperties
+  imageStyle?: React.CSSProperties
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const restTransform = `perspective(900px) rotate(${rotate}deg) translateY(${offsetY}px)`
+  const [transform, setTransform] = useState(restTransform)
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const px = (e.clientX - rect.left) / rect.width - 0.5
+    const py = (e.clientY - rect.top) / rect.height - 0.5
+    const rotateX = (-py * 20).toFixed(2)
+    const rotateY = (px * 20).toFixed(2)
+    setTransform(
+      `perspective(900px) rotate(${rotate}deg) translateY(${offsetY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.06)`
+    )
+  }
+
+  function handleMouseLeave() {
+    setTransform(restTransform)
+  }
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform,
+        transition: "transform 0.35s cubic-bezier(0.22,1,0.36,1)",
+        transformStyle: "preserve-3d",
+        willChange: "transform",
+        cursor: "pointer",
+        ...style,
+      }}
+    >
+      <img
+        src={src}
+        alt={alt}
+        style={{
+          width: "100%",
+          display: "block",
+          borderRadius: 14,
+          boxShadow: "0 24px 56px rgba(0,0,0,0.85)",
+          ...imageStyle,
+        }}
+      />
+    </div>
   )
 }
 
@@ -468,7 +577,17 @@ function Hero() {
               flexWrap: "wrap",
             }}
           >
-            <StatBlock value={<CountUp to={10} />} label="Cards per race" />
+            <StatBlock
+              value={
+                <>
+                  <CountUp to={10} />
+                  <span style={{ fontSize: 13, color: RED, marginLeft: 8, whiteSpace: "nowrap" }}>
+                    +5 sprint weekend
+                  </span>
+                </>
+              }
+              label="Cards per race"
+            />
             <StatBlock value={<CountUp to={6} />} label="Stake tiers" />
             <StatBlock value="0%" label="Rake on pools" />
           </div>
@@ -557,19 +676,41 @@ function HowItWorks() {
           </Body>
         </Reveal>
 
-        {/* Screenshot full-width */}
+        {/* Prediction card examples */}
         <Reveal delay={160}>
-          <img
-            src={gridScreenshot}
-            alt="FR1BET prediction grid — 10 cards per race weekend"
+          <div
             style={{
-              width: "100%",
-              borderRadius: 14,
-              boxShadow: "0 32px 72px rgba(0,0,0,0.85)",
-              display: "block",
-              marginBottom: 32,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 28,
+              marginBottom: 48,
+              paddingTop: 12,
+              paddingBottom: 24,
             }}
-          />
+          >
+            <TiltCard
+              src={cardQualifyingP5}
+              alt="Qualifying P5 prediction card"
+              rotate={-7}
+              offsetY={10}
+              style={{ width: "27%", maxWidth: 300 }}
+            />
+            <TiltCard
+              src={cardSpecialPitStop}
+              alt="First Pit Stop prediction card"
+              rotate={4}
+              offsetY={-14}
+              style={{ width: "27%", maxWidth: 300, zIndex: 2 }}
+            />
+            <TiltCard
+              src={cardSpecialTeamP5}
+              alt="Team P5 season prediction card"
+              rotate={-3}
+              offsetY={6}
+              style={{ width: "27%", maxWidth: 300 }}
+            />
+          </div>
         </Reveal>
 
         <div className="g3">
@@ -619,8 +760,12 @@ function PoolsExplained() {
     <Slide>
       <div className="sp">
         <div
-          className="g-ti2"
-          style={{ alignItems: "flex-start", marginBottom: 40 }}
+          style={{
+            maxWidth: 720,
+            margin: "0 auto",
+            alignItems: "flex-start",
+            marginBottom: 40,
+          }}
         >
           <div>
             <Reveal>
@@ -701,18 +846,6 @@ function PoolsExplained() {
               </div>
             </Reveal>
           </div>
-          <Reveal delay={100}>
-            <img
-              src={insightScreenshot}
-              alt="FR1BET pool view"
-              style={{
-                width: "100%",
-                borderRadius: 14,
-                boxShadow: "0 32px 72px rgba(0,0,0,0.85)",
-                display: "block",
-              }}
-            />
-          </Reveal>
         </div>
       </div>
     </Slide>
@@ -792,16 +925,11 @@ function StakeTiers() {
         </div>
 
         <Reveal delay={160}>
-          <img
-            src={poolScreenshot}
+          <TiltCard
+            src={tiersSelectStake}
             alt="Select stake — active racing divisions"
-            style={{
-              width: "100%",
-              borderRadius: 14,
-              boxShadow: "0 24px 64px rgba(0,0,0,0.85)",
-              display: "block",
-              marginBottom: 32,
-            }}
+            rotate={0}
+            style={{ width: "100%", marginBottom: 32 }}
           />
         </Reveal>
 
@@ -897,25 +1025,6 @@ function StakeTiers() {
 }
 
 function SprintWeekends() {
-  const sprintCards = [
-    {
-      pos: "P2",
-      session: "Sprint Quali",
-      desc: "Who qualifies second for the Sprint?",
-    },
-    { pos: "WIN", session: "Sprint Race", desc: "Sprint race winner" },
-    {
-      pos: "P8",
-      session: "Sprint Race",
-      desc: "Who finishes 8th in the Sprint?",
-    },
-    {
-      pos: "LAST",
-      session: "Sprint Race",
-      desc: "The final classified finisher",
-    },
-    { pos: "PTS", session: "Sprint Teams", desc: "Constructor 5th in Sprint" },
-  ]
   return (
     <Slide>
       <div className="sp">
@@ -973,72 +1082,14 @@ function SprintWeekends() {
               </div>
             </Reveal>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {sprintCards.map((card, i) => (
-              <Reveal key={card.pos} delay={100 + i * 60}>
-                <div
-                  style={{
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: 10,
-                    padding: "14px 16px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 14,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 44,
-                      height: 44,
-                      background: RED,
-                      borderRadius: 8,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontFamily: "'Barlow',sans-serif",
-                        fontWeight: 900,
-                        fontStyle: "italic",
-                        fontSize: 13,
-                        color: "#fff",
-                        letterSpacing: 0.5,
-                      }}
-                    >
-                      {card.pos}
-                    </span>
-                  </div>
-                  <div>
-                    <div
-                      style={{
-                        fontFamily: "'Barlow',sans-serif",
-                        fontSize: 10,
-                        color: RED,
-                        letterSpacing: 2,
-                        marginBottom: 3,
-                      }}
-                    >
-                      {card.session}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: "'Barlow',sans-serif",
-                        fontWeight: 700,
-                        fontSize: 13,
-                        color: "#fff",
-                      }}
-                    >
-                      {card.desc}
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={100}>
+            <TiltCard
+              src={sprintWeekendsCards}
+              alt="Sprint race prediction cards"
+              rotate={0}
+              style={{ width: "100%", alignSelf: "flex-start", marginTop: 70 }}
+            />
+          </Reveal>
         </div>
       </div>
     </Slide>
@@ -1067,17 +1118,12 @@ function Dashboard() {
         </Reveal>
 
         <Reveal delay={155}>
-          <img
-            src={racingDivisionsScreenshot}
-            alt="FR1BET dashboard — active racing divisions and countdown"
-            style={{
-              width: "100%",
-              borderRadius: 14,
-              boxShadow: "0 32px 72px rgba(0,0,0,0.85)",
-              display: "block",
-              marginBottom: 32,
-            }}
-          />
+        <TiltCard
+          src={racingDivisionsScreenshot}
+          alt="FR1BET qualifying betting lock countdown"
+          rotate={0}
+          style={{ width: "100%", marginBottom: 32 }}
+        />
         </Reveal>
 
         <div className="g3">
@@ -1526,15 +1572,20 @@ function Currencies() {
                 gap: 24,
               }}
             >
-              <img
-                src={fr1Coin}
-                alt="FR1 token"
-                style={{
-                  width: "clamp(200px,28vw,320px)",
-                  filter: "drop-shadow(0 20px 60px rgba(200,168,75,0.55))",
-                  display: "block",
-                }}
-              />
+  <TiltCard
+  src={fr1Coin}
+  alt="Gold FR1 platform token"
+  rotate={0}
+  style={{
+  width: "clamp(200px,28vw,320px)",
+  background: "transparent",
+  }}
+  imageStyle={{
+  borderRadius: 0,
+  boxShadow: "none",
+  filter: "drop-shadow(0 20px 60px rgba(200,168,75,0.55))",
+  }}
+  />
               <div
                 style={{
                   display: "flex",
