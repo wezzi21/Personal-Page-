@@ -7,7 +7,6 @@ import cardQualifyingP5 from "@/imports/card-qualifying-p5.png"
  import tiersSelectStake from "@/imports/tiers-select-stake.png"
  import sprintWeekendsCards from "@/imports/sprint-weekends-cards.png"
 import countdownLock from "@/imports/countdown-lock.png"
-import activeRacingDivisions from "@/imports/active-racing-divisions.png"
 
 const presentationHeroImage =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/this%20one-IUlE5S5w2X4ONx9rRKOoejhOtcZ56K.jpg"
@@ -16,7 +15,7 @@ const heroBg = presentationHeroImage
 const logoBg = fr1betLogo
 const fr1Coin = fr1betLogo
 const insightScreenshot = fr1betLogo
-const racingDivisionsScreenshot = activeRacingDivisions
+const racingDivisionsScreenshot = countdownLock
 
 const RED = "#E5001A"
 
@@ -1115,9 +1114,9 @@ function Dashboard() {
         <Reveal delay={155}>
         <TiltCard
           src={racingDivisionsScreenshot}
-alt="FR1BET active racing divisions dashboard"
-              rotate={0}
-              style={{ width: "100%", marginTop: 64, marginBottom: 32 }}
+          alt="FR1BET qualifying betting lock countdown"
+          rotate={0}
+          style={{ width: "100%", marginBottom: 32 }}
         />
         </Reveal>
 
