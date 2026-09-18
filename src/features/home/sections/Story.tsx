@@ -2,6 +2,8 @@ import fr1betLogo from "@/imports/red_white_logo.png"
 import { Reveal } from "@/components/Reveal"
 import { useRafScroll } from "@/lib/use-raf-scroll"
 
+const STORY_POSTER_SRC = "/assets/fr1bet-story-bg.png"
+
 // ─── Story Section ────────────────────────────────────────────────────────────
 
 type StoryBeat = {
@@ -200,6 +202,9 @@ export function Story() {
       className="relative story-3d-section"
       style={{ background: "var(--black)", padding: "7rem 0" }}
     >
+      <div className="story-poster-layer" aria-hidden="true">
+        <img src={STORY_POSTER_SRC} alt="" loading="eager" decoding="async" />
+      </div>
       <div className="story-presentation-logo" aria-hidden="true">
         <img src={fr1betLogo} alt="" loading="lazy" decoding="async" />
       </div>
