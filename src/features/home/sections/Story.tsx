@@ -163,13 +163,19 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
               outline: "none",
             }}
           >
+            <div className="flip-card-hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 2.1 21 6l-4 3.9" />
+                <path d="M3 12.5v-2A5 5 0 0 1 8 5.5h13" />
+                <path d="M7 21.9 3 18l4-3.9" />
+                <path d="M21 11.5v2a5 5 0 0 1-5 5H3" />
+              </svg>
+            </div>
             <div className="flip-card-inner">
               {/* Front: story text */}
               <div
                 className="flip-card-front"
                 style={{
-                  background: "var(--surface-900)",
-                  border: "1px solid var(--surface-800)",
                   padding: "1.75rem",
                   display: "flex",
                   flexDirection: "column",
