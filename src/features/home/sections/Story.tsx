@@ -1,10 +1,8 @@
-import { Suspense, lazy, useEffect, useRef, useState, type MouseEvent } from "react"
+import { useEffect, useRef, useState, type MouseEvent } from "react"
 import fr1betLogo from "@/imports/red_white_logo.png"
 import countdownLock from "@/imports/countdown-lock.png"
 import { Reveal } from "@/components/Reveal"
 import { useRafScroll } from "@/lib/use-raf-scroll"
-
-const LowerPage3DScene = lazy(() => import("@/features/home/LowerPage3DScene"))
 
 // ─── Story Section ────────────────────────────────────────────────────────────
 
@@ -188,9 +186,6 @@ export function Story() {
       <div className="story-presentation-logo" aria-hidden="true">
         <img src={fr1betLogo} alt="" loading="lazy" decoding="async" />
       </div>
-      <Suspense fallback={null}>
-        <LowerPage3DScene />
-      </Suspense>
       <div className="dot-grid absolute inset-0 opacity-60" />
 
       <div className="relative z-10 px-6 md:px-12 max-w-5xl mx-auto">
