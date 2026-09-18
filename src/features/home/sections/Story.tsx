@@ -1,7 +1,6 @@
 import fr1betLogo from "@/imports/red_white_logo.png"
 import { Reveal } from "@/components/Reveal"
 import { useRafScroll } from "@/lib/use-raf-scroll"
-import { CarScrollReveal } from "./CarScrollReveal"
 
 // ─── Story Section ────────────────────────────────────────────────────────────
 
@@ -239,9 +238,37 @@ export function Story() {
                 ))}
               </div>
 
-              {/* Scroll-scrubbed car reveal — starts under "05 / FR1BET" and
+              {/* Static track banner — starts under "05 / FR1BET" and
                   stretches toward the bottom of the slide. */}
-              <CarScrollReveal className="mt-10" scrollTargetId="story" />
+              <div
+                className="mt-10"
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  maxHeight: "calc(100vh - 320px)",
+                  overflow: "hidden",
+                  borderRadius: "4px",
+                  maskImage:
+                    "linear-gradient(to bottom, transparent 0%, black 6%, black 92%, transparent 100%)",
+                  WebkitMaskImage:
+                    "linear-gradient(to bottom, transparent 0%, black 6%, black 92%, transparent 100%)",
+                }}
+              >
+                <img
+                  src="/assets/fr1bet-track-banner.png"
+                  alt="FR1BET wordmark on a race track under red and gold light"
+                  loading="lazy"
+                  decoding="async"
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "cover",
+                    mixBlendMode: "screen",
+                    opacity: 0.9,
+                  }}
+                />
+              </div>
             </div>
 
           </div>
