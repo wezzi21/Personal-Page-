@@ -7,13 +7,14 @@ import cardQualifyingP5 from "@/imports/card-qualifying-p5.png"
  import tiersSelectStake from "@/imports/tiers-select-stake.png"
  import sprintWeekendsCards from "@/imports/sprint-weekends-cards.png"
 import countdownLock from "@/imports/countdown-lock.png"
+import fr1GoldCoin from "@/imports/fr1-gold-coin.png"
 
 const presentationHeroImage =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/this%20one-IUlE5S5w2X4ONx9rRKOoejhOtcZ56K.jpg"
 const qrCode = fr1betLogo
 const heroBg = presentationHeroImage
 const logoBg = fr1betLogo
-const fr1Coin = fr1betLogo
+const fr1Coin = fr1GoldCoin
 
 const racingDivisionsScreenshot = countdownLock
 
@@ -1558,15 +1559,16 @@ function Currencies() {
                 gap: 24,
               }}
             >
-              <img
-                src={fr1Coin}
-                alt="FR1 token"
-                style={{
-                  width: "clamp(200px,28vw,320px)",
-                  filter: "drop-shadow(0 20px 60px rgba(200,168,75,0.55))",
-                  display: "block",
-                }}
-              />
+  <TiltCard
+  src={fr1Coin}
+  alt="Gold FR1 platform token"
+  rotate={0}
+  style={{
+  width: "clamp(200px,28vw,320px)",
+  filter: "drop-shadow(0 20px 60px rgba(200,168,75,0.55))",
+  background: "transparent",
+  }}
+  />
               <div
                 style={{
                   display: "flex",
