@@ -239,9 +239,9 @@ html {
 
 .story-poster-layer {
   z-index: 0;
-  opacity: 0.55;
+  opacity: 0.46;
   mix-blend-mode: screen;
-  transform: translate3d(0, var(--story-parallax-y, 0px), 0) scale(1.12);
+  transform: translate3d(0, var(--story-parallax-y, 0px), 0) scale(1.04);
   will-change: transform;
   transition: transform 120ms linear;
 }
