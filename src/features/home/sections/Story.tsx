@@ -153,28 +153,95 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
         </h2>
 
         {/* Body */}
-        {beat.body.map((para, i) => (
-          <p
-            key={i}
+        {index === 0 ? (
+          <div
+            className="flip-card"
+            tabIndex={0}
             style={{
-              fontFamily: "Inter",
-              fontWeight: 400,
-              fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
-              color: "var(--neutral-400)",
-              lineHeight: 1.75,
               maxWidth: "560px",
-              marginBottom: "1rem",
+              height: "440px",
+              outline: "none",
             }}
           >
-            {para}
-          </p>
-        ))}
+            <div className="flip-card-inner">
+              {/* Front: story text */}
+              <div
+                className="flip-card-front"
+                style={{
+                  background: "var(--surface-900)",
+                  border: "1px solid var(--surface-800)",
+                  padding: "1.75rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                {beat.body.map((para, i) => (
+                  <p
+                    key={i}
+                    style={{
+                      fontFamily: "Inter",
+                      fontWeight: 400,
+                      fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
+                      color: "var(--neutral-400)",
+                      lineHeight: 1.75,
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    {para}
+                  </p>
+                ))}
+                {beat.quote && (
+                  <blockquote className="pull-quote mt-2">
+                    {beat.quote}
+                  </blockquote>
+                )}
+              </div>
 
-        {/* Quote */}
-        {beat.quote && (
-          <blockquote className="pull-quote mt-5" style={{ maxWidth: "500px" }}>
-            {beat.quote}
-          </blockquote>
+              {/* Back: photo */}
+              <div className="flip-card-back">
+                <img
+                  src="/assets/fr1bet-friday-betting.jpg"
+                  alt="Wesley and his father reviewing their Friday Betting spreadsheet at the kitchen table"
+                  loading="lazy"
+                  decoding="async"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            {beat.body.map((para, i) => (
+              <p
+                key={i}
+                style={{
+                  fontFamily: "Inter",
+                  fontWeight: 400,
+                  fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
+                  color: "var(--neutral-400)",
+                  lineHeight: 1.75,
+                  maxWidth: "560px",
+                  marginBottom: "1rem",
+                }}
+              >
+                {para}
+              </p>
+            ))}
+
+            {beat.quote && (
+              <blockquote
+                className="pull-quote mt-5"
+                style={{ maxWidth: "500px" }}
+              >
+                {beat.quote}
+              </blockquote>
+            )}
+          </>
         )}
       </div>
     </Reveal>
