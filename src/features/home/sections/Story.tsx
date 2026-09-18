@@ -54,6 +54,10 @@ const storyBeats: StoryBeat[] = [
       "And I decided to act.",
     ],
     quote: "The idea deserved to exist outside my head.",
+    flipImage: {
+      src: "/assets/fr1bet-turning-point.jpg",
+      alt: "An empty, solemn crematorium chapel with a coffin resting on a stand before a window",
+    },
   },
   {
     number: "04",
