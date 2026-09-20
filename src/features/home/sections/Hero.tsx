@@ -32,8 +32,6 @@ export function Hero() {
         <div
           className="absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-10 hero-copy-overlay"
           style={{
-            background:
-              "linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.7) 60%, transparent 100%)",
             transform: "translateY(24mm)",
           }}
         >
@@ -42,7 +40,7 @@ export function Hero() {
           </Reveal>
           <Reveal delay={200}>
             <h1
-              className="hero-display"
+              className="hero-display hero-name-blur"
               style={{ fontSize: "clamp(3.5rem, 9vw, 8rem)" }}
             >
               Wesley{" "}

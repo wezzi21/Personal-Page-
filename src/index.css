@@ -254,6 +254,27 @@ html {
   color: var(--white);
 }
 
+/* Subtle blur behind the hero name only, so it reads clearly over the animation
+   without a full-width gradient dimming the visuals */
+.hero-name-blur {
+  display: inline-block;
+  position: relative;
+  padding: 0.2em 0.35em;
+  margin: -0.2em -0.35em;
+  border-radius: 12px;
+}
+
+.hero-name-blur::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 12px;
+  background: rgba(10, 10, 10, 0.32);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
 /* Story number headings */
 .story-number {
   font-family: 'Inter', sans-serif;
