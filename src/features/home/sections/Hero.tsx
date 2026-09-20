@@ -35,6 +35,19 @@ export function Hero() {
             background:
               "linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.7) 60%, transparent 100%)",
             transform: "translateY(24mm)",
+            borderRadius: "261px",
+            textAlign: "left",
+            fontFamily: '"Inter", sans-serif',
+            fontSize: "15px",
+            height: "245px",
+            width: "663px",
+            marginLeft: "-4px",
+            paddingTop: "18px",
+            paddingLeft: "49px",
+            paddingRight: "42px",
+            opacity: 0.8,
+            boxShadow: "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
+            boxSizing: "border-box",
           }}
         >
           <Reveal delay={100}>

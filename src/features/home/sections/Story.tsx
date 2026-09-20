@@ -409,6 +409,7 @@ export function Story() {
       <div className="story-poster-layer" aria-hidden="true">
         <img src={STORY_POSTER_SRC} alt="" loading="eager" decoding="async" />
       </div>
+      <div className="story-top-fade" aria-hidden="true" />
       <div className="story-presentation-logo" aria-hidden="true">
         <img src={fr1betLogo} alt="" loading="lazy" decoding="async" />
       </div>
