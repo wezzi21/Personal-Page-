@@ -39,12 +39,17 @@ export function Hero() {
             textAlign: "left",
             fontFamily: '"Inter", sans-serif',
             fontSize: "15px",
-            height: "245px",
-            width: "663px",
+            minHeight: "245px",
+            height: "auto",
+            width: "min(663px, calc(100% - 24px))",
             marginLeft: "-4px",
             paddingTop: "18px",
-            paddingLeft: "49px",
+            paddingLeft: "74px",
             paddingRight: "42px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            overflow: "hidden",
             opacity: 0.8,
             boxShadow: "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
             boxSizing: "border-box",
@@ -58,20 +63,8 @@ export function Hero() {
               className="hero-display"
               style={{ fontSize: "clamp(3.5rem, 9vw, 8rem)" }}
             >
-              Wesley{" "}
-              <span
-                style={{
-                  fontSize: "0.45em",
-                  fontWeight: 700,
-                  letterSpacing: "0.04em",
-                  verticalAlign: "middle",
-                  opacity: 0.7,
-                }}
-              >
-                Robin
-              </span>
-              <br />
-              Jaesch
+              <span style={{ display: "block" }}>Wesley</span>
+              <span style={{ display: "block" }}>Jaesch</span>
             </h1>{" "}
           </Reveal>
         </div>
