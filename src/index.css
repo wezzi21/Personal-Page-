@@ -816,13 +816,13 @@ html {
 /* Slower, softer premium reveal on phones */
 @media (max-width: 767px) {
   .reveal {
-    --reveal-y: 34px;
+    --reveal-y: 42px;
   }
   .reveal.visible {
-    animation: fadeUp 1.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeUp 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .reveal-fade.visible {
-    animation: fadeIn 1.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeIn 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }
 
