@@ -35,7 +35,7 @@ export function Hero() {
             background:
               "linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.7) 60%, transparent 100%)",
             transform: "translateY(24mm)",
-            borderRadius: 0,
+            borderRadius: "261px",
             textAlign: "left",
             fontFamily: '"Inter", sans-serif',
             fontSize: "15px",
