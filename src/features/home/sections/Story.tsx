@@ -53,7 +53,7 @@ const storyBeats: StoryBeat[] = [
     headline: "Then I Lost My Father.",
     body: [
       "My father passed away due to leukemia.",
-      "After losing him, I sat with the idea we had built together every Friday. I thought about the question we had been asking. I thought about how much more there was to say about it.",
+      "After losing him, I sat with the idea we had built together every Friday. I thought about the question we had been asking. I believed that there must be more to this idea. ",
       "And I decided to act.",
     ],
     quote: "The idea deserved to exist outside my head.",
