@@ -71,8 +71,9 @@ const storyBeats: StoryBeat[] = [
       "Not just who wins. The whole grid. The whole weekend.",
       "I started turning what had only ever existed in my mind into something real.",
     ],
-    flipVideo: {
-      src: "/assets/fr1bet-build-animation.mp4",
+    flipImage: {
+      src: "/assets/fr1bet-the-build.png",
+      alt: "A laptop showing early wireframe sketches of a racing prediction platform, surrounded by handwritten notes and a small F1 model car on a desk at night",
     },
   },
   {
