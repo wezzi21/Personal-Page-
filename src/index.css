@@ -99,6 +99,17 @@ body,
   transform: rotate(180deg);
 }
 
+/* On phones the flip card is much narrower than tall, so a plain
+   object-fit: cover crops out one side of wide photos. Zooming the image
+   out (scaling it down within the same frame) keeps everything in the
+   shot visible instead of cropping it. */
+@media (max-width: 767px) {
+  .flip-card-back-img--zoom-out-mobile {
+    object-fit: contain !important;
+    background: rgba(0, 0, 0, 0.55);
+  }
+}
+
 :root {
   --red: #FF1801;
   --red-hover: #D40000;

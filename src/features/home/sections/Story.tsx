@@ -13,7 +13,7 @@ type StoryBeat = {
   headline: string
   body: string[]
   quote?: string
-  flipImage?: { src: string; alt: string }
+  flipImage?: { src: string; alt: string; zoomOutMobile?: boolean }
   flipVideo?: { src: string }
 }
 
@@ -30,6 +30,7 @@ const storyBeats: StoryBeat[] = [
     flipImage: {
       src: "/assets/fr1bet-friday-betting.jpg",
       alt: "Father and son sitting at a table filling out a printed Formula 1 prediction spreadsheet, with a cat resting between them",
+      zoomOutMobile: true,
     },
   },
   {
@@ -241,6 +242,113 @@ function StoryVideoFlipCard({ beat }: { beat: StoryBeat }) {
   )
 }
 
+// Flip card for beats whose back face is a static photo. The flip is driven
+// by explicit click state (rather than CSS :hover/:focus-within) so it
+// behaves the same on touch devices as on desktop — on mobile, hover/focus
+// is released the instant a finger lifts, which made the card snap back
+// almost immediately after tapping it. A tap now toggles the flip and it
+// stays flipped until tapped again.
+function StoryImageFlipCard({ beat }: { beat: StoryBeat }) {
+  const [flipped, setFlipped] = useState(false)
+  const toggleFlip = () => setFlipped((f) => !f)
+
+  return (
+    <div
+      className="flip-card"
+      tabIndex={0}
+      role="button"
+      aria-pressed={flipped}
+      onClick={toggleFlip}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault()
+          toggleFlip()
+        }
+      }}
+      style={{ maxWidth: "560px", height: "440px", outline: "none" }}
+    >
+      <div
+        className="flip-card-hint"
+        aria-hidden="true"
+        style={{
+          opacity: flipped ? 0.9 : 0.6,
+          color: flipped ? "var(--red)" : "var(--neutral-400)",
+          transform: flipped ? "scale(1.05)" : "none",
+        }}
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ transform: flipped ? "rotate(180deg)" : "rotate(0deg)" }}
+        >
+          <path d="M17 2.1 21 6l-4 3.9" />
+          <path d="M3 12.5v-2A5 5 0 0 1 8 5.5h13" />
+          <path d="M7 21.9 3 18l4-3.9" />
+          <path d="M21 11.5v2a5 5 0 0 1-5 5H3" />
+        </svg>
+      </div>
+      <div
+        className="flip-card-inner"
+        style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
+      >
+        {/* Front: story text */}
+        <div
+          className="flip-card-front"
+          style={{
+            padding: "1.75rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          {beat.body.map((para, i) => (
+            <p
+              key={i}
+              style={{
+                fontFamily: "Inter",
+                fontWeight: 400,
+                fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
+                color: "var(--neutral-400)",
+                lineHeight: 1.75,
+                marginBottom: "1rem",
+              }}
+            >
+              {para}
+            </p>
+          ))}
+          {beat.quote && (
+            <blockquote className="pull-quote mt-2">{beat.quote}</blockquote>
+          )}
+        </div>
+
+        {/* Back: photo */}
+        <div className="flip-card-back">
+          <img
+            src={beat.flipImage!.src}
+            alt={beat.flipImage!.alt}
+            loading="lazy"
+            decoding="async"
+            className={
+              beat.flipImage!.zoomOutMobile
+                ? "flip-card-back-img--zoom-out-mobile"
+                : undefined
+            }
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
   const isLast = index === storyBeats.length - 1
   return (
@@ -285,72 +393,7 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
         {beat.flipVideo ? (
           <StoryVideoFlipCard beat={beat} />
         ) : beat.flipImage ? (
-          <div
-            className="flip-card"
-            tabIndex={0}
-            style={{
-              maxWidth: "560px",
-              height: "440px",
-              outline: "none",
-            }}
-          >
-            <div className="flip-card-hint" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17 2.1 21 6l-4 3.9" />
-                <path d="M3 12.5v-2A5 5 0 0 1 8 5.5h13" />
-                <path d="M7 21.9 3 18l4-3.9" />
-                <path d="M21 11.5v2a5 5 0 0 1-5 5H3" />
-              </svg>
-            </div>
-            <div className="flip-card-inner">
-              {/* Front: story text */}
-              <div
-                className="flip-card-front"
-                style={{
-                  padding: "1.75rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                {beat.body.map((para, i) => (
-                  <p
-                    key={i}
-                    style={{
-                      fontFamily: "Inter",
-                      fontWeight: 400,
-                      fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
-                      color: "var(--neutral-400)",
-                      lineHeight: 1.75,
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    {para}
-                  </p>
-                ))}
-                {beat.quote && (
-                  <blockquote className="pull-quote mt-2">
-                    {beat.quote}
-                  </blockquote>
-                )}
-              </div>
-
-              {/* Back: photo */}
-              <div className="flip-card-back">
-                <img
-                  src={beat.flipImage.src}
-                  alt={beat.flipImage.alt}
-                  loading="lazy"
-                  decoding="async"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
-            </div>
-          </div>
+          <StoryImageFlipCard beat={beat} />
         ) : (
           <>
             {beat.body.map((para, i) => (
