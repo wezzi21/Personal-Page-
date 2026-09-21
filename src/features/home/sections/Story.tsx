@@ -83,6 +83,9 @@ const storyBeats: StoryBeat[] = [
     body: [],
     quote:
       "Built to bring the grid to life — not just as a race to watch, but as a world to enter.",
+    flipVideo: {
+      src: "/assets/fr1bet-app-preview.mp4",
+    },
   },
 ]
 
