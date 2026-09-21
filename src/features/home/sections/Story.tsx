@@ -65,7 +65,7 @@ const storyBeats: StoryBeat[] = [
   {
     number: "04",
     label: "The Build",
-    headline: "So I Started Building.",
+    headline: "So I Started Planning. ",
     body: [
       "I imagined a platform where every fan could become part of that experience — a place to predict, compete, react, and follow the race together.",
       "Not just who wins. The whole grid. The whole weekend.",
