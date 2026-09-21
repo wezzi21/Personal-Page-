@@ -794,7 +794,7 @@ html {
 
 /* Scroll reveal animations */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(28px); }
+  from { opacity: 0; transform: translateY(var(--reveal-y, 28px)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeIn {
@@ -804,12 +804,26 @@ html {
 
 .reveal {
   opacity: 0;
+  --reveal-y: 28px;
 }
 .reveal.visible {
   animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 .reveal-fade.visible {
   animation: fadeIn 0.8s ease forwards;
+}
+
+/* Slower, softer premium reveal on phones */
+@media (max-width: 767px) {
+  .reveal {
+    --reveal-y: 34px;
+  }
+  .reveal.visible {
+    animation: fadeUp 1.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .reveal-fade.visible {
+    animation: fadeIn 1.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
