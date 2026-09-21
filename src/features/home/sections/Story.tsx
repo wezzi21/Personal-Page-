@@ -41,7 +41,7 @@ const storyBeats: StoryBeat[] = [
       "Sitting there with my father, I started asking a bigger question. When people follow Formula 1, what is it they are actually watching for?",
       "Is it the podium? The strategy calls? The split-second battles through the chicane? Or the moment everything changes — a safety car, an unexpected overtake, a retirement that reshapes the race?",
     ],
-    quote: "The uncertainty of not knowing what happens next.",
+    quote: "I believe it's the uncertainty of not knowing what happens next.",
     flipImage: {
       src: "/assets/fr1bet-the-question.jpg",
       alt: "Fans watching the pit lane and grandstands packed with spectators during a race weekend",
@@ -56,7 +56,7 @@ const storyBeats: StoryBeat[] = [
       "After losing him, I sat with the idea we had built together every Friday. I thought about the question we had been asking. I believed that there must be more to this idea. ",
       "And I decided to act.",
     ],
-    quote: "The idea deserved to exist outside my head.",
+    quote: "\"If you are going to try, go all the way; otherwise, don't even start.\"",
     flipImage: {
       src: "/assets/fr1bet-turning-point.jpg",
       alt: "An empty, solemn crematorium chapel with a coffin resting on a stand before a window",
