@@ -12,7 +12,6 @@ const milestones = [
     marker: "Now",
     headline: "Building FR1BET.",
     body: "Turning the idea into a platform. Building the world we imagined at that table, and opening it to every F1 fan.",
-    active: true,
   },
   {
     marker: "Next",
@@ -79,22 +78,19 @@ export function Vision() {
             <Reveal key={m.marker} delay={i * 100}>
               <div
                 tabIndex={0}
-                className="vision-milestone"
+                className={`vision-milestone ${
+                  i > 0 ? "md:pl-8 md:[border-left:1px_solid_var(--surface-800)]" : ""
+                } ${i < 2 ? "md:pr-8" : ""}`}
                 style={{
-                  borderTop: `1px solid ${
-                    m.active ? "var(--red)" : "var(--surface-700)"
-                  }`,
+                  borderTop: "1px solid var(--surface-700)",
                   paddingTop: "1.75rem",
-                  paddingRight: i < 2 ? "2rem" : "0",
-                  paddingLeft: i > 0 ? "2rem" : "0",
-                  borderLeft: i > 0 ? "1px solid var(--surface-800)" : "none",
                   outline: "none",
                 }}
               >
                 <p
                   className="section-label vision-milestone-marker mb-3"
                   style={{
-                    color: m.active ? "var(--red)" : "var(--neutral-500)",
+                    color: "var(--neutral-500)",
                   }}
                 >
                   {m.marker}
@@ -108,7 +104,7 @@ export function Vision() {
                     fontSize: "clamp(1rem, 1.8vw, 1.25rem)",
                     textTransform: "uppercase",
                     letterSpacing: "-0.01em",
-                    color: m.active ? "var(--white)" : "var(--neutral-400)",
+                    color: "var(--neutral-400)",
                     marginBottom: "0.75rem",
                     lineHeight: 1.2,
                   }}
