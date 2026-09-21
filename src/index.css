@@ -697,6 +697,10 @@ html {
   transform: translateY(19px);
 }
 
+.hero-copy-overlay .hero-display {
+  margin: 0;
+}
+
 .hero-support-content {
   margin-top: 19px;
   background: linear-gradient(
