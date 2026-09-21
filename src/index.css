@@ -697,6 +697,18 @@ html {
   transform: translateY(19px);
 }
 
+@media (max-width: 767px) {
+  .hero-copy-overlay {
+    left: 0 !important;
+    right: 0 !important;
+    width: calc(100% - 24px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
 .hero-copy-overlay .hero-display {
   margin: 0;
 }
