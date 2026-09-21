@@ -63,20 +63,27 @@ export function Hero() {
               className="hero-display"
               style={{ fontSize: "clamp(3.5rem, 9vw, 8rem)" }}
             >
-              Wesley{" "}
               <span
                 style={{
-                  fontSize: "0.45em",
-                  fontWeight: 700,
-                  letterSpacing: "0.04em",
-                  verticalAlign: "middle",
-                  opacity: 0.7,
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: "0.22em",
+                  whiteSpace: "nowrap",
                 }}
               >
-                Robin
+                Wesley
+                <span
+                  style={{
+                    fontSize: "0.45em",
+                    fontWeight: 700,
+                    letterSpacing: "0.04em",
+                    opacity: 0.7,
+                  }}
+                >
+                  Robin
+                </span>
               </span>
-              <br />
-              Jaesch
+              <span style={{ display: "block" }}>Jaesch</span>
             </h1>{" "}
           </Reveal>
         </div>
