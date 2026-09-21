@@ -44,7 +44,7 @@ export function Hero() {
             width: "min(663px, calc(100% - 24px))",
             marginLeft: "-4px",
             paddingTop: "18px",
-            paddingLeft: "49px",
+            paddingLeft: "61px",
             paddingRight: "42px",
             display: "flex",
             flexDirection: "column",
