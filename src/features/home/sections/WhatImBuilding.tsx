@@ -1,3 +1,4 @@
+import { useState } from "react"
 import fr1betLogo from "@/imports/red_white_logo.png"
 import { Reveal } from "@/components/Reveal"
 
@@ -11,6 +12,8 @@ const buildingItems = [
 ]
 
 export function WhatImBuilding() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+
   return (
     <section
       id="idea"
@@ -113,55 +116,65 @@ export function WhatImBuilding() {
               gap: "1.25rem",
             }}
           >
-            {buildingItems.map((item, i) => (
-              <Reveal key={item.label} fade delay={i * 140}>
-                <div
-                  className="flex items-start gap-4"
-                  style={{
-                    borderBottom: "1px solid var(--surface-800)",
-                    paddingBottom: "1.25rem",
-                  }}
-                >
+            {buildingItems.map((item, i) => {
+              const isUnfocused = hoveredIndex !== null && hoveredIndex !== i
+              return (
+                <Reveal key={item.label} fade delay={i * 140}>
                   <div
+                    className="flex items-start gap-4"
+                    onMouseEnter={() => setHoveredIndex(i)}
+                    onMouseLeave={() => setHoveredIndex(null)}
                     style={{
-                      width: "6px",
-                      height: "6px",
-                      borderRadius: "50%",
-                      background: "var(--red)",
-                      marginTop: "6px",
-                      flexShrink: 0,
-                      boxShadow: "0 0 8px var(--red-glow)",
+                      borderBottom: "1px solid var(--surface-800)",
+                      paddingBottom: "1.25rem",
+                      opacity: isUnfocused ? 0.35 : 1,
+                      filter: isUnfocused ? "blur(3px)" : "blur(0px)",
+                      transform: isUnfocused ? "scale(0.98)" : "scale(1)",
+                      transition:
+                        "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
                     }}
-                  />
-                  <div>
-                    <p
+                  >
+                    <div
                       style={{
-                        fontFamily: "Inter",
-                        fontWeight: 700,
-                        fontSize: "0.75rem",
-                        letterSpacing: "0.12em",
-                        textTransform: "uppercase",
-                        color: "var(--white)",
-                        marginBottom: "2px",
+                        width: "6px",
+                        height: "6px",
+                        borderRadius: "50%",
+                        background: "var(--red)",
+                        marginTop: "6px",
+                        flexShrink: 0,
+                        boxShadow: "0 0 8px var(--red-glow)",
                       }}
-                    >
-                      {item.label}
-                    </p>
-                    <p
-                      style={{
-                        fontFamily: "Inter",
-                        fontWeight: 400,
-                        fontSize: "0.85rem",
-                        color: "var(--neutral-500)",
-                        lineHeight: 1.5,
-                      }}
-                    >
-                      {item.desc}
-                    </p>
+                    />
+                    <div>
+                      <p
+                        style={{
+                          fontFamily: "Inter",
+                          fontWeight: 700,
+                          fontSize: "0.75rem",
+                          letterSpacing: "0.12em",
+                          textTransform: "uppercase",
+                          color: "var(--white)",
+                          marginBottom: "2px",
+                        }}
+                      >
+                        {item.label}
+                      </p>
+                      <p
+                        style={{
+                          fontFamily: "Inter",
+                          fontWeight: 400,
+                          fontSize: "0.85rem",
+                          color: "var(--neutral-500)",
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              )
+            })}
           </div>
         </div>
       </div>
