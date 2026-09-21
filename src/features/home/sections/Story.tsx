@@ -13,7 +13,7 @@ type StoryBeat = {
   headline: string
   body: string[]
   quote?: string
-  flipImage?: { src: string; alt: string }
+  flipImage?: { src: string; alt: string; zoomOutMobile?: boolean }
   flipVideo?: { src: string }
 }
 
@@ -30,6 +30,7 @@ const storyBeats: StoryBeat[] = [
     flipImage: {
       src: "/assets/fr1bet-friday-betting.jpg",
       alt: "Father and son sitting at a table filling out a printed Formula 1 prediction spreadsheet, with a cat resting between them",
+      zoomOutMobile: true,
     },
   },
   {
@@ -40,7 +41,7 @@ const storyBeats: StoryBeat[] = [
       "Sitting there with my father, I started asking a bigger question. When people follow Formula 1, what is it they are actually watching for?",
       "Is it the podium? The strategy calls? The split-second battles through the chicane? Or the moment everything changes — a safety car, an unexpected overtake, a retirement that reshapes the race?",
     ],
-    quote: "The uncertainty of not knowing what happens next.",
+    quote: "I believe it's the uncertainty of not knowing what happens next.",
     flipImage: {
       src: "/assets/fr1bet-the-question.jpg",
       alt: "Fans watching the pit lane and grandstands packed with spectators during a race weekend",
@@ -52,10 +53,10 @@ const storyBeats: StoryBeat[] = [
     headline: "Then I Lost My Father.",
     body: [
       "My father passed away due to leukemia.",
-      "After losing him, I sat with the idea we had built together every Friday. I thought about the question we had been asking. I thought about how much more there was to say about it.",
+      "After losing him, I sat with the idea we had built together every Friday. I thought about the question we had been asking. I believed that there must be more to this idea. ",
       "And I decided to act.",
     ],
-    quote: "The idea deserved to exist outside my head.",
+    quote: "\"If you are going to try, go all the way; otherwise, don't even start.\"",
     flipImage: {
       src: "/assets/fr1bet-turning-point.jpg",
       alt: "An empty, solemn crematorium chapel with a coffin resting on a stand before a window",
@@ -64,14 +65,15 @@ const storyBeats: StoryBeat[] = [
   {
     number: "04",
     label: "The Build",
-    headline: "So I Started Building.",
+    headline: "So I Started Planning. ",
     body: [
       "I imagined a platform where every fan could become part of that experience — a place to predict, compete, react, and follow the race together.",
       "Not just who wins. The whole grid. The whole weekend.",
       "I started turning what had only ever existed in my mind into something real.",
     ],
-    flipVideo: {
-      src: "/assets/fr1bet-build-animation.mp4",
+    flipImage: {
+      src: "/assets/fr1bet-the-build.jpg",
+      alt: "A laptop screen showing the FR1BET login page for the F1 Pool Betting platform",
     },
   },
   {
@@ -81,6 +83,9 @@ const storyBeats: StoryBeat[] = [
     body: [],
     quote:
       "Built to bring the grid to life — not just as a race to watch, but as a world to enter.",
+    flipVideo: {
+      src: "/assets/fr1bet-app-preview.mp4",
+    },
   },
 ]
 
@@ -241,6 +246,113 @@ function StoryVideoFlipCard({ beat }: { beat: StoryBeat }) {
   )
 }
 
+// Flip card for beats whose back face is a static photo. The flip is driven
+// by explicit click state (rather than CSS :hover/:focus-within) so it
+// behaves the same on touch devices as on desktop — on mobile, hover/focus
+// is released the instant a finger lifts, which made the card snap back
+// almost immediately after tapping it. A tap now toggles the flip and it
+// stays flipped until tapped again.
+function StoryImageFlipCard({ beat }: { beat: StoryBeat }) {
+  const [flipped, setFlipped] = useState(false)
+  const toggleFlip = () => setFlipped((f) => !f)
+
+  return (
+    <div
+      className="flip-card"
+      tabIndex={0}
+      role="button"
+      aria-pressed={flipped}
+      onClick={toggleFlip}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault()
+          toggleFlip()
+        }
+      }}
+      style={{ maxWidth: "560px", height: "440px", outline: "none" }}
+    >
+      <div
+        className="flip-card-hint"
+        aria-hidden="true"
+        style={{
+          opacity: flipped ? 0.9 : 0.6,
+          color: flipped ? "var(--red)" : "var(--neutral-400)",
+          transform: flipped ? "scale(1.05)" : "none",
+        }}
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ transform: flipped ? "rotate(180deg)" : "rotate(0deg)" }}
+        >
+          <path d="M17 2.1 21 6l-4 3.9" />
+          <path d="M3 12.5v-2A5 5 0 0 1 8 5.5h13" />
+          <path d="M7 21.9 3 18l4-3.9" />
+          <path d="M21 11.5v2a5 5 0 0 1-5 5H3" />
+        </svg>
+      </div>
+      <div
+        className="flip-card-inner"
+        style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
+      >
+        {/* Front: story text */}
+        <div
+          className="flip-card-front"
+          style={{
+            padding: "1.75rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          {beat.body.map((para, i) => (
+            <p
+              key={i}
+              style={{
+                fontFamily: "Inter",
+                fontWeight: 400,
+                fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
+                color: "var(--neutral-400)",
+                lineHeight: 1.75,
+                marginBottom: "1rem",
+              }}
+            >
+              {para}
+            </p>
+          ))}
+          {beat.quote && (
+            <blockquote className="pull-quote mt-2">{beat.quote}</blockquote>
+          )}
+        </div>
+
+        {/* Back: photo */}
+        <div className="flip-card-back">
+          <img
+            src={beat.flipImage!.src}
+            alt={beat.flipImage!.alt}
+            loading="lazy"
+            decoding="async"
+            className={
+              beat.flipImage!.zoomOutMobile
+                ? "flip-card-back-img--zoom-out-mobile"
+                : undefined
+            }
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
   const isLast = index === storyBeats.length - 1
   return (
@@ -285,72 +397,7 @@ function StoryBeatBlock({ beat, index }: { beat: StoryBeat; index: number }) {
         {beat.flipVideo ? (
           <StoryVideoFlipCard beat={beat} />
         ) : beat.flipImage ? (
-          <div
-            className="flip-card"
-            tabIndex={0}
-            style={{
-              maxWidth: "560px",
-              height: "440px",
-              outline: "none",
-            }}
-          >
-            <div className="flip-card-hint" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17 2.1 21 6l-4 3.9" />
-                <path d="M3 12.5v-2A5 5 0 0 1 8 5.5h13" />
-                <path d="M7 21.9 3 18l4-3.9" />
-                <path d="M21 11.5v2a5 5 0 0 1-5 5H3" />
-              </svg>
-            </div>
-            <div className="flip-card-inner">
-              {/* Front: story text */}
-              <div
-                className="flip-card-front"
-                style={{
-                  padding: "1.75rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                {beat.body.map((para, i) => (
-                  <p
-                    key={i}
-                    style={{
-                      fontFamily: "Inter",
-                      fontWeight: 400,
-                      fontSize: "clamp(0.9rem, 1.5vw, 1.05rem)",
-                      color: "var(--neutral-400)",
-                      lineHeight: 1.75,
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    {para}
-                  </p>
-                ))}
-                {beat.quote && (
-                  <blockquote className="pull-quote mt-2">
-                    {beat.quote}
-                  </blockquote>
-                )}
-              </div>
-
-              {/* Back: photo */}
-              <div className="flip-card-back">
-                <img
-                  src={beat.flipImage.src}
-                  alt={beat.flipImage.alt}
-                  loading="lazy"
-                  decoding="async"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
-            </div>
-          </div>
+          <StoryImageFlipCard beat={beat} />
         ) : (
           <>
             {beat.body.map((para, i) => (
