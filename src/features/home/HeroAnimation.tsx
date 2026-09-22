@@ -93,6 +93,10 @@ export function HeroAnimation() {
           // @ts-expect-error legacy iOS attribute, harmless elsewhere
           webkit-playsinline="true"
           preload="auto"
+          // @ts-expect-error fetchPriority is valid on <video> but missing from React's DOM typings
+          fetchPriority="high"
+          disablePictureInPicture
+          disableRemotePlayback
           aria-hidden="true"
           onLoadedData={() => setVideoReady(true)}
           onCanPlay={() => setVideoReady(true)}
